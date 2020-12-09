@@ -1,23 +1,20 @@
-require('./config/mongoose');
+require('./utils/mongoose');
 const express = require('express')
 const morgan = require('morgan')
 const exphbs = require('express-handlebars')
 
 const app = express()
-const PORT = 3000
+const port= process.env.PORT || 3000
 
 app.use(morgan('dev'))
-
-app.engine('hbs', exphbs({
-    defaultLayout: "main.hbs"
+app.use(express.urlencoded({
+    extended: true
 }))
+app.use('/public', express.static('public'))
 
-app.set('view engine', 'hbs')
+require('./middlewares/views.mdw')(app);
+require('./middlewares/routes.mdw')(app);
 
-app.get('/', (req, res) => {
-    res.render('home')
-})
-
-app.listen(PORT, () => {
-    console.log(`Web server is listening on http://localhost:${PORT}`)
+app.listen(port, () => {
+    console.log(`Web server is listening on http://localhost:${port}`)
 })
