@@ -1,0 +1,54 @@
+  {{!-- `id_course` int NOT NULL AUTO_INCREMENT,
+  `image_path` varchar(1000) DEFAULT NULL,
+  `field` varchar(10) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `description_course` varchar(1000) DEFAULT NULL,
+  `detail_course` varchar(10000) DEFAULT NULL,
+  `last_modified` datetime DEFAULT NULL,
+  `id_teacher` int NOT NULL,
+  `preview_document` varchar(1000) DEFAULT NULL,
+  `status_course` varchar(15) NOT NULL, --}}
+<form method="POST" action="">
+  <div class="card">
+    <div class="card-header">
+      <h4>New Course</h4>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="exampleFormControlFile1">Image path</label>
+        <input type="file" class="form-control-file" id="txtImgPath" name="image_path">
+
+        <label for="txtCatName">Field</label>
+        <input type="text" class="form-control" id="txtField" name="field" autofocus>
+
+        <label for="txtCatName">Title</label>
+        <input type="text" class="form-control" id="txtTitle" name="title" autofocus>
+
+        <label for="txtCatName">Brief Description</label>
+        <input type="text" class="form-control" id="txtDescription" name="description_course" autofocus>
+
+        <label for="txtCatName">Course's Detail</label>
+        <input type="text" class="form-control" id="txtDetail" name="detail_course" autofocus>
+
+        <label for="txtCatName">Teacher's ID</label>
+        <input type="text" class="form-control" id="txtTeacherID" name="id_teacher" autofocus>
+
+        <label for="txtCatName">Preview Document</label>
+        <input type="text" class="form-control" id="txtPreviewDoc" name="preview_document" autofocus>
+        
+        <label for="txtCatName">Course Status</label>
+        <input type="text" class="form-control" id="txtStatus" name="status_course" autofocus>
+      </div>
+    </div>
+    <div class="card-footer">
+      <a class="btn btn-primary" href="/admin/courses" role="button">
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        Back to Courses
+      </a>
+      <button class="btn btn-success" type="submit">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Save
+      </button>
+    </div>
+  </div>
+</form>
