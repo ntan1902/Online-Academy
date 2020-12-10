@@ -23,6 +23,7 @@
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.2",
     "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
     "validator": "^13.5.1"
   }
 }

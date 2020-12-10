@@ -1,7 +1,6 @@
-require('./utils/mongoose');
+require('./utils/db');
 const express = require('express')
 const morgan = require('morgan')
-const exphbs = require('express-handlebars')
 
 const app = express()
 const port= process.env.PORT || 3000
