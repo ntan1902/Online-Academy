@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ntan1902/Online-Academy#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "express-handlebars": "^5.2.0",
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.2",
