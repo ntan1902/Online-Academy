@@ -1,46 +1,48 @@
 const express = require('express');
-const studentModel = require('../models/student.model');
+const teacherModel = require('../models/teacher.model');
 
 const router = express.Router();
 
 router.get('/', async function (req, res) {
-    const list = await studentModel.all();
-    res.render("vwStudents/index", {
+    const list = await teacherModel.all();
+    res.render("vwTeachers/index", {
         list: list,
         empty: list.length === 0
     })
 })
 
 router.get('/add', async function(req, res){
-    res.render("vwStudents/add")
+    res.render("vwTeachers/add")
 })
 
 router.post('/add', async function(req, res){
     console.log(req.body)
     if(req.body.dob.length === 0)
         req.body.dob = null
+
     if(req.body.email.length === 0)
         req.body.email = null
-    await studentModel.add(req.body);
-    res.render("vwStudents/add")
+    await teacherModel.add(req.body);
+    res.render("vwTeachers/add")
 })
 
 router.get('/edit/:id', async function(req, res) {
     const id = req.params.id;
-    const student = await studentModel.single(id);
-    if (student === null) {
-        return res.redirect('/admin/students');
+    const teacher = await teacherModel.single(id);
+    if (teacher === null) {
+        return res.redirect('/admin/teachers');
     }
-    console.log(student)
-    res.render('vwStudents/edit', {
-        student
+    console.log(teacher)
+    
+    res.render('vwTeachers/edit', {
+        teacher
     });
 })
 
 
 router.post('/delete/', async  function(req, res) {
-    await studentModel.delete(req.body.id);
-    res.redirect('/admin/students');
+    await teacherModel.delete(req.body.id);
+    res.redirect('/admin/teachers');
 })
 
 router.post('/patch/', async function(req, res) {
@@ -52,8 +54,8 @@ router.post('/patch/', async function(req, res) {
     if(req.body.email.length === 0)
         req.body.email = null
 
-    await studentModel.patch(req.body);
-    res.redirect('/admin/students');
+    await teacherModel.patch(req.body);
+    res.redirect('/admin/teachers');
 })
 
 module.exports = router;

@@ -5,6 +5,7 @@ module.exports = function (app) {
 
     app.use('/admin/students/', require('../controllers/student.controller'));
     app.use('/admin/courses/', require('../controllers/course.controller'));
+    app.use('/admin/teachers/', require('../controllers/teacher.controller'));
 
     app.get('/err', function (req, res) {
         throw new Error('Error!');
