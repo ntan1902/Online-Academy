@@ -36,13 +36,8 @@
 
             <div class="form-group">
                 <label for="txtDob">Date of Birth</label>
-                {{#if this.student.dob}}
                 <input type="date" class="form-control" id="txtDob" name="dob"
                        value="{{this.student.dob}}">
-                {{else}}
-                    <input type="date" class="form-control" id="txtDob" name="dob"
-                           value="{{""}}">
-                {{/if}}
             </div>
 
             <div class="form-group">
@@ -56,7 +51,7 @@
                 <i class="fa fa-backward" aria-hidden="true"></i>
                 Back to List
             </a>
-            <button class="btn btn-danger" type="submit" formaction="/admin/students/delele">
+            <button class="btn btn-danger" type="submit" formaction="/admin/students/delete">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                 Delete
             </button>

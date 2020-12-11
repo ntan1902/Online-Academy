@@ -11,7 +11,7 @@ module.exports = function (app) {
     })
 
     app.use(function (req, res) {
-        res.render('404', {
+        res.render('error/404', {
             layout: false
         });
     });

@@ -14,7 +14,7 @@ module.exports = {
         return promisePool.query(sql, entity);
     },
 
-    del(condition, table_name) {
+    delete(condition, table_name) {
         const sql = `delete from ${table_name} where ?`;
         return promisePool.query(sql, condition);
     },

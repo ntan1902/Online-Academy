@@ -30,5 +30,13 @@ module.exports = {
         const [result, fields] = await db.patch(entity, condition, 'users');
         return result;
 
-    }
+    },
+
+    async delete(id) {
+        const condition = {
+            id: id
+        };
+        const [result, fields] = await db.delete(condition, 'users');
+        return result;
+    },
 };

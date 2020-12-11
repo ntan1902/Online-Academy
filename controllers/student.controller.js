@@ -16,6 +16,9 @@ router.get('/add', async function(req, res){
 })
 
 router.post('/add', async function(req, res){
+    console.log(req.body)
+    if(req.body.dob.length === 0)
+        req.body.dob = null
     await studentModel.add(req.body);
     res.render("vwStudents/add")
 })
@@ -34,7 +37,7 @@ router.get('/edit/:id', async function(req, res) {
 
 
 router.post('/delete/', async  function(req, res) {
-    await studentModel.del(req.body.id);
+    await studentModel.delete(req.body.id);
     res.redirect('/admin/students');
 })
 
