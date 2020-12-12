@@ -2,7 +2,7 @@ const db = require('../utils/db');
 
 module.exports = {
     async all() {
-        const sql = 'select * from users where ';
+        const sql = "select * from users where role='student'";
         const [rows, fields] = await db.load(sql);
         return rows;
     },
