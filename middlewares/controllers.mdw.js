@@ -16,4 +16,12 @@ module.exports = function (app) {
         });
     });
 
+
+    app.use(function (err, req, res) {
+        console.error(err.stack);
+        res.render('500', {
+            layout: false
+        })
+    })
+
 }
