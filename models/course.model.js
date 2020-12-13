@@ -21,11 +21,11 @@ module.exports = {
         return result;
     },
     
-    async del(id) {
+    async delete(idCourse) {
         const condition = {
             idCourse: idCourse
         };
-        const [result, fields] = await db.del(condition, 'courses');
+        const [result, fields] = await db.delete(condition, 'courses');
         return result;
     },
 

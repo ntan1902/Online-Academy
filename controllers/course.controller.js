@@ -36,7 +36,7 @@ router.get('/edit/:id', async function(req, res) {
 })
 
 router.post('/delete/', async function(req, res) {
-    await courseModel.delete(req.body.id);
+    await courseModel.delete(req.body.idCourse);
     res.redirect('/admin/courses');
 }) 
 
