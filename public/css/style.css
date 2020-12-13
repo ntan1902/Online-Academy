@@ -1,0 +1,31 @@
+body {
+  background-color: #0d1117;
+}
+
+.navbar {
+  background-color: #161b22;
+}
+
+.dropdown-menu {
+  background-color: #161b22;
+}
+.dropdown-menu a:hover {
+  background-color: #58a6ff;
+}
+
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown > .dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+  pointer-events: none;
+}
+
+.input-search {
+  border-radius: 30px;
+  background-color: #0d1117;
+}
+input[type="search"]:focus {
+  background-color: #0d1117;
+}
