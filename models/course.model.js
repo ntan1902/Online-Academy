@@ -8,7 +8,7 @@ module.exports = {
     },
 
     async single(id) {
-        const sql = `select * from courses where id_course = ${id}`;
+        const sql = `select * from courses where idCourse = ${id}`;
         const [rows, fields] = await db.load(sql);
         if(rows.length === 0) 
             return null;
@@ -21,19 +21,19 @@ module.exports = {
         return result;
     },
     
-    async del(id) {
+    async delete(idCourse) {
         const condition = {
-            id_course: id
+            idCourse: idCourse
         };
-        const [result, fields] = await db.del(condition, 'courses');
+        const [result, fields] = await db.delete(condition, 'courses');
         return result;
     },
 
     async patch(entity) {
         const condition = {
-            id_course: id
+            idCourse: entity.idCourse
         };
-        delete (entity.id_course);
+        delete (entity.idCourse);
 
         const [result, fields] = await db.patch(entity, condition, 'courses');
         return result;

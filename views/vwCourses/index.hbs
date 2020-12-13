@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card shadow" style="width: 80rem; margin:auto">
   <div class="card-header d-flex justify-content-between">
     <h4>Couses</h4>
     <a class="btn btn-outline-success" href="/admin/courses/add" role="button">
@@ -10,31 +10,31 @@
     <h5 class="card-title">There is no data</h5>
     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
     {{else}}
-    <div class="row">
-      {{#each this.categories}}
-      <div class="col-sm-4 mb-3">
-        <div class="card h-100">
-          <img src="/public/imgs/sp/{{id_course}}/main_thumbs.jpg" alt="{{id_course}}" title="{{id_course}}"
-            class="card-img-top">
-          <div class="card-body">
-            <h6 class="card-title">{{field}}</h6>
-            <h5 class="card-title text-danger">{{description_course}}</h5>
-            <p class="card-text">{{detail_course}}</p>
-          </div>
-          <div class="card-footer text-muted">
-            <a class="btn btn-sm btn-outline-primary" href="/course/detail/{{id_course}}" role="button">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-              Details
-            </a>
-            <a class="btn btn-sm btn-outline-success" href="#" role="button">
-              <i class="fa fa-cart-plus" aria-hidden="true"></i>
-              Add to cart
-            </a>
+      <div class="row">
+        {{#each this.categories}}
+        <div class="col-sm-3 mb-3">
+          <div class="card h-100" style="width: 18rem;">
+            <img src="/public/images/mobile/1.png" alt="{{idCourse}}" title="{{idCourse}}"
+              class="card-img-top">
+            <div class="card-body">
+              {{!-- <h6 class="card-title">{{field}}</h6> --}}
+              <h5 class="card-title text-danger">{{title}}</h5>
+              <p class="card-text">{{description}}</p>
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-between">
+              <a class="btn btn-sm btn-outline-primary" href="/admin/courses/edit/{{idCourse}}" role="button">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+                Details
+              </a>
+              <a class="btn btn-sm btn-outline-success" href="#" role="button">
+                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                Add to cart
+              </a>
+            </div>
           </div>
         </div>
+        {{/each}}
       </div>
-      {{/each}}
-    </div>
     {{/if}}
   </div>
 </div>
