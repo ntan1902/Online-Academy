@@ -1,3 +1,4 @@
+/* CSS For Navbar */
 body {
   background-color: #0d1117;
 }
@@ -29,7 +30,7 @@ body {
 input[type="search"]:focus {
   background-color: #0d1117;
 }
-
+/* CSS For Navbar */
 
 /* @import url("https://fonts.googleapis.com/css?family=Numans");
 
@@ -52,13 +53,7 @@ body {
   margin-top: auto;
   margin-bottom: auto;
   width: 400px;
-  background-color: rgba(0, 0, 0, 0.5) !important;
-}
-
-.social_icon span {
-  font-size: 60px;
-  margin-left: 10px;
-  color: #ffc312;
+  background-color: #161b22 !important;
 }
 
 .social_icon span:hover {
