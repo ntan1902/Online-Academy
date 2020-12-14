@@ -66,7 +66,9 @@
                 </li>
 
                 <li class="nav-item mr-2 my-2">
-                    <a class="btn btn-outline-success">
+                    {{!-- Cái href="/login" là từ frontend gửi yêu cầu qua server qua cái get /login
+                          Rồi từ server mới render cái login.hbs --}}
+                    <a class="btn btn-outline-success" href="/login">
                         Log in
                     </a>
                 </li>
@@ -79,11 +81,12 @@
             </ul>
         </div>
     </nav>
-    <div class="container-fluid mt-4">
+    {{!-- <div class="container-fluid mt-4">
         <div class="row">
             <div class="col">{{{body}}}</div>
         </div>
-    </div>
+    </div> --}}
+    {{{body}}}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
