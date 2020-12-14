@@ -1,4 +1,5 @@
-/* CSS For Navbar */
+
+/* main.hbs */
 body {
   background-color: #0d1117;
 }
@@ -23,32 +24,34 @@ body {
   pointer-events: none;
 }
 
-.input-search {
+.my-input {
   border-radius: 30px;
   background-color: #0d1117;
 }
 input[type="search"]:focus {
   background-color: #0d1117;
 }
-/* CSS For Navbar */
+/* /main.hbs */
 
-/* @import url("https://fonts.googleapis.com/css?family=Numans");
+/* login.hbs */
+@import url("https://fonts.googleapis.com/css?family=Numans");
 
 html,
-body {
+body{
   background-image: url("http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 100%;
+  /* background-size: cover; */
+  /* background-repeat: no-repeat; */
+  /* height: 100%; */
   font-family: "Numans", sans-serif;
-} */
+}
 
-.container {
+.container-login {
   height: 100%;
   align-content: center;
 }
 
-.card {
+.card-login {
+  /* this affect courses form view */
   height: 370px;
   margin-top: auto;
   margin-bottom: auto;
@@ -56,27 +59,14 @@ body {
   background-color: #161b22 !important;
 }
 
-.social_icon span:hover {
-  color: white;
-  cursor: pointer;
-}
-
-.card-header h3 {
-  color: white;
-}
-
-.social_icon {
-  position: absolute;
-  right: 20px;
-  top: -45px;
-}
-
 .input-group-prepend span {
   width: 50px;
   background-color: #ffc312;
-  color: black;
-  border: 0 !important;
+  color:  #0d1117;
+  border-top-left-radius: 30px !important;
+  border-bottom-left-radius: 30px !important;
 }
+
 
 input:focus {
   outline: 0 0 0 0 !important;
@@ -112,3 +102,4 @@ input:focus {
 .links a {
   margin-left: 4px;
 }
+/* /login.hbs */

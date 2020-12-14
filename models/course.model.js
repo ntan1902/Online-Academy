@@ -7,6 +7,12 @@ module.exports = {
         return rows;
     },
 
+    async allByField(field) {
+        const sql = `select * from courses where field = '${field}'`;
+        const[rows, fields] = await db.load(sql);
+        return rows;
+    },
+
     async single(id) {
         const sql = `select * from courses where idCourse = ${id}`;
         const [rows, fields] = await db.load(sql);
