@@ -42,7 +42,7 @@ input[type="search"]:focus {
   background-color: #161b22 !important;
 }
 
-.input-group-prepend span {
+.card-login .input-group-prepend span {
   width: 50px;
   background-color: #28a745;
   color: #0d1117;
@@ -50,37 +50,37 @@ input[type="search"]:focus {
   border-bottom-left-radius: 30px !important;
 }
 
-input:focus {
+.card-login input:focus {
   outline: 0 0 0 0 !important;
   box-shadow: 0 0 0 0 !important;
 }
 
-.remember {
+.card-login .remember {
   color: white;
 }
 
-.remember input {
+.card-login .remember input {
   width: 20px;
   height: 20px;
   margin-left: 15px;
   margin-right: 5px;
 }
 
-.btn-login {
+.card-login .btn-login {
   color: black;
   background-color: #28a745;
   width: 100px;
   border-radius: 30px;
 }
-.btn-login:hover {
+.card-login .btn-login:hover {
   background-color: white;
 }
 
-.links {
+.card-login .links {
   color: white;
 }
 
-.links a {
+.card-login .links a {
   margin-left: 4px;
 }
 /* /login.hbs */
@@ -94,4 +94,92 @@ input:focus {
   width: 400px;
   background-color: #161b22 !important;
 }
+.card-signup .input-group-prepend span {
+  width: 50px;
+  background-color: #28a745;
+  color: #0d1117;
+  border-top-left-radius: 30px !important;
+  border-bottom-left-radius: 30px !important;
+}
+
+.card-signup input:focus {
+  outline: 0 0 0 0 !important;
+  box-shadow: 0 0 0 0 !important;
+}
+
+.card-signup .remember {
+  color: white;
+}
+
+.card-signup .remember input {
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+.card-signup .btn-login {
+  color: black;
+  background-color: #28a745;
+  width: 100px;
+  border-radius: 30px;
+}
+.card-signup .btn-login:hover {
+  background-color: white;
+}
+
+.card-signup .links {
+  color: white;
+}
+
+.card-signup .links a {
+  margin-left: 4px;
+}
 /* /signup.hbs */
+
+/* home.hbs */
+/* .MultiCarousel {
+  float: left;
+  overflow: hidden;
+  padding: 15px;
+  width: 100%;
+  position: relative;
+}
+.MultiCarousel .MultiCarousel-inner {
+  transition: 1s ease all;
+  float: left;
+}
+.MultiCarousel .MultiCarousel-inner .item {
+  float: left;
+}
+.MultiCarousel .MultiCarousel-inner .item > div {
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+  background: #f1f1f1;
+  color: #666;
+}
+.MultiCarousel .leftLst,
+.MultiCarousel .rightLst {
+  position: absolute;
+  border-radius: 50%;
+  top: calc(50% - 20px);
+}
+.MultiCarousel .leftLst {
+  left: 0;
+}
+.MultiCarousel .rightLst {
+  right: 0;
+}
+
+.MultiCarousel .leftLst.over,
+.MultiCarousel .rightLst.over {
+  pointer-events: none;
+  background: #ccc;
+} */
+
+/* #blogCarousel .carousel-control-prev {
+  display: flex;
+  justify-content: space-between;
+} */
+/* home.hbs */
