@@ -61,7 +61,7 @@ body{
 
 .card-login .input-group-prepend span {
   width: 50px;
-  background-color: #ffc312;
+  background-color: #28a745;
   color:  #0d1117;
   border-top-left-radius: 30px !important;
   border-bottom-left-radius: 30px !important;
@@ -85,7 +85,7 @@ body{
 
 .card-login .btn-login {
   color: black;
-  background-color: #ffc312;
+  background-color: #28a745;
   width: 100px;
 }
 .card-login .btn-login:hover {
