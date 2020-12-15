@@ -84,3 +84,14 @@ input:focus {
   margin-left: 4px;
 }
 /* /login.hbs */
+
+/* signup.hbs */
+.card-signup {
+  /* this affect courses form view */
+  height: 370px;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 400px;
+  background-color: #161b22 !important;
+}
+/* /signup.hbs */
