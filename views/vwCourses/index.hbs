@@ -1,9 +1,48 @@
-<div class="card shadow" style="width: 80rem; margin:auto">
+{{!-- <div class="card shadow" style="width: 80rem; margin:auto">
   <div class="card-header d-flex justify-content-between">
     <h4>Couses</h4>
     <a class="btn btn-outline-success" href="/admin/courses/add" role="button">
-      <i class="fa fa-plus" aria-hidden="true"></i>
-      Add Course
+        Insert
+    </a>
+  </div>
+  <div class="card-body">
+    {{#if this.empty}}
+    <h5 class="card-title">There is no data</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    {{else}}
+      <div class="row">
+        {{#each this.courses}}
+        <div class="col-sm-3 mb-3">
+          <div class="card h-100" style="width: 18rem;">
+            <img src="/public/images/mobile/1.png" alt="{{idCourse}}" title="{{idCourse}}"
+              class="card-img-top">
+            <div class="card-body">
+              <h6 class="card-title">{{field}}</h6> 
+              <h5 class="card-title text-danger">{{title}}</h5>
+              <p class="card-text">{{description}}</p>
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-between">
+              <a class="btn btn-sm btn-outline-primary" href="/admin/courses/edit/{{idCourse}}" role="button">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+                Details
+              </a>
+              <a class="btn btn-sm btn-outline-success" href="#" role="button">
+                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                Add to cart
+              </a>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+</div> --}}
+<div class="card shadow w-75 mx-auto">
+  <div class="card-header d-flex justify-content-between">
+    <h4>Courses</h4>
+    <a class="btn btn-outline-success" href="/admin/courses/add" role="button">
+        Insert
     </a>
   </div>
   <div class="card-body">
@@ -11,30 +50,38 @@
       <h5 class="card-title">There is no data</h5>
       <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
     {{else}}
-      <div class="row">
-        {{#each this.courses}}
-          <div class="col-sm-3 mb-3">
-            <div class="card h-100" style="width: 18rem;">
-              <img src="/public/images/mobile/1.png" alt="{{idCourse}}" title="{{idCourse}}" class="card-img-top">
-              <div class="card-body">
-                {{!-- <h6 class="card-title">{{field}}</h6> --}}
-                <h5 class="card-title text-danger">{{title}}</h5>
-                <p class="card-text">{{description}}</p>
-              </div>
-              <div class="card-footer text-muted d-flex justify-content-between">
-                <a class="btn btn-sm btn-outline-primary" href="/admin/courses/edit/{{idCourse}}" role="button">
-                  <i class="fa fa-eye" aria-hidden="true"></i>
-                  Details
-                </a>
-                <a class="btn btn-sm btn-outline-success" href="#" role="button">
-                  <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                  Add to cart
-                </a>
-              </div>
+        <div class="container">
+            <div class="row">
+              {{#each this.courses}}
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <div class="product-grid4 h-100">
+                        <div class="product-image4">
+                            <a href="#">
+                                <img class="pic-1" src="/public/images/mobile/2.png">
+                                <img class="pic-2" src="/public/images/mobile/1.png">
+                            </a>
+                            <ul class="social">
+                                <li><a href="/admin/courses/edit/{{id}}" data-tip="Quick View" role="button"><i class="fa fa-eye"></i></a></li>
+                                {{!-- <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li> --}}
+                                <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                            <span class="product-new-label">New</span>
+                            <span class="product-discount-label">-10%</span>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="title"><a href="#">{{title}}</a></h3>
+                            {{!-- <h3 class="title">hello word</h3> --}}
+                            <div class="price">
+                                ${{price}}
+                                <span>$5.00</span>
+                            </div>
+                            <a class="add-to-cart" href="">ADD TO CART</a>
+                        </div>
+                    </div>
+                </div>
+              {{/each}}
             </div>
-          </div>
-        {{/each}}
-      </div>
-    {{/if}}
+        </div>
+      {{/if}}
   </div>
 </div>

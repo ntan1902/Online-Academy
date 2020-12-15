@@ -17,6 +17,18 @@
             </div>
 
             <div class="form-group">
+                <label for="txtVideoPath">Video Path</label>
+                <input type="file" class="form-control-file" id="txtImgPath" name="videoPath" 
+                       value="{{this.course.videoPath}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtPrice">Price</label>
+                <input type="number" class="form-control-file" id="txtPrice" name="price" 
+                       value="{{this.course.price}}">
+            </div>
+
+            <div class="form-group">
                 <label for="txtField">Field</label>
                 <input type="text" class="form-control" id="txtField" name="field" required
                        value="{{this.course.field}}">

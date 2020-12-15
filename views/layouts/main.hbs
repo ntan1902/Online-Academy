@@ -49,9 +49,8 @@
                 {{!-- <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li> --}}
-
             </ul>
-            <form class="form-inline my-2 my-lg-0">
+            <form class="form-inline my-2 my-lg-0 mr-auto">
                 <input class="form-control mr-sm-2 text-white my-input" type="search" placeholder="Search"
                     aria-label="Search" />
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
@@ -60,21 +59,21 @@
                 </button>
             </form>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item mr-4 mt-2">
-                    <a class="text-white" href="#">
-                        <i class="fa fa-shopping-cart fa-2x"></i>
+                <li class="nav-item">
+                    <a class="btn btn-light mr-sm-2 my-2">
+                        <i class="fa fa-shopping-cart"></i>
                     </a>
                 </li>
 
                 <li class="nav-item mr-2 my-2">
                     {{!-- Cái href="/login" là từ frontend gửi yêu cầu qua server qua cái get /login
-                    Rồi từ server mới render cái login.hbs --}}
+                          Rồi từ server mới render cái login.hbs --}}
                     <a class="btn btn-outline-success" href="/login">
                         Log in
                     </a>
                 </li>
                 <li class="nav-item my-2">
-                    <a class="btn btn-success" href="/signup">
+                    <a class="btn btn-success">
                         Sign up
                     </a>
                 </li>

@@ -14,7 +14,7 @@ module.exports = {
     },
 
     async single(id) {
-        const sql = `select * from courses where idCourse = ${id}`;
+        const sql = `select * from courses where id = ${id}`;
         const [rows, fields] = await db.load(sql);
         if(rows.length === 0) 
             return null;
