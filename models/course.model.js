@@ -1,8 +1,21 @@
 const db = require("../utils/db");
+const { paginate } = require('../config/default.json');
 
 module.exports = {
     async all() {
         const sql = 'select * from courses';
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+
+    async countCourse() {
+        const sql = `select count(*) as total from courses`;
+        const [rows, fields] = await db.load(sql);
+        return rows[0].total;
+    },
+
+    async pageCourse(offset) {
+        const sql = `select * from courses limit ${paginate.limit} offset ${offset}`;
         const [rows, fields] = await db.load(sql);
         return rows;
     },

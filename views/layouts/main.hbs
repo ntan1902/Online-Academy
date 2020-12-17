@@ -36,15 +36,23 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        data-toggle="dropdown" data-hover="dropdown" aria-haspopup="true" aria-expanded="false">
                         Categories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item text-white-50" href="#">Action</a>
-                        <a class="dropdown-item text-white-50" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-white-50" href="#">Something else here</a>
+                        <div class="dropright btn-group w-50">
+                            <a class="btn dropdown-toggle text-white w-50" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" data-hover="dropdown">
+                                IT
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item text-white" href="#">Action</a>
+                                <a class="dropdown-item text-white" href="#">Another action</a>
+                                <a class="dropdown-item text-white" href="#">Something else here</a>
+                            </div>
+                        </div>
                     </div>
+
                 </li>
                 {{!-- <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -67,13 +75,13 @@
 
                 <li class="nav-item mr-2 my-2">
                     {{!-- Cái href="/login" là từ frontend gửi yêu cầu qua server qua cái get /login
-                          Rồi từ server mới render cái login.hbs --}}
+                    Rồi từ server mới render cái login.hbs --}}
                     <a class="btn btn-outline-success" href="/login">
-                        Log in
+                        Sign in
                     </a>
                 </li>
                 <li class="nav-item my-2">
-                    <a class="btn btn-success"href="/signup">
+                    <a class="btn btn-success" href="/signup">
                         Sign up
                     </a>
                 </li>
@@ -86,7 +94,7 @@
             <div class="col">{{{body}}}</div>
         </div>
     </div> --}}
-   <!-- Optional JavaScript -->
+    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>

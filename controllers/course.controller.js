@@ -1,13 +1,33 @@
 const express = require('express');
 const courseModel = require('../models/course.model');
 const studentModel = require('../models/student.model');
+const { paginate } = require('../config/default.json');
 
 const router = express.Router();
 
-router.get('/', async function(req, res) {
-    const list_courses = await courseModel.all();
-    res.render('vwCourses/index', {
+router.get('/', async function(req, res, next) {
+
+    const page = req.query.page || 1;
+    if(page < 1) page = 1;
+
+    const total = await courseModel.countCourse();
+    let nPages = Math.floor(total / paginate.limit);
+    if(total % paginate.limit > 0) nPages++; //for the remaining courses
+    console.log(nPages);
+    const page_numbers = [];
+    for(i=1; i <= nPages; i++) {
+        page_numbers.push({
+            value: i,
+            isCurrentPage: i === +page
+        });
+    }
+  
+    const offset = (page - 1) * paginate.limit;
+    const list_courses = await courseModel.pageCourse(offset);
+
+    res.render('vwCourses/index', { 
         courses: list_courses,
+        page_numbers,
         empty: list_courses.length === 0
     });
 })
