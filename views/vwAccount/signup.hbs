@@ -1,0 +1,147 @@
+{{#section 'css'}}
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
+{{#section 'js'}}
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script>
+        function checkEmail(email) {
+            if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+                return true;
+
+            } else {
+                return false;
+            }
+        };
+        $('#txtDOB').datetimepicker({
+            format: 'd/m/Y',
+            timepicker: false,
+            mask: true,
+        });
+
+        $('#frmRegister').on('submit', function (e) {
+            e.preventDefault();
+
+            const username = $('#txtUsername').val();
+            const email = $('#txtEmail').val();
+            const password = $('#txtPassword').val();
+            const confirm = $('#txtConfirm').val();
+            if (username.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid username',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                });
+                return;
+            } else if (checkEmail(email) === false) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid email',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                });
+                return;
+            } else if (password !== confirm) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Password is conflict',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                });
+                return;
+            } else {
+                $.getJSON(`/account/isAvailable?user=${username}`, function (data) {
+                    if (data === true) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Your account has been saved',
+                            showConfirmButton: true
+                        });
+                        $('#frmRegister').off('submit').submit();
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Username already exists! Please enter another username',
+                            icon: 'error',
+                            confirmButtonText: 'Cool'
+                        });
+                    }
+                })
+            }
+        });
+
+    </script>
+{{/section}}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-center h-100">
+        <div class="card card-signup">
+            <div class="card-header d-flex justify-content-center">
+                <h3 class="pt-2 text-white">Sign Up</h3>
+            </div>
+            <div class="card-body">
+                <form id="frmRegister" method="POST" action="">
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
+                        </div>
+                        <input type="text" class="form-control my-input" placeholder="Username" id="txtUsername"
+                            name="username" autofocus>
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
+                        </div>
+                        <input type="password" class="form-control my-input" placeholder="Password" id="txtPassword"
+                            name="password">
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-check" aria-hidden="true"></i></span>
+                        </div>
+                        <input type="password" class="form-control my-input" placeholder="Confirm" id="txtConfirm"
+                            name="confirm">
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                        </div>
+                        <input type="text" class="form-control my-input" placeholder="Full name" id="txtFullname"
+                            name="fullname">
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                        </div>
+                        <input type="text" class="form-control my-input" placeholder="Email" id="txtEmail" name="email">
+                    </div>
+
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-calendar-times-o"
+                                    aria-hidden="true"></i></span>
+                        </div>
+                        <input type="text" class="form-control my-input" placeholder="__/__/____" id="txtDOB"
+                            name="dob">
+                    </div>
+                    <input type="hidden" class="form-control" name="role" value="student">
+
+                    <div class="form-group d-flex justify-content-center mt-3">
+                        <button class="btn btn-login w-100" type="submit">
+                            <i class="fa fa-user-plus fa-2x" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-center links">
+                    Already have an account?<a href="/account/signin">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
