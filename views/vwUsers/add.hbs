@@ -1,0 +1,116 @@
+{{#section 'css'}}
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
+{{#section 'js'}}
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script>
+        function checkEmail(email) {
+            if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+                return true;
+
+            } else {
+                return false;
+            }
+        }
+
+        $('#frmRegister').on('submit', function (e) {
+            e.preventDefault();
+
+            const username = $('#txtUsername').val();
+            const email = $('#txtEmail').val();
+            if (username.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid username',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                })
+                return;
+            }
+
+            console.log(email);
+            if (checkEmail(email) === false) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid email',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                })
+                return;
+            }
+
+            $.getJSON(`/account/isAvailable?user=${username}`, function (data) {
+                if (data === true) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Your account has been saved',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                    $('#frmRegister').off('submit').submit();
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Username already exists! Please enter another username',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                    })
+                }
+            })
+        });
+
+
+        $('#txtDOB').datetimepicker({
+            format: 'd/m/Y',
+            timepicker: false,
+            mask: true,
+        });
+    </script>
+{{/section}}
+
+<form method="POST" action="">
+    <div class="card">
+        <div class="card-header">
+            <h4>New User</h4>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="txtUsername">Username</label>
+                <input type="text" class="form-control" id="txtUsername" name="username" autofocus required>
+
+                <label for="txtPassword">Password</label>
+                <input type="password" class="form-control" id="txtPassword" name="password" required>
+
+                <label for="txtName">Name</label>
+                <input type="text" class="form-control" id="txtName" name="fullname">
+
+                <label for="txtEmail">Email</label>
+                <input type="text" class="form-control" id="txtEmail" name="email">
+
+                <label for="txtDob">Day of Birth</label>
+                <input type="text" class="form-control" id="txtDob" name="dob">
+
+                <label for="txtRole">Role</label>
+                <input type="text" class="form-control" id="txtRole" name="role">
+
+                <input type="hidden" class="form-control" name="role" value="teacher">
+
+
+            </div>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" href="/admin/users" role="button">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+                Back to List
+            </a>
+            <button class="btn btn-success" type="submit">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Save
+            </button>
+        </div>
+    </div>
+</form>

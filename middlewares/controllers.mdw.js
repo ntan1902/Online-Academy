@@ -1,30 +1,24 @@
 module.exports = function (app) {
-  app.get("/", (req, res) => {
+  app.get("/", function (req, res) {
     res.render("home", { layout: "main.hbs" });
   });
 
-  app.get("/login", function (req, res) {
-    res.render("vwAuthentication/login", { layout: "main.hbs" });
-  });
-
-  app.get("/signup", function (req, res) {
-    res.render("vwAuthentication/signup", { layout: "main.hbs" });
-  });
-
-  app.use("/admin/students/", require("../controllers/student.controller"));
+  app.use("/account/", require("../controllers/account.controller"));
+  app.use("/admin/users/", require("../controllers/user.controller"));
   app.use("/admin/courses/", require("../controllers/course.controller"));
-  app.use("/admin/teachers/", require("../controllers/teacher.controller"));
 
   app.get("/err", function (req, res) {
     throw new Error("Error!");
   });
 
+  // Handle not found error
   app.use(function (req, res) {
     res.render("error/404", {
       layout: false,
     });
   });
 
+  // Handle database error
   app.use(function (err, req, res) {
     console.error(err.stack);
     res.render("error/500", {

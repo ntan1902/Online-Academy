@@ -14,6 +14,7 @@
 
     <link rel="stylesheet" href="/public/css/style.css" />
     <title>Online Academy</title>
+    {{{_sections.css}}}
 </head>
 
 <body>
@@ -28,12 +29,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -46,18 +41,25 @@
                         <a class="dropdown-item text-white-50" href="#">Something else here</a>
                     </div>
                 </li>
-                {{!-- <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li> --}}
+                <li class="nav-item">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2 text-white my-input" type="search" placeholder="Search"
+                            aria-label="Search" />
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                            <i class="fa fa-search"></i>
+                            Search
+                        </button>
+                    </form>
+                </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0 mr-auto">
+            {{!-- <form class="form-inline">
                 <input class="form-control mr-sm-2 text-white my-input" type="search" placeholder="Search"
                     aria-label="Search" />
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
                     <i class="fa fa-search"></i>
                     Search
                 </button>
-            </form>
+            </form> --}}
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="btn btn-light mr-sm-2 my-2">
@@ -67,13 +69,13 @@
 
                 <li class="nav-item mr-2 my-2">
                     {{!-- Cái href="/login" là từ frontend gửi yêu cầu qua server qua cái get /login
-                          Rồi từ server mới render cái login.hbs --}}
-                    <a class="btn btn-outline-success" href="/login">
-                        Log in
+                        Rồi từ server mới render cái login.hbs --}}
+                    <a class="btn btn-outline-success" href="/account/signin">
+                        Sign in
                     </a>
                 </li>
                 <li class="nav-item my-2">
-                    <a class="btn btn-success"href="/signup">
+                    <a class="btn btn-success" href="/account/signup">
                         Sign up
                     </a>
                 </li>
@@ -81,18 +83,16 @@
             </ul>
         </div>
     </nav>
-    {{!-- <div class="container-fluid mt-4">
-        <div class="row">
-            <div class="col">{{{body}}}</div>
-        </div>
-    </div> --}}
-   <!-- Optional JavaScript -->
+    {{{body}}}
+    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
-    {{{body}}}
 
+    <!-- Sweet Alert2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.12.5/dist/sweetalert2.all.min.js"></script>
+    {{{_sections.js}}}
 </body>
 
 </html>
