@@ -7,9 +7,9 @@ module.exports = function (app) {
   app.use("/admin/users/", require("../controllers/user.controller"));
   app.use("/admin/courses/", require("../controllers/course.controller"));
 
-  app.get("/err", function (req, res) {
-    throw new Error("Error!");
-  });
+  // app.get("/err", function (req, res) {
+  //   throw new Error("Error!");
+  // });
 
   // Handle not found error
   app.use(function (req, res) {

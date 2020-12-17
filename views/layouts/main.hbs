@@ -68,26 +68,46 @@
                     Search
                 </button>
             </form> --}}
+            <form id="frmSignout" action="/account/signout" method="POST"></form>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="btn btn-light mr-sm-2 my-2">
-                        <i class="fa fa-shopping-cart"></i>
-                    </a>
-                </li>
+                {{#if auth}}
 
-                <li class="nav-item mr-2 my-2">
-                    {{!-- Cái href="/login" là từ frontend gửi yêu cầu qua server qua cái get /login
-                        Rồi từ server mới render cái login.hbs --}}
-                    <a class="btn btn-outline-success" href="/account/signin">
-                        Sign in
-                    </a>
-                </li>
-                <li class="nav-item my-2">
-                    <a class="btn btn-success" href="/account/signup">
-                        Sign up
-                    </a>
-                </li>
+                    <li class="nav-item dropdown mr-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <b class="text-white">{{authUser.fullname}}</b>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-white" href="/account/profile">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                Profile
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-white" href="javascript: $('#frmSignout').submit();">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                Sign Out
+                            </a>
+                        </div>
+                    </li>
+                {{else}}
+                    <li class="nav-item">
+                        <a class="btn btn-light mr-sm-2 my-2">
+                            <i class="fa fa-shopping-cart"></i>
+                        </a>
+                    </li>
 
+                    <li class="nav-item mr-2 my-2">
+                        <a class="btn btn-outline-success" href="/account/signin">
+                            Sign in
+                        </a>
+                    </li>
+                    <li class="nav-item my-2">
+                        <a class="btn btn-success" href="/account/signup">
+                            Sign up
+                        </a>
+                    </li>
+
+                {{/if}}
             </ul>
         </div>
     </nav>

@@ -14,6 +14,8 @@ app.use(
 app.use("/public", express.static("public"));
 
 require("./middlewares/views.mdw")(app);
+require("./middlewares/session.mdw")(app);
+require("./middlewares/locals.mdw")(app);
 require("./middlewares/controllers.mdw")(app);
 
 app.listen(port, () => {
