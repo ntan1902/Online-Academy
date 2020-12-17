@@ -20,7 +20,12 @@
             e.preventDefault();
 
             const username = $('#txtUsername').val();
+            const password = $('#txtPassword').val();
+            const name = $('#txtName').val();
             const email = $('#txtEmail').val();
+            const dob = $('#txtDob').val();
+            const role = $('#txtRole').val();
+
             if (username.length === 0) {
                 Swal.fire({
                     title: 'Error!',
@@ -29,10 +34,23 @@
                     confirmButtonText: 'Retry'
                 })
                 return;
-            }
-
-            console.log(email);
-            if (checkEmail(email) === false) {
+            } else if(password.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Password',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                })
+                return;
+            } else if(name.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Name',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                })
+                return;
+            } else if (checkEmail(email) === false) {
                 Swal.fire({
                     title: 'Error!',
                     text: 'Invalid email',
@@ -40,29 +58,44 @@
                     confirmButtonText: 'Retry'
                 })
                 return;
-            }
-
-            $.getJSON(`/account/isAvailable?user=${username}`, function (data) {
-                if (data === true) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Your account has been saved',
-                        showConfirmButton: false,
-                        timer: 1000
-                    });
-                    $('#frmRegister').off('submit').submit();
-                } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'Username already exists! Please enter another username',
-                        icon: 'error',
-                        confirmButtonText: 'Cool'
-                    })
+            } else if(dob.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Date of Birth',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                })
+                return;
+            } else if(role.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Role',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                })
+                return;                
+            } else {
+                $.getJSON(`/account/isAvailable?user=${username}`, function (data) {
+                    if (data === true) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Your account has been saved',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                        $('#frmRegister').off('submit').submit();
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Username already exists! Please enter another username',
+                            icon: 'error',
+                            confirmButtonText: 'Cool'
+                        })
                 }
             })
+            }
         });
-
 
         $('#txtDOB').datetimepicker({
             format: 'd/m/Y',
@@ -94,8 +127,8 @@
                 <label for="txtDob">Day of Birth</label>
                 <input type="text" class="form-control" id="txtDob" name="dob">
 
-                <label for="txtRole">Role</label>
-                <input type="text" class="form-control" id="txtRole" name="role">
+                {{!-- <label for="txtRole">Role</label>
+                <input type="text" class="form-control" id="txtRole" name="role"> --}}
 
                 <input type="hidden" class="form-control" name="role" value="teacher">
 

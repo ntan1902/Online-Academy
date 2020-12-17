@@ -1,52 +1,191 @@
-  {{!-- `id_course` int NOT NULL AUTO_INCREMENT,
-  `image_path` varchar(1000) DEFAULT NULL,
+{{!-- `id` int NOT NULL AUTO_INCREMENT,
+  `imagePath` varchar(1000) DEFAULT NULL,
+  `videoPath` varchar(1000) DEFAULT NULL,
+  `price` int NOT NULL,
   `field` varchar(10) NOT NULL,
-  `title` varchar(50) NOT NULL,
-  `description_course` varchar(1000) DEFAULT NULL,
-  `detail_course` varchar(10000) DEFAULT NULL,
-  `last_modified` datetime DEFAULT NULL,
-  `id_teacher` int NOT NULL,
-  `preview_document` varchar(1000) DEFAULT NULL,
-  `status_course` varchar(15) NOT NULL, --}}
-<form method="POST" action="">
+  `title` varchar(100) NOT NULL,
+  `description` varchar(1000) DEFAULT NULL,
+  `detail` varchar(10000) DEFAULT NULL,
+  `lastModified` datetime DEFAULT NULL,
+  `idTeacher` int NOT NULL,
+  `previewDocument` varchar(1000) DEFAULT NULL,
+  `status` varchar(15) NOT NULL, --}}
+{{#section 'css'}}
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
+{{#section 'js'}}
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script>
+  $('#txtLastModified').datetimepicker({
+    format: 'd/m/Y',
+    timepicker: false,
+    mask: true,
+  });
+
+  $('#frmProduct').on('submit', function (e) {
+    e.preventDefault();
+
+    const imgPath = $('#txtImgPath').val();
+    const videoPath = $('#txtVideoPath').val();
+    const price = $('#txtPrice').val();
+    const field = $('#txtField').val();
+    const title = $('#txtTitle').val();
+    const description = $('#txtDescription').val();
+    const detail = $('#txtDetail').val();
+    const lastModified = $('#txtLastModified').val();
+    const idTeacher = $('#txtIdTeacher').val();
+    const document = $('#txtPreviewDoc');
+    const status = $('#txtStatus').val();
+
+    //check validation
+    if (!imgPath.length === 0) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Image Path',
+        icon: 'error',
+        confirmButtonText: 'Retry'
+      });
+      return;
+    } else if (!videoPath.length === 0) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Video Path',
+        icon: 'error',
+        confirmButtonText: 'Retry'
+      });
+      return;
+    } else if (price.length === 0 || price.is) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Price',
+        icon: 'error',
+        confirmButtonText: 'Retry'
+      });
+      return;
+    } else if (field.length === 0) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Field',
+        icon: 'error',
+        confirmButtonText: 'Retry'
+      });
+      return;
+    } else if (title.length === 0) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Title',
+        icon: 'error',
+        confirmButtonText: 'Retry'
+      });
+      return;
+    } else if (!description.length === 0) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Description',
+        icon: 'error',
+        confirmButtonText: 'Retry'
+      });
+      return;
+    } else if (!detail.length === 0) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Detail',
+        icon: 'error',
+        confirmButtonText: 'Retry'
+      });
+      return;
+    } else if (idTeacher.length === 0) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Teacher ID',
+        icon: 'error',
+        confirmButtonText: 'Retry'
+      });
+      return;
+    } else if (!document.length === 0) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Preview Document',
+        icon: 'error',
+        confirmButtonText: 'Retry'
+      });
+      return;
+    } else if (status.length === 0) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Invalid Status',
+        icon: 'error',
+        confirmButtonText: 'Retry'
+      });
+      return;
+    } else {
+      $.getJSON(`/admin/courses/isAvailable?teacher=${idTeacher}`, function(data) {
+        if (data === true) {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your information has been saved',
+            timer: 2000,
+            showConfirmButton: false
+          });
+          $('#frmProduct').off('submit').submit();
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Teacher ID is not exist ! Please enter another Teacher ID',
+            icon: 'error',
+            confirmButtonText: 'Cool'
+          });
+        }
+      })
+    }
+
+  })
+</script>
+{{/section}}
+
+<form id="frmProduct" method="POST" action="">
   <div class="card">
     <div class="card-header">
       <h4>New Course</h4>
     </div>
     <div class="card-body">
       <div class="form-group">
-        <label for="exampleFormControlFile1">Image path</label>
+        <label>Image path</label>
         <input type="file" class="form-control-file" id="txtImgPath" name="imagePath">
         <br>
-        <label for="exampleFormControlFile1">Video path</label>
+        <label>Video path</label>
         <input type="file" class="form-control-file" id="txtVideoPath" name="videoPath">
         <br>
-        <label for="txtCatName">Price</label>
-        <input type="number" class="form-control" id="txtPrice" name="price" autofocus>
+        <label>Price</label>
+        <input type="number" class="form-control" id="txtPrice" name="price">
 
-        <label for="txtCatName">Field</label>
-        <input type="text" class="form-control" id="txtField" name="field" autofocus>
+        <label>Field</label>
+        <input type="text" class="form-control" id="txtField" name="field">
 
-        <label for="txtCatName">Title</label>
-        <input type="text" class="form-control" id="txtTitle" name="title" autofocus>
+        <label>Title</label>
+        <input type="text" class="form-control" id="txtTitle" name="title">
 
-        <label for="txtCatName">Brief Description</label>
-        <input type="text" class="form-control" id="txtDescription" name="description" autofocus>
+        <label>Brief Description</label>
+        <input type="text" class="form-control" id="txtDescription" name="description">
 
-        <label for="txtCatName">Course's Detail</label>
-        <input type="text" class="form-control" id="txtDetail" name="detail" autofocus>
+        <label>Course's Detail</label>
+        <input type="text" class="form-control" id="txtDetail" name="detail">
 
-        <label for="txtCatName">Last Modified</label>
-        <input type="date" class="form-control" id="txtLastModified" name="lastModified" autofocus>
+        <label>Last Modified</label>
+        <input type="text" class="form-control" id="txtLastModified" name="lastModified">
 
-        <label for="txtCatName">Teacher's ID</label>
-        <input type="text" class="form-control" id="txtTeacherID" name="idTeacher" autofocus>
+        <label>Teacher's ID</label>
+        <input type="text" class="form-control" id="txtIdTeacher" name="idTeacher">
 
-        <label for="txtCatName">Preview Document</label>
-        <input type="text" class="form-control" id="txtPreviewDoc" name="previewDocument" autofocus>
-        
-        <label for="txtCatName">Course Status</label>
-        <input type="text" class="form-control" id="txtStatus" name="status" autofocus>
+        <label>Preview Document</label>
+        <input type="text" class="form-control" id="txtPreviewDoc" name="previewDocument">
+
+        <label>Course Status</label>
+        <input type="text" class="form-control" id="txtStatus" name="status">
       </div>
     </div>
     <div class="card-footer">
