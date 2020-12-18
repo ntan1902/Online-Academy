@@ -22,14 +22,14 @@ module.exports = {
 
     async allByField(field) {
         const sql = `select * from courses where field = '${field}'`;
-        const[rows, fields] = await db.load(sql);
+        const [rows, fields] = await db.load(sql);
         return rows;
     },
 
     async single(id) {
         const sql = `select * from courses where id = ${id}`;
         const [rows, fields] = await db.load(sql);
-        if(rows.length === 0) 
+        if (rows.length === 0)
             return null;
         return rows[0];
     },
@@ -37,9 +37,16 @@ module.exports = {
     async singleByIdTeacher(teacherID) {
         const sql = `select * from courses where idTeacher = '${teacherID}'`;
         const [rows, fields] = await db.load(sql);
-        if(rows.length === 0) return null;
-        
+        if (rows.length === 0) return null;
+
         return rows[0];
+    },
+
+    async allWithTeacher() {
+        const sql = `select * from courses co, users u where co.idTeacher=u.id`;
+        const [rows, fields] = await db.load(sql);
+        if (rows.length === 0) return null;
+        return rows;
     },
 
     async add(course) {
@@ -47,7 +54,7 @@ module.exports = {
         console.log(result);
         return result;
     },
-    
+
     async delete(idCourse) {
         const condition = {
             id: idCourse

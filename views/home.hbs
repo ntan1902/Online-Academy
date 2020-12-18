@@ -7,29 +7,24 @@
 
                     <!-- Carousel items -->
                     <div class="carousel-inner">
-
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <a href="#">
-                                        <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
-                                    </a>
-                                </div>
-                                <div class="col-md-3">
-                                    <a href="#">
-                                        <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
-                                    </a>
-                                </div>
-                                <div class="col-md-3">
-                                    <a href="#">
-                                        <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
-                                    </a>
-                                </div>
-                                <div class="col-md-3">
-                                    <a href="#">
-                                        <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
-                                    </a>
-                                </div>
+                                {{#each courses }}
+                                    <div class="col">
+                                        <a><img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
+                                            <div>
+                                                <h5 class="text-white">{{title}}</h5>
+                                            </div>
+                                            <div class="text-white-50">{{fullname}}</div>
+                                            <div>
+                                                <h4 class="text-white">${{price}}</h4>
+                                            </div>
+                                            {{!-- <div class="text-white">{{detail}}</div> --}}
+                                        </a>
+
+                                    </div>
+
+                                {{/each}}
                             </div>
                             <!--.row-->
                         </div>
@@ -37,7 +32,24 @@
 
                         <div class="carousel-item">
                             <div class="row">
-                                <div class="col-md-3">
+                                {{#each subCourses }}
+                                    <div class="col">
+                                        <a href="#">
+                                            <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
+                                        </a>
+                                        <div>
+                                            <h5 class="text-white">{{title}}</h5>
+                                        </div>
+                                        <div class="text-white-50">{{fullname}}</div>
+                                        <div>
+                                            <span>
+                                                <h4 class="text-white">${{price}}</h4>
+                                            </span>
+                                        </div>
+                                        {{!-- <div class="text-white">{{detail}}</div> --}}
+                                    </div>
+                                {{/each}}
+                                {{!-- <div class="col-md-3">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
@@ -51,12 +63,7 @@
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
-                                </div>
-                                <div class="col-md-3">
-                                    <a href="#">
-                                        <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
-                                    </a>
-                                </div>
+                                </div> --}}
                             </div>
                             <!--.row-->
                         </div>
@@ -93,22 +100,27 @@
 
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
+                                    <a href="#">
+                                        <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
+                                    </a>
+                                </div>
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
@@ -120,22 +132,27 @@
 
                         <div class="carousel-item">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
+                                    <a href="#">
+                                        <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
+                                    </a>
+                                </div>
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
@@ -176,22 +193,27 @@
 
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
+                                    <a href="#">
+                                        <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
+                                    </a>
+                                </div>
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
@@ -203,22 +225,27 @@
 
                         <div class="carousel-item">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
+                                    <a href="#">
+                                        <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
+                                    </a>
+                                </div>
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
@@ -259,22 +286,27 @@
 
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
+                                    <a href="#">
+                                        <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
+                                    </a>
+                                </div>
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
@@ -286,22 +318,27 @@
 
                         <div class="carousel-item">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col">
+                                    <a href="#">
+                                        <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
+                                    </a>
+                                </div>
+                                <div class="col">
                                     <a href="#">
                                         <img src="/public/images/test.jpg" class="d-block w-100" alt="Image">
                                     </a>
