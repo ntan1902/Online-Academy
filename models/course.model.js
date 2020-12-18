@@ -43,7 +43,7 @@ module.exports = {
     },
 
     async allWithTeacher() {
-        const sql = `select * from courses co, users u where co.idTeacher=u.id`;
+        const sql = `select * from courses co, users u where co.idTeacher=u.id limit 10`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0) return null;
         return rows;

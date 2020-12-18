@@ -83,7 +83,7 @@ router.get('/edit/:id', async function (req, res) {
     if (course === null) {
         return res.redirect('/admin/courses');
     }
-    console.log(course);
+    course.lastModified = moment(course.lastModified, "YYYY-MM-DD").format("DD/MM/YYYY");
 
     res.render('vwCourses/edit', {
         course

@@ -14,12 +14,6 @@ module.exports = function (app) {
     app.use(async function (req, res, next) {
         res.locals.courses = await courseModel.allWithTeacher();
         res.locals.subCourses = res.locals.courses.splice(0, 5);
-        console.log(res.locals.courses.length);
-        console.log(res.locals.subCourses.length);
-
-
-
-        console.log(res.locals.courses[0]);
         next();
     });
 }
