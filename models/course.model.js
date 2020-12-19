@@ -26,6 +26,18 @@ module.exports = {
         return rows;
     },
 
+    async countCourseByField(field) {
+        const sql = `select count(*) as total from courses where field = '${field}'`;
+        const [rows, fields] = await db.load(sql);
+        return rows[0].total;
+    },
+
+    async pageCourseByField(offset, field) {
+        const sql = `select * from courses where field = '${field}' limit ${paginate.limit} offset ${offset}`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+
     async single(id) {
         const sql = `select * from courses where id = ${id}`;
         const [rows, fields] = await db.load(sql);

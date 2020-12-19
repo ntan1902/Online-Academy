@@ -35,9 +35,28 @@ router.get('/', async function(req, res, next) {
 router.get('/byField/:field', async function (req, res) {
     const field = req.params.field;
     console.log(field);
-    const list_courses = await courseModel.allByField(field);
-    res.render('vwCourses/index', {
+
+    const page = req.query.page || 1;
+    if(page < 1) page = 1;
+
+    const total = await courseModel.countCourseByField(field);
+    let nPages = Math.floor(total / paginate.limit);
+    if(total % paginate.limit > 0) nPages++; //for the remaining courses
+    console.log(nPages);
+    const page_numbers = [];
+    for(i=1; i <= nPages; i++) {
+        page_numbers.push({
+            value: i,
+            isCurrentPage: i === +page
+        });
+    }
+  
+    const offset = (page - 1) * paginate.limit;
+    const list_courses = await courseModel.pageCourseByField(offset, field);
+
+    res.render('vwCourses/index', { 
         courses: list_courses,
+        page_numbers,
         empty: list_courses.length === 0
     });
 });

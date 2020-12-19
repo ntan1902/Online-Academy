@@ -11,6 +11,6 @@
   },
 
   "paginate": {
-    "limit": 8
+    "limit": 3
   }
 }
