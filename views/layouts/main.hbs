@@ -60,20 +60,13 @@
                     </form>
                 </li>
             </ul>
-            {{!-- <form class="form-inline">
-                <input class="form-control mr-sm-2 text-white my-input" type="search" placeholder="Search"
-                    aria-label="Search" />
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                    <i class="fa fa-search"></i>
-                    Search
-                </button>
-            </form> --}}
+
             <form id="frmSignout" action="/account/signout" method="POST"></form>
             <ul class="navbar-nav ml-auto">
                 {{#if auth}}
 
                     <li class="nav-item dropdown mr-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <b class="text-white">{{authUser.fullname}}</b>
                         </a>

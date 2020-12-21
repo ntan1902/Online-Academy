@@ -23,6 +23,15 @@ body {
   pointer-events: none;
 }
 
+.dropright:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropright > .dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+  pointer-events: none;
+}
+
 .my-input {
   border-radius: 30px;
   background-color: #0d1117;

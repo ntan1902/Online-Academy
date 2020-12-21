@@ -37,6 +37,7 @@ router.post("/add", async function (req, res) {
 router.get("/edit/:id", async function (req, res) {
   const id = req.params.id;
   const user = await userModel.single(id);
+
   if (user === null) {
     return res.redirect("/admin/users");
   }
@@ -52,12 +53,7 @@ router.post("/delete/", async function (req, res) {
 });
 
 router.post("/patch/", async function (req, res) {
-  //TODO
-  console.log(req.body);
-
-  if (req.body.dob.length === 0) req.body.dob = null;
-  if (req.body.email.length === 0) req.body.email = null;
-
+  req.body.dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
   await userModel.patch(req.body);
   res.redirect("/admin/users");
 });

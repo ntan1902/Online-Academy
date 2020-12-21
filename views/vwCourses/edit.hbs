@@ -1,3 +1,22 @@
+{{#section 'css'}}
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
+{{#section 'js'}}
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script>
+        $('#txtLastModified').datetimepicker({
+            format: 'd/m/Y',
+            timepicker: false,
+            mask: true,
+            scrollInput: false
+        });
+    </script>
+
+{{/section}}
+
 <form method="POST">
     <div class="card">
         <div class="card-header">
@@ -6,74 +25,71 @@
         <div class="card-body ">
             <div class="form-group">
                 <label for="txtID">Course ID</label>
-                <input type="text" class="form-control" id="txtID" name="id" readonly
-                       value="{{this.course.id}}">
+                <input type="text" class="form-control" id="txtID" name="id" readonly value="{{this.course.id}}">
             </div>
 
             <div class="form-group">
                 <label for="txtImgPath">Image Path</label>
-                <input type="file" class="form-control-file" id="txtImgPath" name="imagePath" 
-                       value="{{this.course.imagePath}}">
+                <input type="file" class="form-control-file" id="txtImgPath" name="imagePath"
+                    value="{{this.course.imagePath}}">
             </div>
 
             <div class="form-group">
                 <label for="txtVideoPath">Video Path</label>
-                <input type="file" class="form-control-file" id="txtImgPath" name="videoPath" 
-                       value="{{this.course.videoPath}}">
+                <input type="file" class="form-control-file" id="txtImgPath" name="videoPath"
+                    value="{{this.course.videoPath}}">
             </div>
 
             <div class="form-group">
                 <label for="txtPrice">Price</label>
-                <input type="number" class="form-control-file" id="txtPrice" name="price" 
-                       value="{{this.course.price}}">
+                <input type="number" class="form-control-file" id="txtPrice" name="price" value="{{this.course.price}}">
             </div>
 
             <div class="form-group">
                 <label for="txtField">Field</label>
                 <input type="text" class="form-control" id="txtField" name="field" required
-                       value="{{this.course.field}}">
+                    value="{{this.course.field}}">
             </div>
 
             <div class="form-group">
                 <label for="txtTitle">Title</label>
                 <input type="text" class="form-control" id="txtTitle" name="title" required
-                       value="{{this.course.title}}">
+                    value="{{this.course.title}}">
             </div>
 
             <div class="form-group">
                 <label for="txtDescription">Description</label>
                 <input type="text" class="form-control" id="txtDescription" name="description"
-                       value="{{this.course.description}}">
+                    value="{{this.course.description}}">
             </div>
 
             <div class="form-group">
                 <label for="txtDetail">Detail</label>
                 <textarea class="form-control" id="txtDetail" name="detail" rows="3"
-                       value="{{this.course.detail}}"></textarea>
+                    value="{{this.course.detail}}"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="txtLastModified">Last Modified</label>
                 <input type="text" class="form-control" id="txtLastModified" name="lastModified"
-                       value="{{this.course.lastModified}}">
+                    value="{{this.course.lastModified}}">
             </div>
 
             <div class="form-group">
                 <label for="txtIdTeacher">ID Teacher</label>
                 <input type="text" class="form-control" id="txtIdTeacher" name="idTeacher"
-                        value="{{this.course.idTeacher}}">
+                    value="{{this.course.idTeacher}}">
             </div>
 
             <div class="form-group">
                 <label for="txtPreviewDocument">Preview Document</label>
                 <textarea class="form-control" id="txtPreviewDocument" name="previewDocument" rows="3"
-                        value="{{this.course.previewDocument}}"></textarea>
+                    value="{{this.course.previewDocument}}"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="txtStatus">Status</label>
-                <input type="text" class="form-control" id="txtStatus" name="status"
-                        value="{{this.course.status}}">
+                <input type="text" class="form-control" id="txtStatus" name="status" value="{{this.course.status}}">
             </div>
         </div>
         <div class="card-footer">
