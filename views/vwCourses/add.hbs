@@ -130,8 +130,10 @@
             title: 'Your information has been saved',
             timer: 2000,
             showConfirmButton: false
-          });
-          $('#frmProduct').off('submit').submit();
+          }).then(function() {
+            $('#frmProduct').off('submit').submit();
+          })
+
         } else {
           Swal.fire({
             title: 'Error!',
@@ -147,18 +149,18 @@
 </script>
 {{/section}}
 
-<form id="frmProduct" method="POST" action="">
+<form id="frmProduct" method="POST" action="" enctype="multipart/form-data">
   <div class="card">
     <div class="card-header">
       <h4>New Course</h4>
     </div>
     <div class="card-body">
       <div class="form-group">
-        <label>Image path</label>
-        <input type="file" class="form-control-file" id="txtImgPath" name="imagePath">
+        <label>Images path</label>
+        <input type="file" class="form-control-file" id="txtImgPaths" name="images" multiple>
         <br>
         <label>Video path</label>
-        <input type="file" class="form-control-file" id="txtVideoPath" name="videoPath">
+        <input type="text" class="form-control-file" id="txtVideoPath" name="video">
         <br>
         <label>Price</label>
         <input type="number" class="form-control" id="txtPrice" name="price">
@@ -175,8 +177,7 @@
         <label>Course's Detail</label>
         <textarea class="form-control" id="txtDetail" name="detail" rows="3"></textarea>
 
-        <label>Last Modified</label>
-        <input type="text" class="form-control" id="txtLastModified" name="lastModified">
+        <input type="hidden" class="form-control" id="txtLastModified" name="lastModified">
 
         <label>Teacher's ID</label>
         <input type="text" class="form-control" id="txtIdTeacher" name="idTeacher">

@@ -2,8 +2,23 @@ const express = require("express");
 const courseModel = require("../models/course.model");
 const { paginate } = require("../config/default.json");
 const moment = require("moment");
+const multer = require('multer');
+const path = require('path');
 
 const router = express.Router();
+
+//Set Storage Engine
+const storage = multer.diskStorage ({
+  destination: "./public/images/", 
+  filename: function(req, file, callback){
+    callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer ({
+  storage: storage,
+  limits: {fileSize: 1000000}
+});
 
 router.get("/", async function (req, res, next) {
   var page = req.query.page || 1;
@@ -111,11 +126,16 @@ router.get("/byField/:field", async function (req, res) {
 router.get("/add", async function (req, res) {
   res.render("vwCourses/add");
 });
-
-router.post("/add", async function (req, res) {
-  const lastModified = moment(req.body.lastModified, "DD/MM/YYYY").format(
+ 
+router.post("/add", upload.array('images', 2), async function (req, res) {
+  const today = new Date();
+  const lastModified = moment(today, "DD/MM/YYYY").format(
     "YYYY-MM-DD"
   );
+
+  console.log(req.files[0]);
+  console.log(req.files[1]);
+
   const new_course = {
     imagePath: req.body.imagePath,
     videoPath: req.body.videoPath,
@@ -140,7 +160,8 @@ router.get("/edit/:id", async function (req, res) {
   if (course === null) {
     return res.redirect("/admin/courses");
   }
-  course.lastModified = moment(course.lastModified, "YYYY-MM-DD").format(
+  const today = new Date();
+  course.lastModified = moment(today, "YYYY-MM-DD").format(
     "DD/MM/YYYY"
   );
 

@@ -63,7 +63,6 @@ module.exports = {
 
     async add(course) {
         const [result, fields] = await db.add(course, 'courses');
-        console.log(result);
         return result;
     },
 
