@@ -8,16 +8,16 @@ const path = require('path');
 const router = express.Router();
 
 //Set Storage Engine
-const storage = multer.diskStorage ({
-  destination: "./public/images/", 
-  filename: function(req, file, callback){
+const storage = multer.diskStorage({
+  destination: "./public/images/",
+  filename: function (req, file, callback) {
     callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
 
-const upload = multer ({
+const upload = multer({
   storage: storage,
-  limits: {fileSize: 1000000}
+  limits: { fileSize: 1000000 }
 });
 
 router.get("/", async function (req, res, next) {
@@ -37,9 +37,9 @@ router.get("/", async function (req, res, next) {
     let currentPage = (i === +page);
     if (currentPage) {
       if (i === 1) {
-        disablePrev = true;  
+        disablePrev = true;
       } else if (i === nPages) {
-        disableNext = true; 
+        disableNext = true;
       }
       prevPage = i - 1;
       nextPage = i + 1;
@@ -82,11 +82,11 @@ router.get("/byField/:field", async function (req, res) {
   let prevPage, nextPage;
   for (i = 1; i <= nPages; i++) {
     let currentPage = (i === +page);
-    if(currentPage) {
-      if(i === 1) {
+    if (currentPage) {
+      if (i === 1) {
         disablePrev = true;
       }
-      else if(i === nPages) {
+      else if (i === nPages) {
         disableNext = true;
       }
       prevPage = i - 1;
@@ -126,15 +126,15 @@ router.get("/byField/:field", async function (req, res) {
 router.get("/add", async function (req, res) {
   res.render("vwCourses/add");
 });
- 
+
 router.post("/add", upload.array('images', 2), async function (req, res) {
   const today = new Date();
   const lastModified = moment(today, "DD/MM/YYYY").format(
     "YYYY-MM-DD"
   );
 
-  console.log(req.files[0]);
-  console.log(req.files[1]);
+  // console.log(req.files[0]);
+  // console.log(req.files[1]);
 
   const new_course = {
     imagePath: req.body.imagePath,

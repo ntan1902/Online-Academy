@@ -1,6 +1,8 @@
 /* main.hbs */
 body {
   background-color: #0d1117;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: 14px;
 }
 
 .navbar {
@@ -239,6 +241,7 @@ input[type="search"]:focus {
 }
 .product-grid4 .product-content {
   padding: 25px;
+  font-family: 'Blinker', sans-serif;
 }
 .product-grid4 .title {
   font-size: 15px;
@@ -354,5 +357,8 @@ input[type="search"]:focus {
 .carousel-control-next-icon {
   background-color: #0d1117;
   border-radius: 100%;
+}
+.carousel-item .row .col a div {
+  font-family: 'Blinker', sans-serif;
 }
 /* home.hbs */
