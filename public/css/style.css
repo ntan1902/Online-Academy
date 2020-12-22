@@ -34,10 +34,32 @@ body {
   pointer-events: none;
 }
 
-.my-input {
-  border-radius: 30px;
-  background-color: #0d1117;
+#form-search {
+  display: block;
+  width: 30rem;
+  height: 35px;
+  border: 1px solid #d5d5d5;
+  padding: 4px 11px 6px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  margin: 3px 10px 0;
 }
+#input-search {
+  border: none;
+  background-color: #161b22;
+  box-shadow: none;
+  padding: 0;
+  height: 22px;
+  margin-left: 3px;
+  margin-top: 2px;
+}
+
+#btn-search {
+  border: none;
+  background-color: #161b22;
+
+}
+
 input[type="search"]:focus {
   background-color: #0d1117;
 }
@@ -98,6 +120,11 @@ input[type="search"]:focus {
 
 .card-login .links a {
   margin-left: 4px;
+}
+.my-input {
+  border-radius: 30px;
+  background-color: #0d1117;
+  width: 20rem;
 }
 /* /login.hbs */
 
