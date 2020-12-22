@@ -135,9 +135,12 @@ router.post("/add", upload.array('images', 2), async function (req, res) {
 
   // console.log(req.files[0]);
   // console.log(req.files[1]);
+  let imgPath1 = "/public/images/" + req.files[0].filename;
+  let imgPath2 = "/public/images/" + req.files[1].filename;
 
   const new_course = {
-    imagePath: req.body.imagePath,
+    imagePath1: imgPath1,
+    imagePath2: imgPath2,
     videoPath: req.body.videoPath,
     price: req.body.price,
     field: req.body.field,
@@ -149,7 +152,7 @@ router.post("/add", upload.array('images', 2), async function (req, res) {
     previewDocument: req.body.previewDocument,
     status: req.body.status,
   };
-
+  console.log(new_course);
   await courseModel.add(new_course);
   res.render("vwCourses/add");
 });
@@ -176,7 +179,10 @@ router.post("/delete/", async function (req, res) {
 });
 
 router.post("/patch/", async function (req, res) {
-  await courseModel.patch(req.body);
+  const new_course = req.body;
+  const today = new Date();
+  new_course.lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD"); 
+  await courseModel.patch(new_course);
   res.redirect("/admin/courses");
 });
 
