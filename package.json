@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ntan1902/Online-Academy#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-handlebars": "^5.2.0",
@@ -28,6 +29,6 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "mysql2": "^2.2.5",
-    "validator": "^13.5.1"
+    "nodemailer": "^6.4.17"
   }
 }
