@@ -10,6 +10,18 @@
   `idTeacher` int NOT NULL,
   `previewDocument` varchar(1000) DEFAULT NULL,
   `status` varchar(15) NOT NULL, --}}
+<script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+    selector: 'textarea',
+    plugins: 'paste image link autolink lists table media',
+    menubar: false,
+    toolbar: [
+      'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+    ],
+  });
+</script>
 {{#section 'css'}}
 <link rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
@@ -142,7 +154,7 @@
 {{/section}}
 
 <form id="frmProduct" method="POST" action="" enctype="multipart/form-data">
-  <div class="card">
+  <div class="card mx-5">
     <div class="card-header">
       <h4>New Course</h4>
     </div>

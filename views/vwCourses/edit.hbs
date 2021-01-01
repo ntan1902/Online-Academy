@@ -4,6 +4,28 @@
 {{/section}}
 
 {{#section 'js'}}
+<script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '#txtDetail',
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+        ],
+    });
+
+    tinymce.init({
+        selector: '#txtPreviewDocument',
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+        ],
+    });
+
+</script>
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script>
@@ -160,11 +182,11 @@
 {{/section}}
 
 <form id="frmEdit" method="POST">
-    <div class="card">
+    <div class="card mx-5">
         <div class="card-header">
             <h4>Courses</h4>
         </div>
-        <div class="card-body ">
+        <div class="card-body">
             <div class="form-group">
                 <label for="txtID">Course ID</label>
                 <input type="text" class="form-control" id="txtID" name="id" readonly value="{{this.course.id}}">
@@ -211,8 +233,9 @@
 
             <div class="form-group">
                 <label for="txtDetail">Detail</label>
-                <textarea class="form-control" id="txtDetail" name="detail" rows="3"
-                    value="{{this.course.detail}}"></textarea>
+                <textarea class="form-control" id="txtDetail" name="detail" rows="3">
+                    {{this.course.detail}}
+                </textarea>
             </div>
 
             <div class="form-group">
@@ -229,8 +252,9 @@
 
             <div class="form-group">
                 <label for="txtPreviewDocument">Preview Document</label>
-                <textarea class="form-control" id="txtPreviewDocument" name="previewDocument" rows="3"
-                    value="{{this.course.previewDocument}}"></textarea>
+                <textarea class="form-control" id="txtPreviewDocument" name="previewDocument" rows="3">
+                    {{this.course.previewDocument}}
+                </textarea>
             </div>
 
             <div class="form-group">

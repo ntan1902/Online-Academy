@@ -168,6 +168,7 @@ router.get("/edit/:id", async function (req, res) {
     "DD/MM/YYYY"
   );
 
+  console.log(course);
   res.render("vwCourses/edit", {
     course,
   });

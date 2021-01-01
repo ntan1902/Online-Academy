@@ -319,6 +319,10 @@ input[type="search"]:focus {
   background-color: #505050;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
+.product-content .rating{padding:0;margin:0 0 7px;list-style:none}
+.product-grid4 .rating li{font-size:15px;color:#ffd200;transition:all .3s ease 0s}
+.product-grid4 .rating li.disable{color:rgba(0,0,0,.2)}
+
 @media only screen and (max-width: 990px) {
   .product-grid4 {
     margin-bottom: 30px;
