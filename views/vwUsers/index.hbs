@@ -1,4 +1,4 @@
-<div class="card">
+{{!-- <div class="card">
     <div class="card-header d-flex justify-content-between">
         <h4>Users</h4>
         <a class="btn btn-outline-success" href="/admin/users/add" role="button">
@@ -45,4 +45,94 @@
             </table>
         {{/if}}
     </div>
+</div> --}}
+{{#section 'js'}}
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#datatable').DataTable({
+
+                dom: 'Bflrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fa fa-files-o" aria-hidden="true"></i> Copy',
+                        className: 'btn-secondary',
+                        titleAttr: 'Copy',
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV',
+                        className: 'btn-success',
+                        titleAttr: 'CSV',
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF',
+                        className: 'btn-danger',
+                        titleAttr: 'PDF',
+                    },
+                ]
+            });
+
+        });
+    </script>
+{{/section}}
+<div class="card my-3">
+
+    <div class="card-header d-flex justify-content-between">
+        <h4>Users</h4>
+        <a class="btn btn-outline-success" href="/admin/users/add" role="button">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Add User
+        </a>
+    </div>
+    <div class="card-body">
+        <table id="datatable" class="table table-striped table-bordered display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Day of Birth</th>
+                    <th>Role</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+
+            <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Day of Birth</th>
+                    <th>Role</th>
+                    <th>Edit</th>
+                </tr>
+            </tfoot>
+
+            <tbody>
+                {{#each this.list}}
+                    <tr>
+                        <th scope="row">{{id}}</th>
+                        <td>{{username}}</td>
+                        <td>{{fullname}}</td>
+                        <td>{{email}}</td>
+                        <td>{{dob}}</td>
+                        <td>{{role}}</td>
+                        <td>
+                            <a name="" id="" class="btn btn-sm btn-primary" title="Edit" href="/admin/users/edit/{{id}}"
+                                role="button">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+
+        </table>
+    </div>
+
 </div>
