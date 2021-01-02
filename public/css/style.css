@@ -473,3 +473,107 @@ input[type="search"]:focus {
   color: #777;
 }
 /* home.hbs */
+
+
+/*Course detail*/
+nav > .nav.nav-tabs {
+  border: none;
+  color: #fff;
+  background: #272e38;
+  border-radius: 0;
+}
+
+nav > div a.nav-item.nav-link,
+nav > div a.nav-item.nav-link.active {
+  border: none;
+  padding: 18px 25px;
+  color: #fff;
+  background: #272e38;
+  border-radius: 0;
+}
+
+nav > div a.nav-item.nav-link.active:after {
+  content: "";
+  position: relative;
+  bottom: -60px;
+  left: -10%;
+  border: 15px solid transparent;
+  border-top-color: #e74c3c;
+}
+.tab-content {
+  background: #fdfdfd;
+  line-height: 25px;
+  border: 1px solid #ddd;
+  border-top: 5px solid #e74c3c;
+  border-bottom: 5px solid #e74c3c;
+  padding: 30px 25px;
+}
+
+nav > div a.nav-item.nav-link:hover,
+nav > div a.nav-item.nav-link:focus {
+  border: none;
+  background: #e74c3c;
+  color: #fff;
+  border-radius: 0;
+  transition: background 0.2s linear;
+}
+
+/*****************globals*************/
+.tab-content-img {
+  overflow: hidden;
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+  border-top: 5px solid #e74c3c;
+  border-bottom: 5px solid #e74c3c;
+  padding: 10px 10px;
+  width: 400px;
+  height: 300px;
+}
+
+.card-detail {
+  margin-top: 30px;
+  background: #eee;
+  padding: 2em;
+  line-height: 1.5em;
+}
+
+.product-title,
+.price
+{
+  text-transform: UPPERCASE;
+  font-weight: bold;
+}
+
+.checked,
+.price span {
+  color: #ff9f1a;
+}
+
+.product-title {
+  margin-top: -5;
+}
+
+.preview-pic img{
+    width: 380px;
+    height: 260px;
+}
+
+.add-to-cart-detail {
+  background: #ff9f1a;
+  padding: 1em 1em;
+  border: none;
+  text-transform: UPPERCASE;
+  font-weight: bold;
+  color: #fff;
+  -webkit-transition: background 0.3s ease;
+  transition: background 0.3s ease;
+}
+.add-to-cart:hover,
+.like:hover {
+  background: #b36800;
+  color: #fff;
+}
+
+.tab-pane {
+  padding: 1px 1px;
+}

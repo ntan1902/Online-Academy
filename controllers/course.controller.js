@@ -20,26 +20,25 @@ const upload = multer({
   limits: { fileSize: 1000000 }
 });
 
-router.get("/", async function (req, res, next) {
-  var page = req.query.page || 1;
-  if (page < 1) page = 1;
+function paginating(nPages, page) {
+  var page_numbers = [];
+  var disablePrev = false;
+  var disableNext = false;
+  var prevPage, nextPage;
 
-  const total = await courseModel.countCourse();
-  let nPages = Math.floor(total / paginate.limit);
-  if (total % paginate.limit > 0) nPages++; //for the remaining courses
-  console.log(nPages);
-  const page_numbers = [];
-
-  let disablePrev = false;
-  let disableNext = false;
-  let prevPage, nextPage;
   for (i = 1; i <= nPages; i++) {
-    let currentPage = (i === +page);
+    let currentPage = i === +page;
     if (currentPage) {
       if (i === 1) {
         disablePrev = true;
-      } if (i === nPages) {
+        if(nPages === 1) {
+          disableNext = true;
+        }
+      } else if (i === nPages) {
         disableNext = true;
+        if(nPages === 1) {
+          disablePrev = true;
+        }
       }
       prevPage = i - 1;
       nextPage = i + 1;
@@ -49,6 +48,25 @@ router.get("/", async function (req, res, next) {
       isCurrentPage: currentPage,
     });
   }
+
+  return { disablePrev, disableNext, prevPage, nextPage, page_numbers };
+}
+
+router.get("/", async function (req, res, next) {
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+
+  const total = await courseModel.countCourse();
+  let nPages = Math.floor(total / paginate.limit);
+  if (total % paginate.limit > 0) nPages++; //for the remaining courses
+
+  let {
+    disablePrev,
+    disableNext,
+    prevPage,
+    nextPage,
+    page_numbers,
+  } = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
   const list_courses = await courseModel.pageCourse(offset);
@@ -75,28 +93,14 @@ router.get("/byField/:field", async function (req, res) {
   let nPages = Math.floor(total / paginate.limit);
   if (total % paginate.limit > 0) nPages++; //for the remaining courses
   console.log(nPages);
-  const page_numbers = [];
 
-  let disablePrev = false;
-  let disableNext = false;
-  let prevPage, nextPage;
-  for (i = 1; i <= nPages; i++) {
-    let currentPage = (i === +page);
-    if (currentPage) {
-      if (i === 1) {
-        disablePrev = true;
-      }
-      if (i === nPages) {
-        disableNext = true;
-      }
-      prevPage = i - 1;
-      nextPage = i + 1;
-    }
-    page_numbers.push({
-      value: i,
-      isCurrentPage: currentPage
-    });
-  }
+  let {
+    disablePrev,
+    disableNext,
+    prevPage,
+    nextPage,
+    page_numbers,
+  } = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
   const list_courses = await courseModel.pageCourseByField(offset, field);
@@ -111,23 +115,12 @@ router.get("/byField/:field", async function (req, res) {
     disableNext
   });
 });
-// `id` int NOT NULL AUTO_INCREMENT,
-//   `imagePath` varchar(1000) DEFAULT NULL,
-//   `videoPath` varchar(1000) DEFAULT NULL,
-//   `price` int NOT NULL,
-//   `field` varchar(10) NOT NULL,
-//   `title` varchar(100) NOT NULL,
-//   `description` varchar(1000) DEFAULT NULL,
-//   `detail` varchar(10000) DEFAULT NULL,
-//   `lastModified` datetime DEFAULT NULL,
-//   `idTeacher` int NOT NULL,
-//   `previewDocument` varchar(1000) DEFAULT NULL,
-//   `status` varchar(15) NOT NULL,
+
 router.get("/add", async function (req, res) {
   res.render("vwCourses/add");
 });
 
-router.post("/add", upload.array('images', 2), async function (req, res) {
+router.post("/add", upload.single('image'), async function (req, res) {
   const today = new Date();
   const lastModified = moment(today, "DD/MM/YYYY").format(
     "YYYY-MM-DD"
@@ -135,12 +128,12 @@ router.post("/add", upload.array('images', 2), async function (req, res) {
 
   // console.log(req.files[0]);
   // console.log(req.files[1]);
-  let imgPath1 = "/public/images/" + req.files[0].filename;
-  let imgPath2 = "/public/images/" + req.files[1].filename;
+  let imgPath = "/public/images/" + req.file.filename;
+  //let imgPath2 = "/public/images/" + req.files[1].filename;
 
   const new_course = {
-    imagePath1: imgPath1,
-    imagePath2: imgPath2,
+    imagePath: imgPath,
+    //imagePath2: imgPath2,
     videoPath: req.body.videoPath,
     price: req.body.price,
     field: req.body.field,
@@ -216,28 +209,14 @@ router.post("/search", async function (req, res, next) {
   let nPages = Math.floor(total / paginate.limit);
   if (total % paginate.limit > 0) nPages++; //for the remaining courses
   console.log(nPages);
-  const page_numbers = [];
-
-  let disablePrev = false;
-  let disableNext = false;
-  let prevPage, nextPage;
-  for (i = 1; i <= nPages; i++) {
-    let currentPage = (i === +page);
-    if (currentPage) {
-      if (i === 1) {
-        disablePrev = true;
-      }
-      if (i === nPages) {
-        disableNext = true;
-      }
-      prevPage = i - 1;
-      nextPage = i + 1;
-    }
-    page_numbers.push({
-      value: i,
-      isCurrentPage: currentPage
-    });
-  }
+  
+  let {
+    disablePrev,
+    disableNext,
+    prevPage,
+    nextPage,
+    page_numbers,
+  } = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
   const list_courses = await courseModel.pageCourseByKeyword(offset, funcKeyword);
@@ -254,5 +233,22 @@ router.post("/search", async function (req, res, next) {
     disableNext
   });
 });
+
+router.get('/detail/:id', async function(req, res) {
+  const id = req.params.id;
+  const course = await courseModel.single(id);
+  const lastModified = moment(course.lastModified, "DD/MM/YYYY").format(
+    "DD/MM/YYYY"
+  );
+  course.lastModified = lastModified;
+  if (course === null) {
+    return res.redirect("/admin/courses");
+  }
+
+  console.log(course);
+  res.render("vwCourses/detail", {
+    course
+  });
+})
 
 module.exports = router;
