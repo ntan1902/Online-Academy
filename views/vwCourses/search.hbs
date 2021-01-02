@@ -5,8 +5,15 @@
     </div>
     <div class="card-body">
         {{#if this.empty}}
-        <h5 class="card-title">There is no data</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <h4 class="card-title">Sorry, we couldn't find any results for "{{this.showKeyword}}"</h4>
+        <div>
+            <h5>Try adjusting your search. Here are some ideas:</h5>
+            <ul>
+                <li>Make sure all words are spelled correctly</li>
+                <li>Try different search terms</li>
+                <li>Try more general search terms</li>
+            </ul>
+        </div>
         {{else}}
         <div class="container">
             <div class="row">
