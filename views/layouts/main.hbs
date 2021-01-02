@@ -19,6 +19,10 @@
     <!-- Themify-Icons -->
     <link rel="stylesheet" href="/public/vendors/themify-icons/themify-icons.css">
 
+    <!-- DataTable -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+
+
     <link rel="stylesheet" href="/public/css/style.css" />
     <title>Online Academy</title>
     {{{_sections.css}}}
@@ -57,14 +61,14 @@
 
                 </li>
                 <li class="nav-item">
-                    <form class="form-inline" method="POST" id="form-search" action="/admin/courses/search">
+                    <form class="form-inline" id="form-search" method="POST" action="/admin/courses/search">
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">
                                 <button class="btn input-group-text " type="submit" id="btn-search">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
-                            <input class="form-control text-white" type="search" placeholder="Search for anything"
+                            <input class="form-control" type="search" placeholder="Search for anything"
                                 aria-label="Search" id="input-search" name="search" />
                         </div>
 
@@ -75,6 +79,7 @@
             <form id="frmSignout" action="/account/signout" method="POST"></form>
             <ul class="navbar-nav ml-auto">
                 {{#if auth}}
+
                 <li class="nav-item dropdown mr-5">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -97,28 +102,21 @@
                     <a class="btn mr-sm-2 my-1">
                         <i class="fa fa-shopping-cart fa-2x"></i>
                     </a>
-        </div>
-        </li>
-        {{else}}
-        <li class="nav-item">
-            <a class="btn btn-light mr-sm-2 my-2">
-                <i class="fa fa-shopping-cart"></i>
-            </a>
-        </li>
+                </li>
 
-        <li class="nav-item mr-2 my-2">
-            <a class="btn btn-outline-success" href="/account/signin">
-                Sign in
-            </a>
-        </li>
-        <li class="nav-item my-2">
-            <a class="btn btn-success" href="/account/signup">
-                Sign up
-            </a>
-        </li>
+                <li class="nav-item mr-2 my-2">
+                    <a class="btn btn-outline-success" href="/account/signin">
+                        Sign in
+                    </a>
+                </li>
+                <li class="nav-item my-2">
+                    <a class="btn btn-success" href="/account/signup">
+                        Sign up
+                    </a>
+                </li>
 
-        {{/if}}
-        </ul>
+                {{/if}}
+            </ul>
         </div>
     </nav>
     {{{body}}}
@@ -130,6 +128,11 @@
 
     <!-- Sweet Alert2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.12.5/dist/sweetalert2.all.min.js"></script>
+
+    <!-- DataTable-->
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+
     {{{_sections.js}}}
 </body>
 

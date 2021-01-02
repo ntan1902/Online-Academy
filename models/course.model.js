@@ -82,5 +82,26 @@ module.exports = {
 
         const [result, fields] = await db.patch(entity, condition, 'courses');
         return result;
-    }
+    },
+
+    async countCourseByKeyword(keyword) {
+        const sql = `select count(distinct c.id) as total
+                    from users u, courses c
+                    where match(c.title) against ('${keyword}') or 
+                    match(u.fullname) against('${keyword}') and u.id=c.idTeacher 
+                    or match(c.description) against ('${keyword}')`;
+        const [rows, fields] = await db.load(sql);
+        return rows[0].total;
+    },
+
+    async pageCourseByKeyword(offset, keyword) {
+        const sql = `select distinct c.*
+                    from users u, courses c
+                    where match(c.title) against ('${keyword}') or 
+                    match(u.fullname) against('${keyword}') and u.id=c.idTeacher 
+                    or match(c.description) against ('${keyword}') 
+                    limit ${paginate.limit} offset ${offset}`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
 }
