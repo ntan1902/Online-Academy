@@ -38,7 +38,7 @@ router.get("/", async function (req, res, next) {
     if (currentPage) {
       if (i === 1) {
         disablePrev = true;
-      } else if (i === nPages) {
+      } if (i === nPages) {
         disableNext = true;
       }
       prevPage = i - 1;
@@ -86,7 +86,7 @@ router.get("/byField/:field", async function (req, res) {
       if (i === 1) {
         disablePrev = true;
       }
-      else if (i === nPages) {
+      if (i === nPages) {
         disableNext = true;
       }
       prevPage = i - 1;
@@ -197,6 +197,62 @@ router.get("/isAvailable", async function (req, res) {
   } else {
     return res.json(true);
   }
+});
+
+router.post("/search", async function (req, res, next) {
+  var keyword=req.body.search;
+ 
+
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+  
+  var funcKeyword = keyword.replace(/\s+/g, ",");
+  console.log(funcKeyword);
+
+  const total = await courseModel.countCourseByKeyword(funcKeyword);
+
+  var showKeyword = funcKeyword.split(',').join(" ");
+  console.log(total);
+  let nPages = Math.floor(total / paginate.limit);
+  if (total % paginate.limit > 0) nPages++; //for the remaining courses
+  console.log(nPages);
+  const page_numbers = [];
+
+  let disablePrev = false;
+  let disableNext = false;
+  let prevPage, nextPage;
+  for (i = 1; i <= nPages; i++) {
+    let currentPage = (i === +page);
+    if (currentPage) {
+      if (i === 1) {
+        disablePrev = true;
+      }
+      if (i === nPages) {
+        disableNext = true;
+      }
+      prevPage = i - 1;
+      nextPage = i + 1;
+    }
+    page_numbers.push({
+      value: i,
+      isCurrentPage: currentPage
+    });
+  }
+
+  const offset = (page - 1) * paginate.limit;
+  const list_courses = await courseModel.pageCourseByKeyword(offset, funcKeyword);
+
+  res.render("vwCourses/search", {
+    showKeyword,
+    total,
+    courses: list_courses,
+    page_numbers,
+    empty: list_courses.length === 0,
+    prevPage,
+    nextPage,
+    disablePrev,
+    disableNext
+  });
 });
 
 module.exports = router;

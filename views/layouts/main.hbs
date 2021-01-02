@@ -63,7 +63,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <form class="form-inline" id="form-search">
+                    <form class="form-inline" id="form-search" method="POST" action="/admin/courses/search">
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">
                                 <button class="btn input-group-text " type="submit" id="btn-search">
@@ -71,7 +71,7 @@
                                 </button>
                             </div>
                             <input class="form-control" type="search" placeholder="Search for anything"
-                                aria-label="Search" id="input-search" />
+                                aria-label="Search" id="input-search" name="search" />
                         </div>
 
                     </form>
@@ -132,11 +132,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.12.5/dist/sweetalert2.all.min.js"></script>
 
     <!-- DataTable-->
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.js">
+    </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
     <script type="text/javascript"
         src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-colvis-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.js"></script>
+
 
 
     {{{_sections.js}}}
