@@ -54,7 +54,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <form class="form-inline" id="form-search">
+                    <form class="form-inline" method="POST" id="form-search" action="/admin/courses/search">
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">
                                 <button class="btn input-group-text text-white " type="submit" id="btn-search">
@@ -62,7 +62,7 @@
                                 </button>
                             </div>
                             <input class="form-control text-white" type="search" placeholder="Search for anything"
-                                aria-label="Search" id="input-search" />
+                                aria-label="Search" id="input-search" name="search" />
                         </div>
 
                     </form>
@@ -73,40 +73,40 @@
             <ul class="navbar-nav ml-auto">
                 {{#if auth}}
 
-                    <li class="nav-item dropdown mr-5">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <b class="text-white">{{authUser.fullname}}</b>
+                <li class="nav-item dropdown mr-5">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <b class="text-white">{{authUser.fullname}}</b>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item text-white" href="/account/profile">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            Profile
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-white" href="/account/profile">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                Profile
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-white" href="javascript: $('#frmSignout').submit();">
-                                <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                Sign Out
-                            </a>
-                        </div>
-                    </li>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-white" href="javascript: $('#frmSignout').submit();">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            Sign Out
+                        </a>
+                    </div>
+                </li>
                 {{else}}
-                    <li class="nav-item">
-                        <a class="btn btn-light mr-sm-2 my-2">
-                            <i class="fa fa-shopping-cart"></i>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a class="btn btn-light mr-sm-2 my-2">
+                        <i class="fa fa-shopping-cart"></i>
+                    </a>
+                </li>
 
-                    <li class="nav-item mr-2 my-2">
-                        <a class="btn btn-outline-success" href="/account/signin">
-                            Sign in
-                        </a>
-                    </li>
-                    <li class="nav-item my-2">
-                        <a class="btn btn-success" href="/account/signup">
-                            Sign up
-                        </a>
-                    </li>
+                <li class="nav-item mr-2 my-2">
+                    <a class="btn btn-outline-success" href="/account/signin">
+                        Sign in
+                    </a>
+                </li>
+                <li class="nav-item my-2">
+                    <a class="btn btn-success" href="/account/signup">
+                        Sign up
+                    </a>
+                </li>
 
                 {{/if}}
             </ul>
