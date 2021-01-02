@@ -1,4 +1,5 @@
-const auth = require("./auth.mdw");
+const auth = require("./auth.mdw").auth;
+const authAdmin = require("./auth.mdw").authAdmin;
 
 module.exports = function (app) {
   app.get("/", function (req, res) {
@@ -6,12 +7,15 @@ module.exports = function (app) {
   });
 
   app.use("/account/", require("../controllers/account.controller"));
-  app.use("/admin/users/", require("../controllers/user.controller"));
-  app.use("/admin/courses/", require("../controllers/course.controller"));
-
-  // app.get("/err", function (req, res) {
-  //   throw new Error("Error!");
-  // });
+  app.use("/admin/", /*authAdmin,*/ require("../controllers/admin.controller"));
+  app.use(
+    "/admin/users/",
+    /*authAdmin,*/ require("../controllers/user.controller")
+  );
+  app.use(
+    "/admin/courses/",
+    /*authAdmin,*/ require("../controllers/course.controller")
+  );
 
   // Handle not found error
   app.use(function (req, res) {
