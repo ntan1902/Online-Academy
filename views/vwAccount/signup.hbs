@@ -80,32 +80,13 @@
 
     </script>
 {{/section}}
-
 {{#if message}}
-    {{#if fail}}
-        <div class="alert alert-danger alert-dismissible fade show text-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            {{message}}
-        </div>
-    {{/if}}
-    {{#if success}}
-        <div class="alert alert-success alert-dismissible fade show text-success" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            {{message}}
-        </div>
-    {{/if}}
-    {{#if warning}}
-        <div class="alert alert-warning alert-light fade show text-warning" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            {{message}}
-        </div>
-    {{/if}}
+    <div class="alert alert-{{type}} alert-dismissible fade show text-{{type}}" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{message}}
+    </div>
 {{/if}}
 
 
@@ -113,7 +94,7 @@
     <div class="d-flex justify-content-center h-100">
         <div class="card card-signup">
             <div class="card-header d-flex justify-content-center">
-                <h3 class="pt-2 text-white">Sign Up</h3>
+                <h3 class="pt-2">Sign Up</h3>
             </div>
             <div class="card-body">
                 <form id="frmRegister" method="POST" action="">
@@ -163,7 +144,7 @@
                     <input type="hidden" class="form-control" name="role" value="student">
 
                     <div class="form-group d-flex justify-content-center mt-3">
-                        <button class="btn btn-login w-100" type="submit">
+                        <button class="btn btn-signup w-100" type="submit">
                             <i class="fa fa-user-plus fa-2x" aria-hidden="true"></i>
                         </button>
                     </div>

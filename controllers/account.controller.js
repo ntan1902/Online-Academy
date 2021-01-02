@@ -56,25 +56,19 @@ router.post("/signup", async function (req, res) {
   req.session.authUser = user;
   link = req.protocol + "://" + req.get('host') + "/account/verify?id=" + hash;
 
-  mailOptions = {
-    from: "trinh.an.1902@gmail.com",
-    to: req.body.email,
-    subject: "Please confirm your Email account",
-    html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
-  }
-  console.log(mailOptions);
-  mail.sendMail(mailOptions, function (error, response) {
-    if (error) {
-      console.log(error);
-      res.end("Error");
-    } else {
+  mail
+    .send(req.body.email, link)
+    .then(response => {
       console.log("Message sent: " + response.message);
       res.render("vwAccount/signup", {
         message: `Email is sent at ${req.body.email}. Please check your mail to verify the account`,
-        warning: true
+        type: "warning"
       });
-    }
-  });
+    })
+    .catch(err => {
+      console.log(error);
+      res.end("Error");
+    })
 });
 
 router.get("/verify", async function (req, res) {
@@ -86,12 +80,12 @@ router.get("/verify", async function (req, res) {
 
       res.render("vwAccount/signup", {
         message: `Email ${req.session.authUser.email} is been successfully verified`,
-        success: true
+        type: "success"
       });
     } else {
       res.render("vwAccount/signup", {
         message: `Email ${req.session.authUser.email} is not verified`,
-        fail: true
+        type: "danger"
       });
     }
   } else {

@@ -16,6 +16,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Blinker&display=swap" rel="stylesheet">
 
+    <!-- Themify-Icons -->
+    <link rel="stylesheet" href="/public/vendors/themify-icons/themify-icons.css">
+
     <link rel="stylesheet" href="/public/css/style.css" />
     <title>Online Academy</title>
     {{{_sections.css}}}
@@ -23,7 +26,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top">
-        <a class="navbar-brand text-white" href="/">
+        <a class="navbar-brand" href="/">
             <i class="fa fa-book" aria-hidden="true"></i>
             Courses
         </a>
@@ -34,20 +37,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" data-hover="dropdown" aria-haspopup="true" aria-expanded="false">
                         Categories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <div class="dropright btn-group w-50">
-                            <a class="btn dropdown-toggle text-white w-50" data-toggle="dropdown" aria-haspopup="true"
+                            <a class="btn dropdown-toggle w-50" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" data-hover="dropdown">
                                 IT
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item text-white" href="/admin/courses/">All Courses</a>
-                                <a class="dropdown-item text-white" href="/admin/courses/byField/web">IT Website</a>
-                                <a class="dropdown-item text-white" href="/admin/courses/byField/mobile">IT Mobile</a>
+                                <a class="dropdown-item" href="/admin/courses/">All Courses</a>
+                                <a class="dropdown-item" href="/admin/courses/byField/web">IT Website</a>
+                                <a class="dropdown-item" href="/admin/courses/byField/mobile">IT Mobile</a>
                             </div>
                         </div>
                     </div>
@@ -57,7 +60,7 @@
                     <form class="form-inline" method="POST" id="form-search" action="/admin/courses/search">
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">
-                                <button class="btn input-group-text text-white " type="submit" id="btn-search">
+                                <button class="btn input-group-text " type="submit" id="btn-search">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
@@ -72,19 +75,18 @@
             <form id="frmSignout" action="/account/signout" method="POST"></form>
             <ul class="navbar-nav ml-auto">
                 {{#if auth}}
-
                 <li class="nav-item dropdown mr-5">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <b class="text-white">{{authUser.fullname}}</b>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item text-white" href="/account/profile">
+                        <a class="dropdown-item" href="/account/profile">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             Profile
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-white" href="javascript: $('#frmSignout').submit();">
+                        <a class="dropdown-item" href="javascript: $('#frmSignout').submit();">
                             <i class="fa fa-sign-out" aria-hidden="true"></i>
                             Sign Out
                         </a>
@@ -92,24 +94,31 @@
                 </li>
                 {{else}}
                 <li class="nav-item">
-                    <a class="btn btn-light mr-sm-2 my-2">
-                        <i class="fa fa-shopping-cart"></i>
+                    <a class="btn mr-sm-2 my-1">
+                        <i class="fa fa-shopping-cart fa-2x"></i>
                     </a>
-                </li>
+        </div>
+        </li>
+        {{else}}
+        <li class="nav-item">
+            <a class="btn btn-light mr-sm-2 my-2">
+                <i class="fa fa-shopping-cart"></i>
+            </a>
+        </li>
 
-                <li class="nav-item mr-2 my-2">
-                    <a class="btn btn-outline-success" href="/account/signin">
-                        Sign in
-                    </a>
-                </li>
-                <li class="nav-item my-2">
-                    <a class="btn btn-success" href="/account/signup">
-                        Sign up
-                    </a>
-                </li>
+        <li class="nav-item mr-2 my-2">
+            <a class="btn btn-outline-success" href="/account/signin">
+                Sign in
+            </a>
+        </li>
+        <li class="nav-item my-2">
+            <a class="btn btn-success" href="/account/signup">
+                Sign up
+            </a>
+        </li>
 
-                {{/if}}
-            </ul>
+        {{/if}}
+        </ul>
         </div>
     </nav>
     {{{body}}}
