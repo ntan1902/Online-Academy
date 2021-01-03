@@ -5,6 +5,13 @@ body {
     "Lucida Sans Unicode", "Lucida Grande";
   font-weight: 14px;
 }
+a {
+  color: #222;
+}
+a:hover {
+  color: #384aeb;
+  text-decoration: inherit;
+}
 
 .navbar {
   /* background-color: #161b22; */
@@ -35,7 +42,6 @@ body {
   /*Without this, clicking will make it sticky*/
   pointer-events: none;
 }
-
 #form-search {
   display: block;
   width: 30rem;
@@ -441,13 +447,13 @@ input[type="search"]:focus {
   }
 }
 
-#topCourseCarousel a {
+/* #topCourseCarousel a {
   color: #222;
 }
 #topCourseCarousel a:hover {
   color: #384aeb;
   text-decoration: inherit;
-}
+} */
 
 .card-course {
   border: 0;

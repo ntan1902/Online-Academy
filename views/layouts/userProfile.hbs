@@ -29,6 +29,7 @@
 
     <link rel="stylesheet" href="/public/css/style.css" />
     <title>Online Academy</title>
+    <link rel='icon' href="/public/images/OA-Logo.png">
     {{{_sections.css}}}
 </head>
 
@@ -45,15 +46,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" data-hover="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link" href="#">
                         <b>Categories</b>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu">
                         <div class="dropright btn-group w-50">
-                            <a class="btn dropdown-toggle w-50" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" data-hover="dropdown">
+                            <a class="btn w-100 d-flex justify-content-between m-2">
                                 IT
+                                <i class="fa fa-caret-right mt-1" aria-hidden="true"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="/admin/courses/">All Courses</a>
@@ -84,11 +84,10 @@
             <ul class="navbar-nav ml-auto">
                 {{#if isAdmin}}
                     <li class="nav-item dropdown mr-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="/admin">
                             <b class="text-warning">Welcome Admin</b>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu">
                             <a class="dropdown-item" href="/account/profile">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 Profile
@@ -102,11 +101,10 @@
                     </li>
                 {{else}}
                     <li class="nav-item dropdown mr-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="#">
                             <b class="text-dark">{{authUser.fullname}}</b>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu">
                             <a class="dropdown-item" href="/account/profile">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 Profile
@@ -131,11 +129,11 @@
                     </div>
                     <div class="list-group list-group-flush">
                         <a href="{{#if edit}} javascript:; {{else}}/account/profile{{/if}}"
-                            class="list-group-item list-group-item-action {{#if edit}} active {{/if}}">
+                            class="list-group-item list-group-item-action {{#if edit}} list-group-item-info {{/if}}">
                             <b>Edit Profile</b>
                         </a>
                         <a href="{{#if change}} javascript:; {{else}} /account/changePassword {{/if}}"
-                            class="list-group-item list-group-item-action {{#if change}} active {{/if}}">
+                            class="list-group-item list-group-item-action {{#if change}} list-group-item-info {{/if}}">
                             <b>Change Password</b>
                         </a>
                     </div>
