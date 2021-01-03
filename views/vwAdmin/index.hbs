@@ -7,9 +7,19 @@
         </div>
         <div class="card-body">
             <div class="list-group list-group-flush">
-                <a href="/admin/users" class="list-group-item list-group-item-action">
-                    <b>Users</b>
-                </a>
+                <div class="list-group-item list-group-item-action">
+                    <div class="dropdown">
+                        <a href="/admin/users">
+                            <b>Users</b>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/admin/teachers">Teachers</a>
+                            <a class="dropdown-item" href="/admin/students">Students</a>
+                        </div>
+                    </div>
+                </div>
+
+
                 <a href="/admin/courses" class="list-group-item list-group-item-action">
                     <b>Courses</b>
                 </a>
