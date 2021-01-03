@@ -549,6 +549,7 @@ input[type="search"]:focus {
 /* home.hbs */
 
 /*Course detail*/
+/*
 nav > .nav.nav-tabs {
   border: none;
   color: #fff;
@@ -592,6 +593,7 @@ nav > div a.nav-item.nav-link:focus {
 }
 
 /*****************globals*************/
+/*
 .tab-content-img {
   overflow: hidden;
   background: #fdfdfd;
@@ -648,4 +650,4 @@ nav > div a.nav-item.nav-link:focus {
 
 .tab-pane {
   padding: 1px 1px;
-}
+} */
