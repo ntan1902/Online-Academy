@@ -56,17 +56,7 @@ function paginating(nPages, page) {
 }
 
 router.get("/", async function (req, res, next) {
-  var page = req.query.page || 1;
-  if (page < 1) page = 1;
-
-  const total = await courseModel.countCourse();
-  let nPages = Math.floor(total / paginate.limit);
-  if (total % paginate.limit > 0) nPages++; //for the remaining courses
-
-  let pagination = paginating(nPages, page);
-
-  const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourse(offset);
+  const list_courses = await courseModel.all();
 
   res.render("vwCourses/index", {
     layout: "admin.hbs",
@@ -74,31 +64,15 @@ router.get("/", async function (req, res, next) {
     manageCourses: true,
 
     courses: list_courses,
-    page_numbers: pagination.page_numbers,
     empty: list_courses.length === 0,
-    prevPage: pagination.prevPage,
-    nextPage: pagination.nextPage,
-    disablePrev: pagination.disablePrev,
-    disableNext: pagination.disableNext,
+
   });
 });
 
 router.get("/byField/:field", async function (req, res) {
   const field = req.params.field;
   console.log(field);
-
-  var page = req.query.page || 1;
-  if (page < 1) page = 1;
-
-  const total = await courseModel.countCourseByField(field);
-  let nPages = Math.floor(total / paginate.limit);
-  if (total % paginate.limit > 0) nPages++; //for the remaining courses
-  console.log(nPages);
-
-  let pagination = paginating(nPages, page);
-
-  const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourseByField(offset, field);
+  const list_courses = await courseModel.allByField(field);
 
   res.render("vwCourses/index", {
     layout: "admin.hbs",
@@ -106,12 +80,7 @@ router.get("/byField/:field", async function (req, res) {
     manageCourses: true,
 
     courses: list_courses,
-    page_numbers: pagination.page_numbers,
     empty: list_courses.length === 0,
-    prevPage: pagination.prevPage,
-    nextPage: pagination.nextPage,
-    disablePrev: pagination.disablePrev,
-    disableNext: pagination.disableNext,
   });
 });
 
@@ -126,15 +95,14 @@ router.get("/add", async function (req, res) {
 router.post("/add", upload.single("image"), async function (req, res) {
   const today = new Date();
   const lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
-
-  // console.log(req.files[0]);
-  // console.log(req.files[1]);
-  let imgPath = "/public/images/" + req.file.filename;
-  //let imgPath2 = "/public/images/" + req.files[1].filename;
-
+  let imgPath;
+  if(req.file === undefined) {
+    imgPath = "";
+  } else {
+    imgPath = "/public/images/" + req.file.filename;
+  }
   const new_course = {
     imagePath: imgPath,
-    //imagePath2: imgPath2,
     videoPath: req.body.videoPath,
     price: req.body.price,
     field: req.body.field,
@@ -164,7 +132,6 @@ router.get("/edit/:id", async function (req, res) {
   const today = new Date();
   course.lastModified = moment(today, "YYYY-MM-DD").format("DD/MM/YYYY");
 
-  console.log(course);
   res.render("vwCourses/edit", {
     layout: "admin.hbs",
     manageUsers: false,
@@ -179,10 +146,33 @@ router.post("/delete/", async function (req, res) {
   res.redirect("/admin/courses");
 });
 
-router.post("/patch/", async function (req, res) {
-  const new_course = req.body;
+router.post("/patch/", upload.single('image'), async function (req, res) {
+  let imgPath;
+  console.log(req.body.previewImage);
+  if(req.file === undefined) {
+    imgPath = req.body.previewImage;
+  } else {
+    imgPath = "/public/images/" + req.file.filename;
+  }
+
   const today = new Date();
-  new_course.lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
+  let lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
+  const new_course = {
+    id: req.body.id,
+    imagePath: imgPath,
+    videoPath: req.body.videoPath,
+    price: req.body.price,
+    field: req.body.field,
+    title: req.body.title,
+    description: req.body.description,
+    detail: req.body.detail,
+    lastModified: lastModified,
+    idTeacher: req.body.idTeacher,
+    previewDocument: req.body.previewDocument,
+    status: req.body.status,
+  };
+
+  console.log(new_course);
   await courseModel.patch(new_course);
   res.redirect("/admin/courses");
 });

@@ -181,7 +181,7 @@
 
 {{/section}}
 
-<form id="frmEdit" method="POST">
+<form id="frmEdit" method="POST" enctype="multipart/form-data">
     <div class="card mx-5">
         <div class="card-header">
             <h4>Courses</h4>
@@ -193,11 +193,13 @@
             </div>
 
             <div class="form-group">
-                <img src="{{this.course.imagePath1}}" alt="image1">
+                <label>Preview Image</label> <br>
+                <img src="{{this.course.imagePath}}" alt="image">
             </div>
+            <input type="hidden" value="{{this.course.imagePath}}" name="previewImage">
 
             <div class="form-group">
-                <label for="txtImgPath">Images</label>
+                <label for="txtImgPath">New Image</label>
                 <input type="file" class="form-control-file" id="txtImgPath" name="image">
             </div>
 

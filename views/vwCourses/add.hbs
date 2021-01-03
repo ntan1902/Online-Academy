@@ -13,9 +13,23 @@
 {{#section 'css'}}
 <link rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css">
 {{/section}}
 
 {{#section 'js'}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/themes/fa/theme.min.js"></script>
+
+<script>
+  $('#txtImgPath').fileinput({
+    language: 'vi',
+    theme: 'fa',
+    allowedFileExtensions: ['jpg', 'png'],
+    dropZoneEnabled: false,
+  });
+</script>
+
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script>
@@ -149,7 +163,7 @@
     <div class="card-body">
       <div class="form-group">
         <label>Images path</label>
-        <input type="file" class="form-control-file" id="txtImgPaths" name="image" multiple required>
+        <input type="file" class="form-control-file" id="txtImgPath" name="image">
         <br>
         <label>Video path</label>
         <input type="text" class="form-control-file" id="txtVideoPath" name="video">
