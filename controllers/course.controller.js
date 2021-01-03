@@ -2,8 +2,8 @@ const express = require("express");
 const courseModel = require("../models/course.model");
 const { paginate } = require("../config/default.json");
 const moment = require("moment");
-const multer = require('multer');
-const path = require('path');
+const multer = require("multer");
+const path = require("path");
 
 const router = express.Router();
 
@@ -11,13 +11,16 @@ const router = express.Router();
 const storage = multer.diskStorage({
   destination: "./public/images/",
   filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
+    callback(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
 });
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1000000 }
+  limits: { fileSize: 1000000 },
 });
 
 function paginating(nPages, page) {
@@ -31,12 +34,12 @@ function paginating(nPages, page) {
     if (currentPage) {
       if (i === 1) {
         disablePrev = true;
-        if(nPages === 1) {
+        if (nPages === 1) {
           disableNext = true;
         }
       } else if (i === nPages) {
         disableNext = true;
-        if(nPages === 1) {
+        if (nPages === 1) {
           disablePrev = true;
         }
       }
@@ -72,13 +75,17 @@ router.get("/", async function (req, res, next) {
   const list_courses = await courseModel.pageCourse(offset);
 
   res.render("vwCourses/index", {
+    layout: "admin.hbs",
+    manageUsers: false,
+    manageCourses: true,
+
     courses: list_courses,
     page_numbers,
     empty: list_courses.length === 0,
     prevPage,
     nextPage,
     disablePrev,
-    disableNext
+    disableNext,
   });
 });
 
@@ -106,25 +113,31 @@ router.get("/byField/:field", async function (req, res) {
   const list_courses = await courseModel.pageCourseByField(offset, field);
 
   res.render("vwCourses/index", {
+    layout: "admin.hbs",
+    manageUsers: false,
+    manageCourses: true,
+
     courses: list_courses,
     page_numbers,
     empty: list_courses.length === 0,
     prevPage,
     nextPage,
     disablePrev,
-    disableNext
+    disableNext,
   });
 });
 
 router.get("/add", async function (req, res) {
-  res.render("vwCourses/add");
+  res.render("vwCourses/add", {
+    layout: "admin.hbs",
+    manageUsers: false,
+    manageCourses: true,
+  });
 });
 
-router.post("/add", upload.single('image'), async function (req, res) {
+router.post("/add", upload.single("image"), async function (req, res) {
   const today = new Date();
-  const lastModified = moment(today, "DD/MM/YYYY").format(
-    "YYYY-MM-DD"
-  );
+  const lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
 
   // console.log(req.files[0]);
   // console.log(req.files[1]);
@@ -147,7 +160,11 @@ router.post("/add", upload.single('image'), async function (req, res) {
   };
   console.log(new_course);
   await courseModel.add(new_course);
-  res.render("vwCourses/add");
+  res.render("vwCourses/add", {
+    layout: "admin.hbs",
+    manageUsers: false,
+    manageCourses: true,
+  });
 });
 
 router.get("/edit/:id", async function (req, res) {
@@ -157,12 +174,14 @@ router.get("/edit/:id", async function (req, res) {
     return res.redirect("/admin/courses");
   }
   const today = new Date();
-  course.lastModified = moment(today, "YYYY-MM-DD").format(
-    "DD/MM/YYYY"
-  );
+  course.lastModified = moment(today, "YYYY-MM-DD").format("DD/MM/YYYY");
 
   console.log(course);
   res.render("vwCourses/edit", {
+    layout: "admin.hbs",
+    manageUsers: false,
+    manageCourses: true,
+
     course,
   });
 });
@@ -175,7 +194,7 @@ router.post("/delete/", async function (req, res) {
 router.post("/patch/", async function (req, res) {
   const new_course = req.body;
   const today = new Date();
-  new_course.lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD"); 
+  new_course.lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
   await courseModel.patch(new_course);
   res.redirect("/admin/courses");
 });
@@ -193,23 +212,22 @@ router.get("/isAvailable", async function (req, res) {
 });
 
 router.post("/search", async function (req, res, next) {
-  var keyword=req.body.search;
- 
+  var keyword = req.body.search;
 
   var page = req.query.page || 1;
   if (page < 1) page = 1;
-  
+
   var funcKeyword = keyword.replace(/\s+/g, ",");
   console.log(funcKeyword);
 
   const total = await courseModel.countCourseByKeyword(funcKeyword);
 
-  var showKeyword = funcKeyword.split(',').join(" ");
+  var showKeyword = funcKeyword.split(",").join(" ");
   console.log(total);
   let nPages = Math.floor(total / paginate.limit);
   if (total % paginate.limit > 0) nPages++; //for the remaining courses
   console.log(nPages);
-  
+
   let {
     disablePrev,
     disableNext,
@@ -219,7 +237,10 @@ router.post("/search", async function (req, res, next) {
   } = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourseByKeyword(offset, funcKeyword);
+  const list_courses = await courseModel.pageCourseByKeyword(
+    offset,
+    funcKeyword
+  );
 
   res.render("vwCourses/search", {
     showKeyword,
@@ -230,11 +251,11 @@ router.post("/search", async function (req, res, next) {
     prevPage,
     nextPage,
     disablePrev,
-    disableNext
+    disableNext,
   });
 });
 
-router.get('/detail/:id', async function(req, res) {
+router.get("/detail/:id", async function (req, res) {
   const id = req.params.id;
   const course = await courseModel.single(id);
   const lastModified = moment(course.lastModified, "DD/MM/YYYY").format(
@@ -247,8 +268,8 @@ router.get('/detail/:id', async function(req, res) {
 
   console.log(course);
   res.render("vwCourses/detail", {
-    course
+    course,
   });
-})
+});
 
 module.exports = router;

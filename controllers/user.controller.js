@@ -10,13 +10,20 @@ router.get("/", async function (req, res) {
     element.dob = moment(element.dob, "YYYY-MM-DD").format("DD/MM/YYYY");
   });
   res.render("vwUsers/index", {
+    layout: "admin.hbs",
+    manageUsers: true,
+    manageCourses: false,
     list: list,
     empty: list.length === 0,
   });
 });
 
 router.get("/add", async function (req, res) {
-  res.render("vwUsers/add");
+  res.render("vwUsers/add", {
+    layout: "admin.hbs",
+    manageUsers: true,
+    manageCourses: false,
+  });
 });
 
 router.post("/add", async function (req, res) {
@@ -32,7 +39,11 @@ router.post("/add", async function (req, res) {
   };
 
   await userModel.add(user);
-  res.render("vwUsers/add");
+  res.render("vwUsers/add", {
+    layout: "admin.hbs",
+    manageUsers: true,
+    manageCourses: false,
+  });
 });
 
 router.get("/edit/:id", async function (req, res) {
@@ -44,6 +55,9 @@ router.get("/edit/:id", async function (req, res) {
   }
   user.dob = moment(user.dob, "YYYY-MM-DD").format("DD/MM/YYYY");
   res.render("vwUsers/edit", {
+    layout: "admin.hbs",
+    manageUsers: true,
+    manageCourses: false,
     user,
   });
 });

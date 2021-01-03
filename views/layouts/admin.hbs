@@ -82,62 +82,45 @@
 
             <form id="frmSignout" action="/account/signout" method="POST"></form>
             <ul class="navbar-nav ml-auto">
-                {{#if isAdmin}}
-                    <li class="nav-item dropdown mr-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <b class="text-warning">Welcome Admin</b>
+                <li class="nav-item dropdown mr-5">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <b class="text-warning">Welcome Admin</b>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/account/profile">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            Profile
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/account/profile">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                Profile
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript: $('#frmSignout').submit();">
-                                <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                Sign Out
-                            </a>
-                        </div>
-                    </li>
-                {{else}}
-                    <li class="nav-item dropdown mr-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <b class="text-dark">{{authUser.fullname}}</b>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="javascript: $('#frmSignout').submit();">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            Sign Out
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/account/profile">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                Profile
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript: $('#frmSignout').submit();">
-                                <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                Sign Out
-                            </a>
-                        </div>
-                    </li>
-                {{/if}}
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
     <div class="container-fluid mt-4">
+        <h4 class="text-warning">Site Administration</h4>
         <div class="row">
             <div class="col-sm-3">
                 <div class="card shadow">
-                    <div class="card-header">
-                        <h4>Featured</h4>
+                    <div class="card-header bg-info text-white">
+                        <h4>CATALOG</h4>
                     </div>
-                    <div class="list-group list-group-flush">
-                        <a href="{{#if edit}} javascript:; {{else}}/account/profile{{/if}}"
-                            class="list-group-item list-group-item-action {{#if edit}} active {{/if}}">
-                            <b>Edit Profile</b>
-                        </a>
-                        <a href="{{#if change}} javascript:; {{else}} /account/changePassword {{/if}}"
-                            class="list-group-item list-group-item-action {{#if change}} active {{/if}}">
-                            <b>Change Password</b>
-                        </a>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            <a href="{{#if edit}} javascript:; {{else}} /admin/users {{/if}}"
+                                class="list-group-item list-group-item-action {{#if manageUsers}} active {{/if}}">
+                                <b>Users</b>
+                            </a>
+                            <a href="{{#if edit}} javascript:; {{else}} /admin/courses {{/if}}"
+                                class="list-group-item list-group-item-action {{#if manageCourses}} active {{/if}}">
+                                <b>Courses</b>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
