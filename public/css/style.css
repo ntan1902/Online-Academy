@@ -400,57 +400,124 @@ input[type="search"]:focus {
 /* /signup.hbs */
 
 /* home.hbs */
-#topCourseCarousel .owl-prev,
-#topCourseCarousel .owl-next {
+.banner {
+  background-color: rgb(245, 245, 245);
+}
+.banner-content {
+  margin-left: 7rem;
+}
+.banner-content p {
+  font-size: 20px;
+}
+.achieve {
+  background-color: rgb(235, 243, 255);
+}
+.achieve h2 {
+  text-align: center;
+  margin: 5rem 0 3rem;
+}
+.goals {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+.goals .col {
+  margin-right: 50px;
+}
+.goals-img {
+  margin: 2rem 0;
+  min-height: 55px;
+  display: flex;
+  justify-content: center;
+}
+.goals-content {
+  font-weight: 600;
+  font-style: normal;
+  text-align: center;
+  letter-spacing: -0.1px;
+  color: rgb(31, 31, 31);
+  margin-bottom: 60px;
+  line-height: 28px;
+  font-size: 20px;
+}
+.goals-content span b {
+  display: block;
+  font-weight: 600;
+  height: 4rem;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  color: rgb(31, 31, 31);
+}
+.goals-content span small {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: normal;
+}
+.topCourse {
+  background-color: rgb(245, 245, 245);
+  margin: 0;
+  overflow: hidden;
+}
+.topCourse .container {
+  margin-top: 3rem;
+}
+
+.topCourse .container h3 {
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.myCarousel .owl-prev,
+.myCarousel .owl-next {
   width: 40px;
   height: 40px;
   background: #f1f6f7;
 }
-#topCourseCarousel .owl-prev i,
-#topCourseCarousel .owl-prev span,
-#topCourseCarousel .owl-next i,
-#topCourseCarousel .owl-next span {
+.myCarousel .owl-prev i,
+.myCarousel .owl-prev span,
+.myCarousel .owl-next i,
+.myCarousel .owl-next span {
   font-size: 15px;
   color: #384aeb;
   line-height: 40px;
 }
-#topCourseCarousel .owl-prev:hover,
-#topCourseCarousel .owl-next:hover {
+.myCarousel .owl-prev:hover,
+.myCarousel .owl-next:hover {
   background: #384aeb;
 }
-#topCourseCarousel .owl-prev:hover i,
-#topCourseCarousel .owl-prev:hover span,
-#topCourseCarousel .owl-next:hover i,
-#topCourseCarousel .owl-next:hover span {
+.myCarousel .owl-prev:hover i,
+.myCarousel .owl-prev:hover span,
+.myCarousel .owl-next:hover i,
+.myCarousel .owl-next:hover span {
   color: #fff;
 }
-#topCourseCarousel .owl-prev {
+.myCarousel .owl-prev {
   position: absolute;
   top: 30%;
   transform: translateY(-30%);
   left: -20px;
 }
 @media (min-width: 1340px) {
-  #topCourseCarousel .owl-prev {
+  .myCarousel .owl-prev {
     left: -105px;
   }
 }
-#topCourseCarousel .owl-next {
+.myCarousel .owl-next {
   position: absolute;
   top: 30%;
   transform: translateY(-30%);
   right: -20px;
 }
 @media (min-width: 1340px) {
-  #topCourseCarousel .owl-next {
+  .myCarousel .owl-next {
     right: -105px;
   }
 }
 
-/* #topCourseCarousel a {
+/* .myCarousel a {
   color: #222;
 }
-#topCourseCarousel a:hover {
+.myCarousel a:hover {
   color: #384aeb;
   text-decoration: inherit;
 } */
@@ -458,6 +525,7 @@ input[type="search"]:focus {
 .card-course {
   border: 0;
   margin-bottom: 30px;
+  background-color: rgb(245, 245, 245);
 }
 .card-course p {
   margin-bottom: 0;

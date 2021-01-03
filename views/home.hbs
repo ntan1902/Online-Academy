@@ -8,7 +8,7 @@
     <script>
         $(document).ready(function () {
             if ($('.owl-carousel').length > 0) {
-                $('#topCourseCarousel').owlCarousel({
+                $('.myCarousel').owlCarousel({
                     loop: true,
                     margin: 30,
                     nav: true,
@@ -35,75 +35,105 @@
     </script>
 
 {{/section}}
-
-<div class="container">
-    <div class="mt-3 mb-5 border-bottom">
-        <h3 class="mb-3">Top courses in week</h3>
-
-        <!-- Carousel -->
-        <div class="owl-carousel owl-theme" id="topCourseCarousel">
-
-            <!-- Carousel items -->
-            {{#each courses }}
-                <div class="card card-course">
-                    <a href="#">
-                        <div class="card-course__img">
-                            <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
-                        </div>
-                        <div class="card-body">
-                            <div class="card-course__title">
-                                <h5>{{title}}</h5>
-                            </div>
-                            <div class="card-course__nameTeacher">{{fullname}}</div>
-                            <div class="card-course__price">
-                                <h4>${{price}}</h4>
-                            </div>
-                            {{!-- <div>{{detail}}</div> --}}
-                        </div>
-
-                    </a>
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-7 d-flex align-items-center">
+                <div class="banner-content">
+                    <h2><b>Up To 50% Off</b></h2>
+                    <h3><b>Your Course to Success</b></h3>
+                    <p>Build skills with courses, certificates, and degrees online from world-class universities and
+                        companies.</p>
+                    <a class="btn btn-info mt-2 mt-xl-3" href="/account/signin">Join now</a>
                 </div>
-            {{/each}}
+            </div>
+            <div class="col-xl-5">
+                <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/hero/hero-b.png?auto=format%2Ccompress&dpr=1&w=459&h=497&q=40"
+                    alt="Image Banner">
+            </div>
         </div>
-        <!--.Carousel-->
     </div>
+</div>
 
-    <div class="mt-3 mb-5 border-bottom">
-        <h3 class="mb-3">Top the most view courses</h3>
-
-        <!-- Carousel -->
-        <div class="owl-carousel owl-theme" id="topCourseCarousel">
-
-            <!-- Carousel items -->
-            {{#each courses }}
-                <div class="card card-course">
-                    <a href="#">
-                        <div class="card-course__img">
-                            <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
-                        </div>
-                        <div class="card-body">
-                            <div class="card-course__title">
-                                <h5>{{title}}</h5>
-                            </div>
-                            <div class="card-course__nameTeacher">{{fullname}}</div>
-                            <div class="card-course__price">
-                                <h4>${{price}}</h4>
-                            </div>
-                            {{!-- <div>{{detail}}</div> --}}
-                        </div>
-
-                    </a>
-                </div>
-            {{/each}}
+<div class="achieve">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2><b>Achieve your goals with Coursera</b></h2>
+            </div>
         </div>
-        <!--.Carousel-->
+        <div class="goals">
+            <div class="row">
+                <div class="col">
+                    <div class="goals-img">
+                        <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Learn.svg?auto=format%2Ccompress&amp;dpr=1&amp;w=&amp;h=55"
+                            srcset="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Learn.svg?auto=format%2Ccompress&amp;dpr=2&amp;w=&amp;h=55 2x, https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Learn.svg?auto=format%2Ccompress&amp;dpr=3&amp;w=&amp;h=55 3x"
+                            class="_laqrpf" style="max-height:55px" alt="">
+                    </div>
+                    <div class="goals-content">
+                        <span>
+                            <b>Learn the <br>latest skills</b>
+                            <small>like business analytics, graphic design, Python, and more</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="goals-img">
+                        <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Get-Ready.svg?auto=format%2Ccompress&amp;dpr=1&amp;w=&amp;h=55"
+                            srcset="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Get-Ready.svg?auto=format%2Ccompress&amp;dpr=2&amp;w=&amp;h=55 2x, https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Get-Ready.svg?auto=format%2Ccompress&amp;dpr=3&amp;w=&amp;h=55 3x"
+                            class="_laqrpf" style="max-height:55px" alt="">
+                    </div>
+                    <div class="goals-content">
+                        <span>
+                            <b>Get ready <br>for a career</b>
+
+                            <small>in high-demand fields like IT, AI and cloud engineering</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="goals-img">
+                        <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Earn-Degree.svg?auto=format%2Ccompress&amp;dpr=1&amp;w=&amp;h=55"
+                            srcset="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Earn-Degree.svg?auto=format%2Ccompress&amp;dpr=2&amp;w=&amp;h=55 2x, https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Earn-Degree.svg?auto=format%2Ccompress&amp;dpr=3&amp;w=&amp;h=55 3x"
+                            class="_laqrpf" style="max-height:55px" alt="">
+                    </div>
+                    <div class="goals-content">
+                        <span>
+                            <b>Earn <br>a degree</b>
+                            <small>from a
+                                leading university in business, computer science, and more
+                            </small>
+                        </span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="goals-img">
+                        <img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Upskill-your-org.svg?auto=format%2Ccompress&amp;dpr=1&amp;w=&amp;h=55"
+                            srcset="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Upskill-your-org.svg?auto=format%2Ccompress&amp;dpr=2&amp;w=&amp;h=55 2x, https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://s3.amazonaws.com/coursera_assets/front-page-rebrand/achieve-your-goals/Icon-Upskill-your-org.svg?auto=format%2Ccompress&amp;dpr=3&amp;w=&amp;h=55 3x"
+                            class="_laqrpf" style="max-height:55px" alt="">
+                    </div>
+                    <div class="goals-content">
+                        <span>
+                            <b>Upskill your <br>organization</b>
+                            <small>
+                                with on-demand training and development programs
+                            </small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
+</div>
 
-    <div class="mt-3 mb-5 border-bottom">
-        <h3 class="mb-3">New courses</h3>
+<div class="topCourse">
+    <div class="container">
+        <h3>Top courses in week</h3>
 
         <!-- Carousel -->
-        <div class="owl-carousel owl-theme" id="topCourseCarousel">
+        <div class="owl-carousel owl-theme myCarousel">
 
             <!-- Carousel items -->
             {{#each courses }}
@@ -128,13 +158,14 @@
             {{/each}}
         </div>
         <!--.Carousel-->
+
+
     </div>
-
-    <div class="mt-3 mb-5 border-bottom">
-        <h3 class="mb-3">Top the most registered category</h3>
+    <div class="container">
+        <h3>Top the most view courses</h3>
 
         <!-- Carousel -->
-        <div class="owl-carousel owl-theme" id="topCourseCarousel">
+        <div class="owl-carousel owl-theme myCarousel">
 
             <!-- Carousel items -->
             {{#each courses }}
@@ -159,5 +190,68 @@
             {{/each}}
         </div>
         <!--.Carousel-->
+
+    </div>
+    <div class="container">
+        <h3>New courses</h3>
+
+        <!-- Carousel -->
+        <div class="owl-carousel owl-theme myCarousel">
+
+            <!-- Carousel items -->
+            {{#each courses }}
+                <div class="card card-course">
+                    <a href="#">
+                        <div class="card-course__img">
+                            <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-course__title">
+                                <h5>{{title}}</h5>
+                            </div>
+                            <div class="card-course__nameTeacher">{{fullname}}</div>
+                            <div class="card-course__price">
+                                <h4>${{price}}</h4>
+                            </div>
+                            {{!-- <div>{{detail}}</div> --}}
+                        </div>
+
+                    </a>
+                </div>
+            {{/each}}
+        </div>
+        <!--.Carousel-->
+
+    </div>
+    <div class="container">
+        <h3>Top the most registered category</h3>
+
+        <!-- Carousel -->
+        <div class="owl-carousel owl-theme myCarousel">
+
+            <!-- Carousel items -->
+            {{#each courses }}
+                <div class="card card-course">
+                    <a href="#">
+                        <div class="card-course__img">
+                            <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-course__title">
+                                <h5>{{title}}</h5>
+                            </div>
+                            <div class="card-course__nameTeacher">{{fullname}}</div>
+                            <div class="card-course__price">
+                                <h4>${{price}}</h4>
+                            </div>
+                            {{!-- <div>{{detail}}</div> --}}
+                        </div>
+
+                    </a>
+                </div>
+            {{/each}}
+        </div>
+        <!--.Carousel-->
+
     </div>
 </div>
