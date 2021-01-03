@@ -2,6 +2,7 @@ const express = require("express");
 const userModel = require("../models/user.model");
 const moment = require("moment");
 const router = express.Router();
+const bcrypt = require("bcryptjs");
 
 router.get("/", async function (req, res) {
   const list = await userModel.all();

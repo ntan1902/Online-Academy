@@ -1,75 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div class="container">
-		<div class="card-detail">
-			<div class="container-fliud">
-				<div class="wrapper row">
-					<div class="col-md-6">
-						<div class="preview-pic tab-content-img">
-						  <div class="tab-pane active" id="pic-1"><img src="/public/images/test.jpg" /></div>
-						</div>
-					</div>
-					<div class="details col-md-6">
-						<h4 class="product-title">{{this.course.title}}</h4>
-						<div class="rating">
-							<div class="stars">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>
-                        </div>
-                        <p class="product-description">Teacher: {{this.course.idTeacher}}</p>
-                        <p class="product-description">Field: {{this.course.field}}</p>
-                        <p class="product-description">Last update: {{this.course.lastModified}}</p>
-						<h4 class="price">current price: <span>${{this.course.price}}</span></h4>
 
-						<div class="action">
-							<button class="add-to-cart-detail btn btn-default" type="button">add to cart</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-    <div class="container mt-3">
-        <div class="row">
-          <div class="col-xs-12 ">
-            <nav>
-              <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link" id="nav-home-tab " data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Brief Description</a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Course's Detail</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Preview Document</a>
-                <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">Reviews <strong>(15)</strong></a>
-              </div>
-            </nav>
-            <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-              <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                  {{this.course.description}}
-              </div>
-              <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                  {{{this.course.detail}}}
-              </div>
-              <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                  {{{this.course.previewDocument}}}
-              </div>
-              <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
-              </div>
-            </div>
-          
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card-detail">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="preview-pic tab-content-img">
+            <div class="tab-pane active" id="pic-1"><img src="/public/images/test.jpg" /></div>
           </div>
         </div>
+        <div class="details col-md-6">
+          <h4 class="product-title">{{this.course.title}}</h4>
+          <div class="rating">
+            <div class="stars">
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star"></span>
+              <span class="fa fa-star"></span>
+            </div>
+          </div>
+          <p class="product-description">Teacher: {{this.course.idTeacher}}</p>
+          <p class="product-description">Field: {{this.course.field}}</p>
+          <p class="product-description">Last update: {{this.course.lastModified}}</p>
+          <h4 class="price">current price: <span>${{this.course.price}}</span></h4>
+
+          <div class="action">
+            <button class="add-to-cart-detail btn btn-default" type="button">add to cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-</div>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-xs-12 ">
+        <nav>
+          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link" id="nav-home-tab " data-toggle="tab" href="#nav-home" role="tab"
+              aria-controls="nav-home" aria-selected="true">Brief Description</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+              aria-controls="nav-profile" aria-selected="false">Course's Detail</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+              aria-controls="nav-contact" aria-selected="false">Preview Document</a>
+            <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab"
+              aria-controls="nav-about" aria-selected="false">Reviews <strong>(15)</strong></a>
+          </div>
+        </nav>
+        <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            {{this.course.description}}
+          </div>
+          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            {{{this.course.detail}}}
+          </div>
+          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            {{{this.course.previewDocument}}}
+          </div>
+          <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+            Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam.
+            Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure
+            adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat.
+            Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation
+            mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim
+            ullamco ad duis occaecat ex.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
 
 </body>
+
 </html>

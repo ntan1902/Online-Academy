@@ -111,7 +111,10 @@ router.get("/profile", auth, async function (req, res) {
   const user = await userModel.single(req.session.authUser.id);
   user.dob = moment(user.dob, "YYYY-MM-DD").format("DD/MM/YYYY");
   res.render("vwAccount/edit", {
+    layout: "userProfile.hbs",
     user,
+    change: false,
+    edit: true,
   });
 });
 
@@ -125,7 +128,10 @@ router.post("/patch", auth, async function (req, res) {
 router.get("/changePassword", auth, async function (req, res) {
   const user = await userModel.single(req.session.authUser.id);
   res.render("vwAccount/changePassword", {
+    layout: "userProfile.hbs",
     user,
+    change: true,
+    edit: false,
   });
 });
 

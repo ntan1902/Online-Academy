@@ -1,8 +1,8 @@
 /* main.hbs */
 body {
   /* background-color: #0d1117; */
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: "Poppins", "Lucida Sans", sans-serif, Arial, "Trebuchet MS",
+    "Lucida Sans Unicode", "Lucida Grande";
   font-weight: 14px;
 }
 
@@ -474,7 +474,6 @@ input[type="search"]:focus {
 }
 /* home.hbs */
 
-
 /*Course detail*/
 nav > .nav.nav-tabs {
   border: none;
@@ -538,8 +537,7 @@ nav > div a.nav-item.nav-link:focus {
 }
 
 .product-title,
-.price
-{
+.price {
   text-transform: UPPERCASE;
   font-weight: bold;
 }
@@ -553,9 +551,9 @@ nav > div a.nav-item.nav-link:focus {
   margin-top: -5;
 }
 
-.preview-pic img{
-    width: 380px;
-    height: 260px;
+.preview-pic img {
+  width: 380px;
+  height: 260px;
 }
 
 .add-to-cart-detail {

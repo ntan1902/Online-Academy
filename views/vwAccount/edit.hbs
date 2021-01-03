@@ -93,69 +93,43 @@
 
 {{/section}}
 <form id="frmEdit" method="POST" action="/account/patch">
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Featured</h4>
-                    </div>
-                    <div class="list-group list-group-flush">
-                        <a href="javascript:;" class="list-group-item list-group-item-action active">
-                            <b>Edit Profile</b>
-                        </a>
-                        <a href="/account/changePassword" class="list-group-item list-group-item-action">
-                            <b>Change Password</b>
-                        </a>
-                    </div>
-                </div>
+    <div class="card">
+        <div class="card-header">
+            <h4>Edit Profile</h4>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="txtUsername">Username</label>
+                <input type="text" class="form-control" id="txtUsername" name="username" value="{{this.user.username}}">
             </div>
 
-            <div class="col-sm-9">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Edit Profile</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="txtUsername">Username</label>
-                            <input type="text" class="form-control" id="txtUsername" name="username"
-                                value="{{this.user.username}}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="txtFullName">Full name</label>
-                            <input type="text" class="form-control" id="txtFullName" name="fullname"
-                                value="{{this.user.fullname}}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="txtEmail">Email</label>
-                            <input type="text" class="form-control" id="txtEmail" name="email"
-                                value="{{this.user.email}}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="txtDob">Date of Birth</label>
-                            <input type="text" class="form-control" id="txtDob" name="dob" value="{{this.user.dob}}">
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" id="txtRole" name="role" value="student">
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" id="txtId" name="id" value="{{this.user.id}}">
-                        </div>
-
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-success" type="submit">
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                            Save
-                        </button>
-                    </div>
-                </div>
-
+            <div class="form-group">
+                <label for="txtFullName">Full name</label>
+                <input type="text" class="form-control" id="txtFullName" name="fullname" value="{{this.user.fullname}}">
             </div>
+
+            <div class="form-group">
+                <label for="txtEmail">Email</label>
+                <input type="text" class="form-control" id="txtEmail" name="email" value="{{this.user.email}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtDob">Date of Birth</label>
+                <input type="text" class="form-control" id="txtDob" name="dob" value="{{this.user.dob}}">
+            </div>
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="txtRole" name="role" value="student">
+            </div>
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="txtId" name="id" value="{{this.user.id}}">
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success" type="submit">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Save
+            </button>
         </div>
     </div>
 </form>
