@@ -63,13 +63,7 @@ router.get("/", async function (req, res, next) {
   let nPages = Math.floor(total / paginate.limit);
   if (total % paginate.limit > 0) nPages++; //for the remaining courses
 
-  let {
-    disablePrev,
-    disableNext,
-    prevPage,
-    nextPage,
-    page_numbers,
-  } = paginating(nPages, page);
+  let pagination = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
   const list_courses = await courseModel.pageCourse(offset);
@@ -80,12 +74,12 @@ router.get("/", async function (req, res, next) {
     manageCourses: true,
 
     courses: list_courses,
-    page_numbers,
+    page_numbers: pagination.page_numbers,
     empty: list_courses.length === 0,
-    prevPage,
-    nextPage,
-    disablePrev,
-    disableNext,
+    prevPage: pagination.prevPage,
+    nextPage: pagination.nextPage,
+    disablePrev: pagination.disablePrev,
+    disableNext: pagination.disableNext,
   });
 });
 
@@ -101,13 +95,7 @@ router.get("/byField/:field", async function (req, res) {
   if (total % paginate.limit > 0) nPages++; //for the remaining courses
   console.log(nPages);
 
-  let {
-    disablePrev,
-    disableNext,
-    prevPage,
-    nextPage,
-    page_numbers,
-  } = paginating(nPages, page);
+  let pagination = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
   const list_courses = await courseModel.pageCourseByField(offset, field);
@@ -118,12 +106,12 @@ router.get("/byField/:field", async function (req, res) {
     manageCourses: true,
 
     courses: list_courses,
-    page_numbers,
+    page_numbers: pagination.page_numbers,
     empty: list_courses.length === 0,
-    prevPage,
-    nextPage,
-    disablePrev,
-    disableNext,
+    prevPage: pagination.prevPage,
+    nextPage: pagination.nextPage,
+    disablePrev: pagination.disablePrev,
+    disableNext: pagination.disableNext,
   });
 });
 

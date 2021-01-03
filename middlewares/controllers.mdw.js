@@ -16,6 +16,7 @@ module.exports = function (app) {
     "/admin/courses/",
     /*authAdmin,*/ require("../controllers/course.controller")
   );
+  app.use("/courses", require("../controllers/fe_course.controler"));
 
   // Handle not found error
   app.use(function (req, res) {

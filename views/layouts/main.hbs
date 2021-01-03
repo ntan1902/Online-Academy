@@ -28,7 +28,8 @@
 
 
     <link rel="stylesheet" href="/public/css/style.css" />
-    <link rel="stylesheet" href="/public/css/style_detail.css">
+    {{!--
+    <link rel="stylesheet" href="/public/css/style_detail.css"> --}}
     <title>Online Academy</title>
     <link rel='icon' href="/public/images/OA-Logo.png">
     {{{_sections.css}}}
@@ -56,9 +57,9 @@
                                 <i class="fa fa-caret-right mt-1" aria-hidden="true"></i>
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/admin/courses/">All Courses</a>
-                                <a class="dropdown-item" href="/admin/courses/byField/web">IT Website</a>
-                                <a class="dropdown-item" href="/admin/courses/byField/mobile">IT Mobile</a>
+                                <a class="dropdown-item" href="/courses">All Courses</a>
+                                <a class="dropdown-item" href="/courses/byField/web">IT Website</a>
+                                <a class="dropdown-item" href="/courses/byField/mobile">IT Mobile</a>
                             </div>
                         </div>
                     </div>
@@ -83,71 +84,74 @@
             <form id="frmSignout" action="/account/signout" method="POST"></form>
             <ul class="navbar-nav ml-auto">
                 {{#if auth}}
-                    {{#if isAdmin}}
-                        <li class="nav-item dropdown mr-5">
-                            <a class="nav-link" href="/admin">
-                                <b class="text-warning">Welcome Admin</b>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/account/profile">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    Profile
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript: $('#frmSignout').submit();">
-                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                    Sign Out
-                                </a>
-                            </div>
-                        </li>
-                    {{else}}
-                        <li class="nav-item dropdown mr-5">
-                            <a class="nav-link" href="#">
-                                <b class="text-dark">{{authUser.fullname}}</b>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/account/profile">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    Profile
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript: $('#frmSignout').submit();">
-                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                    Sign Out
-                                </a>
-                            </div>
-                        </li>
-                    {{/if}}
+                {{#if isAdmin}}
+                <li class="nav-item dropdown mr-5">
+                    <a class="nav-link" href="/admin">
+                        <b class="text-warning">Welcome Admin</b>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/account/profile">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            Profile
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="javascript: $('#frmSignout').submit();">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            Sign Out
+                        </a>
+                    </div>
+                </li>
+                {{else}}
+                <li class="nav-item dropdown mr-5">
+                    <a class="nav-link" href="#">
+                        <b class="text-dark">{{authUser.fullname}}</b>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/account/profile">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            Profile
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="javascript: $('#frmSignout').submit();">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            Sign Out
+                        </a>
+                    </div>
+                </li>
+                {{/if}}
 
                 {{else}}
-                    <li class="nav-item">
-                        <a class="btn mr-sm-2 my-1">
-                            <i class="fa fa-shopping-cart fa-2x"></i>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a class="btn mr-sm-2 my-1">
+                        <i class="fa fa-shopping-cart fa-2x"></i>
+                    </a>
+                </li>
 
-                    <li class="nav-item mr-2 my-2">
-                        <a class="btn btn-outline-success" href="/account/signin">
-                            Sign in
-                        </a>
-                    </li>
-                    <li class="nav-item my-2">
-                        <a class="btn btn-success" href="/account/signup">
-                            Sign up
-                        </a>
-                    </li>
+                <li class="nav-item mr-2 my-2">
+                    <a class="btn btn-outline-success" href="/account/signin">
+                        Sign in
+                    </a>
+                </li>
+                <li class="nav-item my-2">
+                    <a class="btn btn-success" href="/account/signup">
+                        Sign up
+                    </a>
+                </li>
 
                 {{/if}}
             </ul>
         </div>
     </nav>
+
     {{{body}}}
+
+
     <!--================ Start footer Area  =================-->
     <footer>
         <div class="footer-area footer-only">
             <div class="container">
                 <div class="row section_gap">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="single-footer-widget tp_widgets">
                             <h4 class="footer_title large_title">Our Mission</h4>
                             <p>
@@ -161,7 +165,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="offset-lg-1 col-lg-2 col-md-6 col-sm-6">
+                    <div class="offset-lg-1 col-lg-3 col-md-6 col-sm-6">
                         <div class="single-footer-widget tp_widgets">
                             <h4 class="footer_title">Quick Links</h4>
                             <ul class="list">
@@ -174,9 +178,9 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-6 col-sm-6">
+                    {{!-- <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="single-footer-widget instafeed">
-                            <h4 class="footer_title">Gallery</h4>
+                            <h4 class="footer_title">Courses</h4>
                             <ul class="list instafeed d-flex flex-wrap">
                                 <li><img src="img/gallery/r1.jpg" alt="" /></li>
                                 <li><img src="img/gallery/r2.jpg" alt="" /></li>
@@ -186,7 +190,7 @@
                                 <li><img src="img/gallery/r8.jpg" alt="" /></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="offset-lg-1 col-lg-3 col-md-6 col-sm-6">
                         <div class="single-footer-widget tp_widgets">
                             <h4 class="footer_title">Contact Us</h4>

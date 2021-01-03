@@ -5,6 +5,114 @@ body {
     "Lucida Sans Unicode", "Lucida Grande";
   font-weight: 14px;
 }
+
+/*footer start*/
+.footer-area {
+  background-color: rgb(235, 243, 255);
+  
+}
+@media (min-width: 1000px) {
+  .footer-area {
+    padding: 20px 0px 0px;
+  }
+}
+.single-footer-widget p {
+  margin-bottom: 15px;
+}
+.single-footer-widget p:last-child {
+  margin-bottom: 0;
+}
+.single-footer-widget .instafeed {
+  margin-left: -5px;
+  margin-right: -5px;
+}
+.single-footer-widget .instafeed li {
+  margin: 5px;
+}
+@media (max-width: 1199px) and (min-width: 992px) {
+  .single-footer-widget .instafeed li:nth-child(4),
+  .single-footer-widget .instafeed li:nth-child(5),
+  .single-footer-widget .instafeed li:nth-child(6) {
+    display: none;
+  }
+}
+.single-footer-widget .sm-head {
+  margin-bottom: 0px;
+}
+.single-footer-widget .sm-head span {
+  position: relative;
+  margin-left: -40px;
+  margin-right: 10px;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  background: #384aeb;
+  border-radius: 20px;
+}
+.tp_widgets .list li {
+  margin-bottom: 12px;
+}
+.tp_widgets .list li a {
+  color: #7b838a;
+  font-family: "Roboto", sans-serif;
+}
+.tp_widgets .list li a:hover {
+  color: #384aeb;
+}
+.tp_widgets .list li:last-child {
+  margin-bottom: 0px;
+}
+.tp_widgets p {
+  color: #7b838a;
+}
+.footer_title {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  font-family: "Oswald", sans-serif;
+  text-transform: capitalize;
+  margin-bottom: 28px;
+}
+@media (max-width: 991px) {
+  .footer_title {
+    margin-bottom: 10px;
+  }
+}
+.footer_title.large_title {
+  font-size: 36px;
+  font-weight: 600;
+}
+@media (max-width: 1199px) {
+  .footer_title.large_title {
+    font-size: 18px;
+  }
+}
+.footer-bottom {
+  background-color: rgb(245, 245, 245);
+  padding: 16px;
+}
+.footer-bottom .footer-text {
+  margin-bottom: 0;
+}
+.footer-bottom .footer-text a {
+  color: #384aeb;
+  opacity: 1;
+}
+.footer-only {
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
+}
+@media (min-width: 1000px) {
+  .footer-only {
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+  }
+}
+
+/*footer-end*/
+
 a {
   color: #222;
 }
@@ -404,7 +512,7 @@ input[type="search"]:focus {
   background-color: rgb(245, 245, 245);
 }
 .banner-content {
-  margin-left: 7rem;
+  margin-left: 4rem;
 }
 .banner-content p {
   font-size: 20px;
