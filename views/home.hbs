@@ -1,38 +1,38 @@
 {{#section 'css'}}
-    <link rel="stylesheet" href="/public/vendors/owl-carousel/owl.carousel.min.css">
-    <link rel="stylesheet" href="/public/vendors/owl-carousel/owl.theme.default.min.css">
+<link rel="stylesheet" href="/public/vendors/owl-carousel/owl.carousel.min.css">
+<link rel="stylesheet" href="/public/vendors/owl-carousel/owl.theme.default.min.css">
 {{/section}}
 
 {{#section 'js'}}
-    <script src="/public/vendors/owl-carousel/owl.carousel.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            if ($('.owl-carousel').length > 0) {
-                $('.myCarousel').owlCarousel({
-                    loop: true,
-                    margin: 30,
-                    nav: true,
-                    navText: ["<i class='ti-arrow-left'></i>", "<i class='ti-arrow-right'></i>"],
-                    dots: false,
-                    responsive: {
-                        0: {
-                            items: 1,
-                            nav: true
-                        },
-                        600: {
-                            items: 3,
-                            nav: false
-                        },
-                        1000: {
-                            items: 5,
-                            nav: true,
-                            loop: false
-                        }
+<script src="/public/vendors/owl-carousel/owl.carousel.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($('.owl-carousel').length > 0) {
+            $('.myCarousel').owlCarousel({
+                loop: true,
+                margin: 30,
+                nav: true,
+                navText: ["<i class='ti-arrow-left'></i>", "<i class='ti-arrow-right'></i>"],
+                dots: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: true
+                    },
+                    600: {
+                        items: 3,
+                        nav: false
+                    },
+                    1000: {
+                        items: 5,
+                        nav: true,
+                        loop: false
                     }
-                });
-            }
-        });
-    </script>
+                }
+            });
+        }
+    });
+</script>
 
 {{/section}}
 <div class="banner">
@@ -137,24 +137,24 @@
 
             <!-- Carousel items -->
             {{#each courses }}
-                <div class="card card-course">
-                    <a href="#">
-                        <div class="card-course__img">
-                            <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
+            <div class="card card-course">
+                <a href="#">
+                    <div class="card-course__img">
+                        <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-course__title">
+                            <h5>{{title}}</h5>
                         </div>
-                        <div class="card-body">
-                            <div class="card-course__title">
-                                <h5>{{title}}</h5>
-                            </div>
-                            <div class="card-course__nameTeacher">{{fullname}}</div>
-                            <div class="card-course__price">
-                                <h4>${{price}}</h4>
-                            </div>
-                            {{!-- <div>{{detail}}</div> --}}
+                        <div class="card-course__nameTeacher">{{fullname}}</div>
+                        <div class="card-course__price">
+                            <h4>${{price}}</h4>
                         </div>
+                        {{!-- <div>{{detail}}</div> --}}
+                    </div>
 
-                    </a>
-                </div>
+                </a>
+            </div>
             {{/each}}
         </div>
         <!--.Carousel-->
@@ -168,25 +168,25 @@
         <div class="owl-carousel owl-theme myCarousel">
 
             <!-- Carousel items -->
-            {{#each courses }}
-                <div class="card card-course">
-                    <a href="#">
-                        <div class="card-course__img">
-                            <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
+            {{#each topView }}
+            <div class="card card-course">
+                <a href="#">
+                    <div class="card-course__img">
+                        <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-course__title">
+                            <h5>{{title}}</h5>
                         </div>
-                        <div class="card-body">
-                            <div class="card-course__title">
-                                <h5>{{title}}</h5>
-                            </div>
-                            <div class="card-course__nameTeacher">{{fullname}}</div>
-                            <div class="card-course__price">
-                                <h4>${{price}}</h4>
-                            </div>
-                            {{!-- <div>{{detail}}</div> --}}
+                        <div class="card-course__nameTeacher">{{fullname}}</div>
+                        <div class="card-course__price">
+                            <h4>${{price}}</h4>
                         </div>
+                        {{!-- <div>{{detail}}</div> --}}
+                    </div>
 
-                    </a>
-                </div>
+                </a>
+            </div>
             {{/each}}
         </div>
         <!--.Carousel-->
@@ -200,24 +200,24 @@
 
             <!-- Carousel items -->
             {{#each courses }}
-                <div class="card card-course">
-                    <a href="#">
-                        <div class="card-course__img">
-                            <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
+            <div class="card card-course">
+                <a href="#">
+                    <div class="card-course__img">
+                        <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-course__title">
+                            <h5>{{title}}</h5>
                         </div>
-                        <div class="card-body">
-                            <div class="card-course__title">
-                                <h5>{{title}}</h5>
-                            </div>
-                            <div class="card-course__nameTeacher">{{fullname}}</div>
-                            <div class="card-course__price">
-                                <h4>${{price}}</h4>
-                            </div>
-                            {{!-- <div>{{detail}}</div> --}}
+                        <div class="card-course__nameTeacher">{{fullname}}</div>
+                        <div class="card-course__price">
+                            <h4>${{price}}</h4>
                         </div>
+                        {{!-- <div>{{detail}}</div> --}}
+                    </div>
 
-                    </a>
-                </div>
+                </a>
+            </div>
             {{/each}}
         </div>
         <!--.Carousel-->
@@ -230,25 +230,25 @@
         <div class="owl-carousel owl-theme myCarousel">
 
             <!-- Carousel items -->
-            {{#each courses }}
-                <div class="card card-course">
-                    <a href="#">
-                        <div class="card-course__img">
-                            <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
+            {{#each topRegister }}
+            <div class="card card-course">
+                <a href="#">
+                    <div class="card-course__img">
+                        <img class="img-fluid" src="/public/images/test.jpg" alt="Image">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-course__title">
+                            <h5>{{title}}</h5>
                         </div>
-                        <div class="card-body">
-                            <div class="card-course__title">
-                                <h5>{{title}}</h5>
-                            </div>
-                            <div class="card-course__nameTeacher">{{fullname}}</div>
-                            <div class="card-course__price">
-                                <h4>${{price}}</h4>
-                            </div>
-                            {{!-- <div>{{detail}}</div> --}}
+                        <div class="card-course__nameTeacher">{{fullname}}</div>
+                        <div class="card-course__price">
+                            <h4>${{price}}</h4>
                         </div>
+                        {{!-- <div>{{detail}}</div> --}}
+                    </div>
 
-                    </a>
-                </div>
+                </a>
+            </div>
             {{/each}}
         </div>
         <!--.Carousel-->

@@ -60,11 +60,59 @@ module.exports = {
   },
 
   async allWithTeacher() {
-    const sql = `select * from courses co, users u where co.idTeacher=u.id limit 10`;
+    const sql = `select * from courses co, users u where co.idTeacher=u.idUser 
+                  order by co.title limit 10`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
     return rows;
   },
+
+  
+  async topViewCourses(){
+    const sql = `select c.*
+                from courses c, view v
+                where c.idCourse=v.idCourse
+                group by c.idCourse
+                order by count(*) desc limit 10`;
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0) return null;
+    return rows;
+},
+
+async topRegistedCourses(){
+    const sql = `select c.*
+                from courses c, register r
+                where c.idCourse= r.idCourse
+                group by c.idCourse
+                order by count(*) desc limit 10`;
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0) return null;
+    return rows;
+},
+
+async newCourses(){
+  const sql = `select c.*
+              from courses c
+              order by c.lastModified desc
+              limit 10`;
+  const [rows, fields] = await db.load(sql);
+  if (rows.length === 0) return null;
+  return rows;
+},
+
+async topCourses(){
+  const sql = `select c.*
+                from courses c, view v
+                where yearweek(v.date) = yearweek(curdate()) and c.idCourse=v.idCourse
+                group by (c.idCourse)
+                order by count(distinct v.idUser) desc limit 4`;
+  const [rows, fields] = await db.load(sql);
+  if (rows.length === 0) return null;
+  return rows;
+},
+
+
+
 
   async add(course) {
     const [result, fields] = await db.add(course, "courses");

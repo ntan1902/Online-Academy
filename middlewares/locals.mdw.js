@@ -15,6 +15,9 @@ module.exports = function (app) {
 
   app.use(async function (req, res, next) {
     res.locals.courses = await courseModel.allWithTeacher();
+    res.locals.topView = await courseModel.topViewCourses();
+    res.locals.topRegister = await courseModel.topRegistedCourses();
+
     // res.locals.subCourses = res.locals.courses.splice(0, 5);
     next();
   });
