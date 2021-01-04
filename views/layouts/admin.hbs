@@ -58,10 +58,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="{{#if manageCourses}} javascript:; {{else}} /admin/courses {{/if}}"
+                            <div
                                 class="list-group-item list-group-item-action {{#if manageCourses}} list-group-item-info {{/if}}">
-                                <b>Courses</b>
-                            </a>
+                                <div class="dropdown">
+                                    <a href="/admin/courses">
+                                        <b>Courses</b>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/admin/courses/byField/web">Web</a>
+                                        <a class="dropdown-item" href="/admin/courses/byField/mobile">Mobile</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="list-group-item list-group-item-action {{#if manageCategories}} list-group-item-info {{/if}}">
+                                <div class="dropdown">
+                                    <a href="/admin/categories">
+                                        <b>Categories</b>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

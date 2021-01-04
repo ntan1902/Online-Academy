@@ -27,13 +27,13 @@ module.exports = {
     },
 
     async countCourseByField(field) {
-        const sql = `select count(*) as total from courses where field = '${field}'`;
+        const sql = `select count(*) as total from courses co, categories cat where cat.name = '${field}' and cat.idC = co.idCat`;
         const [rows, fields] = await db.load(sql);
         return rows[0].total;
     },
 
     async pageCourseByField(offset, field) {
-        const sql = `select * from courses where field = '${field}' limit ${paginate.limit} offset ${offset}`;
+        const sql = `select * from courses co, categories cat where cat.name= '${field}' and cat.idC = co.idCat limit ${paginate.limit} offset ${offset}`;
         const [rows, fields] = await db.load(sql);
         return rows;
     },
@@ -104,4 +104,15 @@ module.exports = {
         const [rows, fields] = await db.load(sql);
         return rows;
     },
-}
+
+    //categories
+    async allByCat(CatName) {
+        const sql = `select * from courses co, categories cat 
+                    where cat.name = '${CatName}' and co.idCat = cat.idC `;
+        console.log(sql);
+        const [rows, fields] = await db.load(sql);
+        console.log(rows);
+        return rows;
+    },
+
+}   
