@@ -4,16 +4,12 @@ module.exports = function (app) {
   app.engine(
     "hbs",
     exphbs({
-      extname: 'hbs',
+      extname: "hbs",
       defaultLayout: "main.hbs",
       helpers: {
         section: hbs_sections(),
-        format_money(val) {
-          return `${val} đ`;
-        },
       },
     })
   );
   app.set("view engine", "hbs");
 };
-

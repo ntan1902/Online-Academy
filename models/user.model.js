@@ -1,47 +1,47 @@
 const db = require("../utils/db");
 
 module.exports = {
-    async all() {
-        const sql = "select * from users";
-        const [rows, fields] = await db.load(sql);
-        return rows;
-    },
+  async all() {
+    const sql = "select * from users";
+    const [rows, fields] = await db.load(sql);
+    return rows;
+  },
 
-    async add(student) {
-        const [result, fields] = await db.add(student, "users");
-        return result;
-    },
-    async singleByUserName(username) {
-        const sql = `select * from users where username = '${username}'`;
-        const [rows, fields] = await db.load(sql);
-        if (rows.length === 0) return null;
+  async add(student) {
+    const [result, fields] = await db.add(student, "users");
+    return result;
+  },
+  async singleByUserName(username) {
+    const sql = `select * from users where username = '${username}'`;
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0) return null;
 
-        return rows[0];
-    },
+    return rows[0];
+  },
 
-    async single(id) {
-        const sql = `select * from users where id = ${id}`;
-        const [rows, fields] = await db.load(sql);
-        if (rows.length === 0) return null;
+  async single(id) {
+    const sql = `select * from users where idUser = ${id}`;
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0) return null;
 
-        return rows[0];
-    },
+    return rows[0];
+  },
 
-    async patch(entity) {
-        const condition = {
-            id: entity.id,
-        };
-        delete entity.id;
+  async patch(entity) {
+    const condition = {
+      idUser: entity.id,
+    };
+    delete entity.id;
 
-        const [result, fields] = await db.patch(entity, condition, "users");
-        return result;
-    },
+    const [result, fields] = await db.patch(entity, condition, "users");
+    return result;
+  },
 
-    async delete(id) {
-        const condition = {
-            id: id,
-        };
-        const [result, fields] = await db.delete(condition, "users");
-        return result;
-    },
+  async delete(id) {
+    const condition = {
+      idUser: id,
+    };
+    const [result, fields] = await db.delete(condition, "users");
+    return result;
+  },
 };

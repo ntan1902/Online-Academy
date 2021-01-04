@@ -65,13 +65,12 @@ router.get("/", async function (req, res, next) {
 
     courses: list_courses,
     empty: list_courses.length === 0,
-
   });
 });
 
 router.get("/byField/:field", async function (req, res) {
   const field = req.params.field;
-  console.log(field);
+  // console.log(field);
   const list_courses = await courseModel.allByField(field);
 
   res.render("vwCourses/index", {
@@ -96,7 +95,7 @@ router.post("/add", upload.single("image"), async function (req, res) {
   const today = new Date();
   const lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
   let imgPath;
-  if(req.file === undefined) {
+  if (req.file === undefined) {
     imgPath = "";
   } else {
     imgPath = "/public/images/" + req.file.filename;
@@ -146,10 +145,10 @@ router.post("/delete/", async function (req, res) {
   res.redirect("/admin/courses");
 });
 
-router.post("/patch/", upload.single('image'), async function (req, res) {
+router.post("/patch/", upload.single("image"), async function (req, res) {
   let imgPath;
   console.log(req.body.previewImage);
-  if(req.file === undefined) {
+  if (req.file === undefined) {
     imgPath = req.body.previewImage;
   } else {
     imgPath = "/public/images/" + req.file.filename;
@@ -187,67 +186,6 @@ router.get("/isAvailable", async function (req, res) {
   } else {
     return res.json(true);
   }
-});
-
-router.post("/search", async function (req, res, next) {
-  var keyword = req.body.search;
-
-  var page = req.query.page || 1;
-  if (page < 1) page = 1;
-
-  var funcKeyword = keyword.replace(/\s+/g, ",");
-  console.log(funcKeyword);
-
-  const total = await courseModel.countCourseByKeyword(funcKeyword);
-
-  var showKeyword = funcKeyword.split(",").join(" ");
-  console.log(total);
-  let nPages = Math.floor(total / paginate.limit);
-  if (total % paginate.limit > 0) nPages++; //for the remaining courses
-  console.log(nPages);
-
-  let {
-    disablePrev,
-    disableNext,
-    prevPage,
-    nextPage,
-    page_numbers,
-  } = paginating(nPages, page);
-
-  const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourseByKeyword(
-    offset,
-    funcKeyword
-  );
-
-  res.render("vwCourses/search", {
-    showKeyword,
-    total,
-    courses: list_courses,
-    page_numbers,
-    empty: list_courses.length === 0,
-    prevPage,
-    nextPage,
-    disablePrev,
-    disableNext,
-  });
-});
-
-router.get("/detail/:id", async function (req, res) {
-  const id = req.params.id;
-  const course = await courseModel.single(id);
-  const lastModified = moment(course.lastModified, "DD/MM/YYYY").format(
-    "DD/MM/YYYY"
-  );
-  course.lastModified = lastModified;
-  if (course === null) {
-    return res.redirect("/admin/courses");
-  }
-
-  console.log(course);
-  res.render("vwCourses/detail", {
-    course,
-  });
 });
 
 module.exports = router;

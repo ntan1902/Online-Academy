@@ -83,7 +83,7 @@ input[type="search"]:focus {
 
 .card-login {
   /* this affect courses form view */
-  height: 370px;
+  height: 420px;
   margin-top: auto;
   margin-bottom: auto;
   width: 400px;
@@ -351,7 +351,7 @@ input[type="search"]:focus {
 /* signup.hbs */
 .card-signup {
   /* this affect courses form view */
-  height: 530px;
+  height: 550px;
   margin-top: auto;
   margin-bottom: auto;
   width: 400px;
@@ -4145,7 +4145,7 @@ a {
   }
 }
 .s_Product_carousel .owl-dots {
-  display:none;
+  display: none;
   position: absolute;
   right: 20px;
   top: 50%;
@@ -4657,4 +4657,28 @@ a {
   border-bottom: 5px solid purple;
   width: 500px;
   height: 400px;
+}
+
+.single-prd-item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.single-prd-item img {
+  position: absolute;
+}
+
+.icon-play {
+  position: absolute;
+  margin: 10rem 0rem 0rem 4rem;
+  background-color: transparent;
+  color: white;
+}
+.embedded-media-player {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
