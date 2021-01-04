@@ -60,7 +60,7 @@ module.exports = {
   },
 
   async allWithTeacher() {
-    const sql = `select * from courses co, users u where co.idTeacher=u.idUser 
+    const sql = `select * from courses co, users u where co.idTeacher=u.idUserUser 
                 order by co.title limit 10`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
@@ -105,13 +105,11 @@ async topCourses(){
                 from courses c, view v
                 where yearweek(v.date) = yearweek(curdate()) and c.idCourse=v.idCourse
                 group by (c.idCourse)
-                order by count(distinct v.idUser) desc limit 4`;
+                order by count(*) desc limit 4`;
   const [rows, fields] = await db.load(sql);
   if (rows.length === 0) return null;
   return rows;
 },
-
-
 
 
   async add(course) {
@@ -138,10 +136,10 @@ async topCourses(){
   },
 
   async countCourseByKeyword(keyword) {
-    const sql = `select count(distinct c.id) as total
+    const sql = `select count(distinct c.idCourse) as total
                     from users u, courses c
                     where match(c.title) against ('${keyword}') or 
-                    match(u.fullname) against('${keyword}') and u.id=c.idTeacher 
+                    match(u.fullname) against('${keyword}') and u.idUser=c.idTeacher 
                     or match(c.description) against ('${keyword}')`;
     const [rows, fields] = await db.load(sql);
     return rows[0].total;
@@ -151,7 +149,7 @@ async topCourses(){
     const sql = `select distinct c.*
                     from users u, courses c
                     where match(c.title) against ('${keyword}') or 
-                    match(u.fullname) against('${keyword}') and u.id=c.idTeacher 
+                    match(u.fullname) against('${keyword}') and u.idUser=c.idTeacher 
                     or match(c.description) against ('${keyword}') 
                     limit ${paginate.limit} offset ${offset}`;
     const [rows, fields] = await db.load(sql);
