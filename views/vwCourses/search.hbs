@@ -1,4 +1,4 @@
-<div class="card shadow w-75 mx-auto">
+<div class="card shadow w-75 mx-auto mt-3 mb-3">
     <div class="card-header d-flex justify-content-between">
         <h4>Courses</h4>
         <h3> {{this.total}} result for "{{this.showKeyword}}" </h3>
@@ -6,14 +6,12 @@
     <div class="card-body">
         {{#if this.empty}}
         <h4 class="card-title">Sorry, we couldn't find any results for "{{this.showKeyword}}"</h4>
-        <div>
-            <h5>Try adjusting your search. Here are some ideas:</h5>
-            <ul>
-                <li>Make sure all words are spelled correctly</li>
-                <li>Try different search terms</li>
-                <li>Try more general search terms</li>
-            </ul>
-        </div>
+        <h5>Try adjusting your search. Here are some ideas:</h5>
+        <ol>
+            <li>Make sure all words are spelled correctly</li>
+            <li>Try different search terms</li>
+            <li>Try more general search terms</li>
+        </ol>
         {{else}}
         <div class="container">
             <div class="row">
@@ -22,21 +20,21 @@
                     <div class="product-grid4 h-100">
                         <div class="product-image4">
                             <a href="#">
-                                <img class="pic-1" src="/public/images/mobile/2.png">
-                                <img class="pic-2" src="/public/images/mobile/1.png">
+                                <img class="pic-1" style="height: 150px" src="{{imagePath}}">
+                                <img class="pic-2" style="height: 150px" src="{{imagePath}}">
                             </a>
                             <ul class="social">
-                                <li><a href="/admin/courses/edit/{{id}}" data-tip="Quick View" role="button"><i
+                                <li><a href="/admin/courses/edit/{{idCourse}}" data-tip="Quick View" role="button"><i
                                             class="fa fa-eye"></i></a></li>
-                                {{!-- <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a>
-                                </li> --}}
+                                <li><a href="/courses/detail/{{idCourse}}" data-tip="Like the course" role="button"><i
+                                            class="fa fa-heart"></i></a></li>
                                 <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
                             </ul>
                             <span class="product-new-label">New</span>
                             <span class="product-discount-label">-10%</span>
                         </div>
                         <div class="product-content">
-                            <h3 class="title"><a href="#">{{title}}</a></h3>
+                            <h3 class="title"><a href="">{{title}}</a></h3>
                             <ul class="rating">
                                 <li class="fa fa-star"></li>
                                 <li class="fa fa-star"></li>
@@ -48,7 +46,7 @@
                                 ${{price}}
                                 <span>$5.00</span>
                             </div>
-                            <a class="add-to-cart" href="">ADD TO CART</a>
+                            <a class="add-to-cart" href="#">ADD TO CART</a>
                         </div>
                     </div>
                 </div>
