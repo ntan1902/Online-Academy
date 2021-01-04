@@ -1,5 +1,6 @@
 {{#section 'css'}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css">
 {{/section}}
 
@@ -17,9 +18,7 @@
     ],
   });
 </script>
-{{!--< Editor --}} 
-
-{{!-- File Upload> --}}
+{{!--< Editor --}} {{!-- File Upload> --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/themes/fa/theme.min.js"></script>
 
@@ -30,9 +29,7 @@
       dropZoneEnabled: false,
     });
   </script>
-  {{!-- < File Upload --}} 
-  
-  {{!-- Date Picker >--}}
+  {{!-- < File Upload --}} {{!-- Date Picker>--}}
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
     <script>
@@ -47,7 +44,6 @@
       $('#frmProduct').on('submit', function (e) {
         e.preventDefault();
 
-        const videoPath = $('#txtVideoPath').val();
         const price = $('#txtPrice').val();
         const field = $('#txtField').val();
         const title = $('#txtTitle').val();
@@ -55,18 +51,8 @@
         const detail = $('#txtDetail').val();
         const lastModified = $('#txtLastModified').val();
         const idTeacher = $('#txtIdTeacher').val();
-        const document = $('#txtPreviewDoc');
         const status = $('#txtStatus').val();
-
-        if (!videoPath.length === 0) {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Invalid Video Path',
-            icon: 'error',
-            confirmButtonText: 'Retry'
-          });
-          return;
-        } else if (price.length === 0) {
+        if (price.length === 0) {
           Swal.fire({
             title: 'Error!',
             text: 'Invalid Price',
@@ -74,7 +60,7 @@
             confirmButtonText: 'Retry'
           });
           return;
-        } else if (field.length === 0) {
+        } else if (field === "Choose your option") {
           Swal.fire({
             title: 'Error!',
             text: 'Invalid Field',
@@ -110,14 +96,6 @@
           Swal.fire({
             title: 'Error!',
             text: 'Invalid Teacher ID',
-            icon: 'error',
-            confirmButtonText: 'Retry'
-          });
-          return;
-        } else if (!document.length === 0) {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Invalid Preview Document',
             icon: 'error',
             confirmButtonText: 'Retry'
           });
@@ -168,14 +146,18 @@
             <label>Images path</label>
             <input type="file" class="form-control-file" id="txtImgPath" name="image">
             <br>
-            <label>Video path</label>
-            <input type="text" class="form-control-file" id="txtVideoPath" name="video">
-            <br>
             <label>Price</label>
             <input type="number" class="form-control" id="txtPrice" name="price">
 
-            <label>Field</label>
-            <input type="text" class="form-control" id="txtField" name="field">
+            <label for="txtField">Field</label>
+            {{!-- <input type="text" class="form-control" id="txtField" name="field" required
+              value="{{this.course.field}}"> --}}
+            <select class="form-control" name='field' id="txtField">
+              <option selected>Choose your option</option> 
+              {{#each listCategories}}
+              <option value="{{idCategory}}">{{name}}</option>
+              {{/each}}
+            </select>
 
             <label>Title</label>
             <input type="text" class="form-control" id="txtTitle" name="title">
@@ -188,9 +170,6 @@
 
             <label>Teacher's ID</label>
             <input type="number" class="form-control" id="txtIdTeacher" name="idTeacher">
-
-            <label>Preview Document</label>
-            <textarea class="form-control" id="txtPreviewDoc" name="previewDocument" rows="3"></textarea>
 
             <label>Course Status</label>
             <input type="text" class="form-control" id="txtStatus" name="status">

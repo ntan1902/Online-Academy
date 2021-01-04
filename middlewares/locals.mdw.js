@@ -1,3 +1,4 @@
+const categoryModel = require("../models/category.model");
 const courseModel = require("../models/course.model");
 
 module.exports = function (app) {
@@ -17,6 +18,7 @@ module.exports = function (app) {
     res.locals.courses = await courseModel.allWithTeacher();
     res.locals.topView = await courseModel.topViewCourses();
     res.locals.topRegister = await courseModel.topRegistedCourses();
+    res.locals.listCategories = await categoryModel.allWithDetails();
 
     // res.locals.subCourses = res.locals.courses.splice(0, 5);
     next();
