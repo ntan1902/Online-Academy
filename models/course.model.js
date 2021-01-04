@@ -33,7 +33,7 @@ module.exports = {
   },
 
   async single(id) {
-    const sql = `select * from courses where id = ${id}`;
+    const sql = `select * from courses where idCourse = ${id}`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
     return rows[0];
@@ -67,7 +67,7 @@ module.exports = {
 
   async delete(idCourse) {
     const condition = {
-      id: idCourse,
+      idCourse: idCourse,
     };
     const [result, fields] = await db.delete(condition, "courses");
     return result;
@@ -75,7 +75,7 @@ module.exports = {
 
   async patch(entity) {
     const condition = {
-      id: entity.id,
+      idCourse: entity.id,
     };
     delete entity.id;
 

@@ -1,12 +1,14 @@
 {{#section 'css'}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css">
 {{/section}}
 
 {{#section 'js'}}
-{{!-- Editor > --}}
- <script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
-    referrerpolicy="origin"></script>
+    {{!-- Editor > --}}
+    <script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: '#txtDetail',
@@ -26,9 +28,9 @@
             ],
         });
     </script>
-{{!--< Editor --}}
+    {{!--< Editor --}}
 
-{{!-- File Upload> --}}
+    {{!-- File Upload> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/themes/fa/theme.min.js"></script>
 
@@ -39,10 +41,11 @@
             dropZoneEnabled: false,
         });
     </script>
-{{!-- < File Upload --}} 
+    {{!-- < File Upload --}}
 
-{{!-- Date Picker >--}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    {{!-- Date Picker >--}}
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
     <script>
         $('#txtLastModified').datetimepicker({
             format: 'd/m/Y',
@@ -93,7 +96,7 @@
             const idTeacher = $('#txtIdTeacher').val();
             const document = $('#txtPreviewDoc');
             const status = $('#txtStatus').val();
-            
+
             if (!videoPath.length === 0) {
                 Swal.fire({
                     title: 'Error!',
@@ -193,104 +196,103 @@
         })
     </script>
 
-    {{/section}}
+{{/section}}
 
-    <form id="frmEdit" method="POST" enctype="multipart/form-data">
-        <div class="card mx-5">
-            <div class="card-header">
-                <h4>Courses</h4>
+<form id="frmEdit" method="POST" enctype="multipart/form-data">
+    <div class="card mx-5">
+        <div class="card-header">
+            <h4>Courses</h4>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="txtID">Course ID</label>
+                <input type="text" class="form-control" id="txtID" name="id" readonly value="{{this.course.idCourse}}">
             </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="txtID">Course ID</label>
-                    <input type="text" class="form-control" id="txtID" name="id" readonly value="{{this.course.id}}">
-                </div>
 
-                <div class="form-group">
-                    <label>Preview Image</label> <br>
-                    <img src="{{this.course.imagePath}}" alt="no preview image found">
-                </div>
-                <input type="hidden" value="{{this.course.imagePath}}" name="previewImage">
-
-                <div class="form-group">
-                    <label for="txtImgPath">New Image</label>
-                    <input type="file" class="form-control-file" id="txtImgPath" name="image">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtVideoPath">Video Path</label>
-                    <input type="text" class="form-control-file" id="txtImgPath" name="videoPath"
-                        value="{{this.course.videoPath}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtPrice">Price</label>
-                    <input type="number" class="form-control-file" id="txtPrice" name="price"
-                        value="{{this.course.price}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtField">Field</label>
-                    <input type="text" class="form-control" id="txtField" name="field" required
-                        value="{{this.course.field}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtTitle">Title</label>
-                    <input type="text" class="form-control" id="txtTitle" name="title" required
-                        value="{{this.course.title}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtDescription">Description</label>
-                    <input type="text" class="form-control" id="txtDescription" name="description"
-                        value="{{this.course.description}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtDetail">Detail</label>
-                    <textarea class="form-control" id="txtDetail" name="detail" rows="3">
-                    {{this.course.detail}}
-                </textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="txtLastModified">Last Modified</label>
-                    <input type="text" class="form-control" id="txtLastModified" name="lastModified" readonly
-                        value="{{this.course.lastModified}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtIdTeacher">ID Teacher</label>
-                    <input type="number" class="form-control" id="txtIdTeacher" name="idTeacher"
-                        value="{{this.course.idTeacher}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtPreviewDocument">Preview Document</label>
-                    <textarea class="form-control" id="txtPreviewDocument" name="previewDocument" rows="3">
-                    {{this.course.previewDocument}}
-                </textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="txtStatus">Status</label>
-                    <input type="text" class="form-control" id="txtStatus" name="status" value="{{this.course.status}}">
-                </div>
+            <div class="form-group">
+                <label>Preview Image</label> <br>
+                <img src="{{this.course.imagePath}}" alt="no preview image found">
             </div>
-            <div class="card-footer">
-                <a class="btn btn-primary" href="/admin/courses" role="button">
-                    <i class="fa fa-backward" aria-hidden="true"></i>
-                    Back to Courses
-                </a>
-                <button class="btn btn-danger" type="button" formaction="/admin/courses/delete" id="delete">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    Delete
-                </button>
-                <button class="btn btn-success" type="button" formaction="/admin/courses/patch" id="save">
-                    <i class="fa fa-check" aria-hidden="true"></i>
-                    Save
-                </button>
+            <input type="hidden" value="{{this.course.imagePath}}" name="previewImage">
+
+            <div class="form-group">
+                <label for="txtImgPath">New Image</label>
+                <input type="file" class="form-control-file" id="txtImgPath" name="image">
+            </div>
+
+            <div class="form-group">
+                <label for="txtVideoPath">Video Path</label>
+                <input type="text" class="form-control-file" id="txtImgPath" name="videoPath"
+                    value="{{this.course.videoPath}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtPrice">Price</label>
+                <input type="number" class="form-control-file" id="txtPrice" name="price" value="{{this.course.price}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtField">Field</label>
+                <input type="text" class="form-control" id="txtField" name="field" required
+                    value="{{this.course.field}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtTitle">Title</label>
+                <input type="text" class="form-control" id="txtTitle" name="title" required
+                    value="{{this.course.title}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtDescription">Description</label>
+                <input type="text" class="form-control" id="txtDescription" name="description"
+                    value="{{this.course.description}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtDetail">Detail</label>
+                <textarea class="form-control" id="txtDetail" name="detail" rows="3">
+                {{this.course.detail}}
+                </textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="txtLastModified">Last Modified</label>
+                <input type="text" class="form-control" id="txtLastModified" name="lastModified" readonly
+                    value="{{this.course.lastModified}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtIdTeacher">ID Teacher</label>
+                <input type="number" class="form-control" id="txtIdTeacher" name="idTeacher"
+                    value="{{this.course.idTeacher}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtPreviewDocument">Preview Document</label>
+                <textarea class="form-control" id="txtPreviewDocument" name="previewDocument" rows="3">
+                {{this.course.previewDocument}}
+                </textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="txtStatus">Status</label>
+                <input type="text" class="form-control" id="txtStatus" name="status" value="{{this.course.status}}">
             </div>
         </div>
-    </form>
+        <div class="card-footer">
+            <a class="btn btn-primary" href="/admin/courses" role="button">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+                Back to Courses
+            </a>
+            <button class="btn btn-danger" type="button" formaction="/admin/courses/delete" id="delete">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                Delete
+            </button>
+            <button class="btn btn-success" type="button" formaction="/admin/courses/patch" id="save">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Save
+            </button>
+        </div>
+    </div>
+</form>
