@@ -4,6 +4,7 @@ module.exports = function (app) {
   app.engine(
     "hbs",
     exphbs({
+      extname: 'hbs',
       defaultLayout: "main.hbs",
       helpers: {
         section: hbs_sections(),
@@ -15,3 +16,4 @@ module.exports = function (app) {
   );
   app.set("view engine", "hbs");
 };
+
