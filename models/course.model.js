@@ -20,14 +20,20 @@ module.exports = {
     return rows;
   },
 
+  async allByField(field) {
+    const sql = `select * from courses where field = '${field}'`;
+    const [rows, fields] = await db.load(sql);
+    return rows;
+  },
+
   async countCourseByField(field) {
-    const sql = `select count(*) as total from courses where field = '${field}'`;
+    const sql = `select count(*) as total from courses co, categories cat where cat.name = '${field}' and cat.idC = co.idCat`;
     const [rows, fields] = await db.load(sql);
     return rows[0].total;
   },
 
   async pageCourseByField(offset, field) {
-    const sql = `select * from courses where field = '${field}' limit ${paginate.limit} offset ${offset}`;
+    const sql = `select * from courses co, categories cat where cat.name= '${field}' and cat.idC = co.idCat limit ${paginate.limit} offset ${offset}`;
     const [rows, fields] = await db.load(sql);
     return rows;
   },
@@ -54,7 +60,7 @@ module.exports = {
   },
 
   async allWithTeacher() {
-    const sql = `select * from courses co, users u where co.idTeacher=u.idUser limit 10`;
+    const sql = `select * from courses co, users u where co.idTeacher=u.id limit 10`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
     return rows;
@@ -101,6 +107,16 @@ module.exports = {
                     or match(c.description) against ('${keyword}') 
                     limit ${paginate.limit} offset ${offset}`;
     const [rows, fields] = await db.load(sql);
+    return rows;
+  },
+
+  //categories
+  async allByCat(CatName) {
+    const sql = `select * from courses co, categories cat 
+                    where cat.name = '${CatName}' and co.idCat = cat.idC `;
+    console.log(sql);
+    const [rows, fields] = await db.load(sql);
+    console.log(rows);
     return rows;
   },
 };

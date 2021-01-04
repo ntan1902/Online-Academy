@@ -70,8 +70,8 @@ router.get("/", async function (req, res, next) {
 
 router.get("/byField/:field", async function (req, res) {
   const field = req.params.field;
-  // console.log(field);
-  const list_courses = await courseModel.allByField(field);
+  console.log(field);
+  const list_courses = await courseModel.allByCat(field);
 
   res.render("vwCourses/index", {
     layout: "admin.hbs",
@@ -104,7 +104,7 @@ router.post("/add", upload.single("image"), async function (req, res) {
     imagePath: imgPath,
     videoPath: req.body.videoPath,
     price: req.body.price,
-    field: req.body.field,
+    idCat: req.body.field,
     title: req.body.title,
     description: req.body.description,
     detail: req.body.detail,
