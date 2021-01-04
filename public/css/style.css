@@ -281,7 +281,7 @@ input[type="search"]:focus {
   font-family: "Blinker", sans-serif;
 }
 .product-grid4 .title {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 400;
   text-transform: capitalize;
   margin: 0 0 7px;
@@ -293,6 +293,11 @@ input[type="search"]:focus {
 .product-grid4 .title a:hover {
   color: #16a085;
 }
+
+.product-grid4 .teacher {
+  color: rgba(130, 139, 178, 0.1);
+}
+
 .product-grid4 .price {
   color: #16a085;
   font-size: 17px;
@@ -515,38 +520,6 @@ input[type="search"]:focus {
   }
 }
 
-/* .myCarousel a {
-  color: #222;
-}
-.myCarousel a:hover {
-  color: #384aeb;
-  text-decoration: inherit;
-} */
-
-.card-course {
-  border: 0;
-  margin-bottom: 30px;
-  background-color: rgb(245, 245, 245);
-}
-.card-course p {
-  margin-bottom: 0;
-}
-.card-course__img {
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
-  position: relative;
-}
-
-.card-course__price {
-  font-size: 18px;
-  font-weight: 500;
-  color: #222;
-}
-.card-course__nameTeacher {
-  font-size: 18px;
-  font-weight: 500;
-  color: #777;
-}
 /* home.hbs */
 
 /*Detail.hbs*/
@@ -1390,52 +1363,7 @@ a {
 .offer__content p {
   color: #555555;
 }
-#bestSellerCarousel .owl-prev,
-#bestSellerCarousel .owl-next {
-  width: 40px;
-  height: 40px;
-  background: #f1f6f7;
-}
-#bestSellerCarousel .owl-prev i,
-#bestSellerCarousel .owl-prev span,
-#bestSellerCarousel .owl-next i,
-#bestSellerCarousel .owl-next span {
-  font-size: 15px;
-  color: #384aeb;
-  line-height: 40px;
-}
-#bestSellerCarousel .owl-prev:hover,
-#bestSellerCarousel .owl-next:hover {
-  background: #384aeb;
-}
-#bestSellerCarousel .owl-prev:hover i,
-#bestSellerCarousel .owl-prev:hover span,
-#bestSellerCarousel .owl-next:hover i,
-#bestSellerCarousel .owl-next:hover span {
-  color: #fff;
-}
-#bestSellerCarousel .owl-prev {
-  position: absolute;
-  top: 30%;
-  transform: translateY(-30%);
-  left: -20px;
-}
-@media (min-width: 1340px) {
-  #bestSellerCarousel .owl-prev {
-    left: -105px;
-  }
-}
-#bestSellerCarousel .owl-next {
-  position: absolute;
-  top: 30%;
-  transform: translateY(-30%);
-  right: -20px;
-}
-@media (min-width: 1340px) {
-  #bestSellerCarousel .owl-next {
-    right: -105px;
-  }
-}
+
 .card-blog {
   border: 0;
 }
