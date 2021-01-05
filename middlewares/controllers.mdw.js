@@ -1,9 +1,20 @@
 const auth = require("./auth.mdw").auth;
 const authAdmin = require("./auth.mdw").authAdmin;
+const courseModel = require("../models/course.model");
 
 module.exports = function (app) {
-  app.get("/", function (req, res) {
-    res.render("home", { layout: "main.hbs" });
+  app.get("/", async function (req, res) {
+    const newCourses = await courseModel.newCourses();
+    const topView = await courseModel.topViewCourses();
+    const topRegister = await courseModel.topRegistedCourses();
+    const topCourses = await courseModel.topCourses();
+    res.render("home", {
+      layout: "main.hbs",
+      newCourses,
+      topView,
+      topRegister,
+      topCourses,
+    });
   });
 
   app.use("/admin/feedbacks/", require("../controllers/feedback.controller"));

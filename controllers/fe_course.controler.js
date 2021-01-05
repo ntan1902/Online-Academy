@@ -106,7 +106,6 @@ router.post("/search/:keyword/:sort", async function (req, res) {
   let nPages = Math.floor(total / paginate.limit);
   if (total % paginate.limit > 0) nPages++; //for the remaining courses
 
-
   let {
     disablePrev,
     disableNext,
@@ -116,7 +115,11 @@ router.post("/search/:keyword/:sort", async function (req, res) {
   } = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourseByKeyword(offset,funcKeyword,sort);
+  const list_courses = await courseModel.pageCourseByKeyword(
+    offset,
+    funcKeyword,
+    sort
+  );
   res.render("vwCourses/search", {
     sort,
     showKeyword,
@@ -147,7 +150,6 @@ router.get("/search/:keyword/:sort", async function (req, res) {
   let nPages = Math.floor(total / paginate.limit);
   if (total % paginate.limit > 0) nPages++; //for the remaining courses
 
-
   let {
     disablePrev,
     disableNext,
@@ -157,7 +159,11 @@ router.get("/search/:keyword/:sort", async function (req, res) {
   } = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourseByKeyword(offset,funcKeyword,sort);
+  const list_courses = await courseModel.pageCourseByKeyword(
+    offset,
+    funcKeyword,
+    sort
+  );
   res.render("vwCourses/search", {
     sort,
     showKeyword,

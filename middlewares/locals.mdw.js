@@ -15,13 +15,12 @@ module.exports = function (app) {
   });
 
   app.use(async function (req, res, next) {
-    res.locals.newCourses = await courseModel.newCourses();
-    res.locals.topView = await courseModel.topViewCourses();
-    res.locals.topRegister = await courseModel.topRegistedCourses();
+    // res.locals.newCourses = await courseModel.newCourses();
+    // res.locals.topView = await courseModel.topViewCourses();
+    // res.locals.topRegister = await courseModel.topRegistedCourses();
+    // res.locals.topCourses = await courseModel.topCourses();
     res.locals.listCategories = await categoryModel.allWithDetails();
-    res.locals.topCourses = await courseModel.topCourses();
 
-    // res.locals.subCourses = res.locals.courses.splice(0, 5);
     next();
   });
 };
