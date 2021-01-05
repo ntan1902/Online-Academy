@@ -7,37 +7,30 @@
 {{#section 'js'}}
   {{!-- <script src="https://cdn.plyr.io/3.6.3/demo.js"></script> --}}
   <script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
-  <script src="https://cdn.plyr.io/3.6.3/demo.js"></script>
   <script>
-    $('#displayModal').on('hide.bs.modal', function (e) {
+    document.addEventListener('DOMContentLoaded', () => {
       const player = new Plyr('#player');
       window.player = player;
-      player.stop();
-    })
 
-    $('button').click(function () {
-      {{#each this.previews }}
-        $('#{{chapter}}').css('background-color', 'transparent');
-      {{/each}}
-      
-      $(this).css('background-color', '#000');
-      //console.log($(this).val());
-      //console.log($('iframe').attr('src'));
-      //const player = new Plyr('#player');
-      //$('#player').attr('class', "plyr__video-embed");
-      //$('iframe').attr('src', $(this).val());
+      $('#displayModal').on('hide.bs.modal', function (e) {
+        player.stop();
+      })
 
-      let player = $('#player');
-      player.attr('class', 'plyr__video-embed');
-      let frame = $('iframe');
-    
-      frame.attr('src', $(this).val());
-      frame.attr('allowFullScreen', '');
-      frame.attr('allowtransparency', '');
-      frame.attr('allow', 'autoplay');
-    
-      player.append(frame);
-      
+      $('button').click(function () {
+        $("button").css('background-color', 'transparent');
+        $(this).css('background-color', '#000');
+
+        player.source = {
+          type: 'video',
+          sources: [
+            {
+              src: $(this).val(),
+              provider: 'youtube',
+            },
+          ],
+        };
+
+      });
     })
   </script>
 {{/section}}
@@ -67,7 +60,11 @@
       <div class="col-lg-6">
         <div class="single-prd-item btn" data-toggle="modal" data-target="#displayModal">
           <img class="detail-img" src="{{this.course.imagePath}}" alt="image" />
-          <i class="fa fa-play-circle fa-4x icon-play" aria-hidden="true"></i>
+          <div class="background-icon"></div>
+          <div class="icon-play">
+            <i class="fa fa-play-circle-o fa-4x" aria-hidden="true"></i>
+          </div>
+
         </div>
       </div>
       <div class="col-lg-5 offset-lg-1">
@@ -124,8 +121,8 @@
       <div class="modal-body">
         <div class="container">
           <div class="embedded-media-player">
-            <div id="player">
-              <iframe src="" allowfullscreen allowtransparency allow="autoplay"></iframe>
+            <div class="plyr__video-embed" id="player">
+              <iframe src="{{this.firstPreview.videoPath}}" allowfullscreen allowtransparency allow="autoplay"></iframe>
             </div>
           </div>
 
@@ -137,7 +134,8 @@
             {{#if isPreview}}
 
               <div class="course-previews">
-                <button class="course-preview-row" id="{{chapter}}" value="{{videoPath}}">
+                <button class="course-preview-row" {{#if isActive}}style="background-color: #000;" {{/if}}
+                  id="{{chapter}}" value="{{videoPath}}">
                   <div class="course-preview-row-thumbnail">
                     <img alt="" width="640" height="480" class="course-preview-row-thumbnail-img" src="{{imagePath}}">
                   </div>

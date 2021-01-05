@@ -167,13 +167,17 @@ router.get("/detail/:id", async function (req, res) {
   for (let index = 0; index < previews.length; index++) {
     const dur = await getDuration(previews[index].videoPath);
     previews[index].duration = dur;
+    previews[index].isActive = false;
   }
+
+  previews[0].isActive = true;
 
   // res.json({ course, previews });
 
   res.render("vwCourses/detail", {
     course,
     previews,
+    firstPreview: previews[0]
   });
 });
 

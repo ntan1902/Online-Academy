@@ -4581,8 +4581,6 @@ a {
   overflow: hidden;
   background: #fdfdfd;
   border: 1px solid #ddd;
-  border-top: 5px solid purple;
-  border-bottom: 5px solid purple;
   width: 500px;
   height: 400px;
 }
@@ -4601,10 +4599,16 @@ a {
 .icon-play {
   position: absolute;
   margin-top: 11rem;
-  background-color: transparent;
-  color: white;
 }
+.background-icon {
+  position: absolute;
+  margin-top: 11.5rem;
+  border-radius: 3rem;
 
+  width: 3rem;
+  height: 3rem;
+  background-color: white;
+}
 .embedded-media-player {
   position: relative;
   width: 100%;
