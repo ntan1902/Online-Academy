@@ -100,9 +100,9 @@ router.post("/add", upload.single("image"), async function (req, res) {
   } else {
     imgPath = "/public/images/" + req.file.filename;
   }
+  console.log(req.body.field);
   const new_course = {
     imagePath: imgPath,
-    videoPath: req.body.videoPath,
     price: req.body.price,
     idCat: req.body.field,
     title: req.body.title,
@@ -110,7 +110,6 @@ router.post("/add", upload.single("image"), async function (req, res) {
     detail: req.body.detail,
     lastModified: lastModified,
     idTeacher: req.body.idTeacher,
-    previewDocument: req.body.previewDocument,
     status: req.body.status,
   };
   console.log(new_course);
@@ -128,6 +127,7 @@ router.get("/edit/:id", async function (req, res) {
   if (course === null) {
     return res.redirect("/admin/courses");
   }
+  console.log(course);
   const today = new Date();
   course.lastModified = moment(today, "YYYY-MM-DD").format("DD/MM/YYYY");
 
@@ -159,15 +159,13 @@ router.post("/patch/", upload.single("image"), async function (req, res) {
   const new_course = {
     id: req.body.id,
     imagePath: imgPath,
-    videoPath: req.body.videoPath,
     price: req.body.price,
-    field: req.body.field,
+    idCat: req.body.field,
     title: req.body.title,
     description: req.body.description,
     detail: req.body.detail,
     lastModified: lastModified,
     idTeacher: req.body.idTeacher,
-    previewDocument: req.body.previewDocument,
     status: req.body.status,
   };
 

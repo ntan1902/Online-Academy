@@ -6,6 +6,7 @@ module.exports = function (app) {
     res.render("home", { layout: "main.hbs" });
   });
 
+  app.use("/admin/categories/", require("../controllers/category.controller"));
   app.use("/account/", require("../controllers/account.controller"));
   app.use("/admin/", /*authAdmin,*/ require("../controllers/admin.controller"));
   app.use(

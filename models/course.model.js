@@ -2,8 +2,8 @@ const db = require("../utils/db");
 const { paginate } = require("../config/default.json");
 
 module.exports = {
-  async all() {
-    const sql = "select * from courses";
+  async all() { //with detail now
+    const sql = "select * from courses co, categories cat where cat.idCategory = co.idCat";
     const [rows, fields] = await db.load(sql);
     return rows;
   },

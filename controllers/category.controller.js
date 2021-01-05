@@ -4,15 +4,13 @@ const categoryModel = require('../models/category.model');
 const router = express.Router();
 
 router.get('/', async function (req, res) {
-  const list = await categoryModel.all();
-  res.render('vwCategories/index', {
-    categories: list,
-    empty: list.length === 0
+  res.render("vwCategories/index", {
+    layout: "admin.hbs",
   });
 })
 
-router.get('/edit', async function (req, res) {
-  const id = req.query.id;
+router.get('/edit/:id', async function (req, res) {
+  const id = req.params.id;
   const category = await categoryModel.single(id);
   if (category === null) {
     return res.redirect('/admin/categories');
@@ -29,11 +27,11 @@ router.get('/add', function (req, res) {
 
 router.post('/add', async function (req, res) {
   await categoryModel.add(req.body);
-  res.render('vwCategories/add');
+  res.redirect('/admin/categories')
 })
 
 router.post('/del', async function (req, res) {
-  await categoryModel.del(req.body.CatID);
+  await categoryModel.del(req.body.idCategory);
   res.redirect('/admin/categories');
 })
 

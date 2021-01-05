@@ -1,36 +1,24 @@
 {{#section 'css'}}
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css">
 {{/section}}
 
 {{#section 'js'}}
-    {{!-- Editor > --}}
-    <script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: '#txtDetail',
-            plugins: 'paste image link autolink lists table media',
-            menubar: false,
-            toolbar: [
-                'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
-            ],
-        });
-
-        tinymce.init({
-            selector: '#txtPreviewDocument',
-            plugins: 'paste image link autolink lists table media',
-            menubar: false,
-            toolbar: [
-                'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
-            ],
-        });
-    </script>
-    {{!--< Editor --}}
-
-    {{!-- File Upload> --}}
+{{!-- Editor > --}}
+<script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '#txtDetail',
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+        ],
+    });
+</script>
+{{!--< Editor --}} {{!-- File Upload> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/themes/fa/theme.min.js"></script>
 
@@ -41,258 +29,235 @@
             dropZoneEnabled: false,
         });
     </script>
-    {{!-- < File Upload --}}
-
-    {{!-- Date Picker >--}}
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-    <script>
-        $('#txtLastModified').datetimepicker({
-            format: 'd/m/Y',
-            timepicker: false,
-            mask: true,
-        });
-        // < DatePicker
-
-        //Check input Validation
-        $('#save').click(function () {
-            $('#frmEdit').attr('action', '/admin/courses/patch');
-            $('#frmEdit').submit();
-        });
-
-        $('#delete').click(function () {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    ).then(function () {
-                        $('#frmEdit').attr('action', '/admin/courses/delete');
-                        $('#frmEdit').off('submit').submit();
-                    });
-                }
+    {{!-- < File Upload --}} {{!-- Date Picker>--}}
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+        <script>
+            $('#txtLastModified').datetimepicker({
+                format: 'd/m/Y',
+                timepicker: false,
+                mask: true,
             });
-        });
+            // < DatePicker
 
-        $('#frmProduct').on('submit', function (e) {
-            e.preventDefault();
-            const imgPath = $('#txtImgPath').val();
-            const videoPath = $('#txtVideoPath').val();
-            const price = $('#txtPrice').val();
-            const field = $('#txtField').val();
-            const title = $('#txtTitle').val();
-            const description = $('#txtDescription').val();
-            const detail = $('#txtDetail').val();
-            const lastModified = $('#txtLastModified').val();
-            const idTeacher = $('#txtIdTeacher').val();
-            const document = $('#txtPreviewDoc');
-            const status = $('#txtStatus').val();
+            $('#txtField').val($('#txtFieldtemp').val());
 
-            if (!videoPath.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Video Path',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else if (price.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Price',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else if (field.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Field',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else if (title.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Title',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else if (!description.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Description',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else if (!detail.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Detail',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else if (idTeacher.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Teacher ID',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else if (!document.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Preview Document',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else if (status.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Status',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else {
-                $.getJSON(`/admin/courses/isAvailable?teacher=${idTeacher}`, function (data) {
-                    if (data === true) {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Your information has been saved',
-                            timer: 2000,
-                            showConfirmButton: false
-                        }).then(function () {
-                            $('#frmProduct').off('submit').submit();
-                        })
+            //Check input Validation
+            $('#save').click(function () {
+                $('#frmEdit').attr('action', '/admin/courses/patch');
+                $('#frmEdit').submit();
+            });
 
-                    } else {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'Teacher ID is not exist! Please enter another Teacher ID',
-                            icon: 'error',
-                            confirmButtonText: 'Retry'
+            $('#delete').click(function () {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        ).then(function () {
+                            $('#frmEdit').attr('action', '/admin/courses/delete');
+                            $('#frmEdit').off('submit').submit();
                         });
                     }
-                })
-            }
+                });
+            });
 
-        })
-    </script>
+            $('#frmProduct').on('submit', function (e) {
+                e.preventDefault();
+                const imgPath = $('#txtImgPath').val();
+                const price = $('#txtPrice').val();
+                const field = $('#txtField').val();
+                const title = $('#txtTitle').val();
+                const description = $('#txtDescription').val();
+                const detail = $('#txtDetail').val();
+                const lastModified = $('#txtLastModified').val();
+                const idTeacher = $('#txtIdTeacher').val();
+                const status = $('#txtStatus').val();
 
-{{/section}}
+                if (price.length === 0) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Invalid Price',
+                        icon: 'error',
+                        confirmButtonText: 'Retry'
+                    });
+                    return;
+                } else if (field.length === 0) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Invalid Field',
+                        icon: 'error',
+                        confirmButtonText: 'Retry'
+                    });
+                    return;
+                } else if (title.length === 0) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Invalid Title',
+                        icon: 'error',
+                        confirmButtonText: 'Retry'
+                    });
+                    return;
+                } else if (!description.length === 0) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Invalid Description',
+                        icon: 'error',
+                        confirmButtonText: 'Retry'
+                    });
+                    return;
+                } else if (!detail.length === 0) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Invalid Detail',
+                        icon: 'error',
+                        confirmButtonText: 'Retry'
+                    });
+                    return;
+                } else if (idTeacher.length === 0) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Invalid Teacher ID',
+                        icon: 'error',
+                        confirmButtonText: 'Retry'
+                    });
+                    return;
+                } else if (status.length === 0) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Invalid Status',
+                        icon: 'error',
+                        confirmButtonText: 'Retry'
+                    });
+                    return;
+                } else {
+                    $.getJSON(`/admin/courses/isAvailable?teacher=${idTeacher}`, function (data) {
+                        if (data === true) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Your information has been saved',
+                                timer: 2000,
+                                showConfirmButton: false
+                            }).then(function () {
+                                $('#frmProduct').off('submit').submit();
+                            })
 
-<form id="frmEdit" method="POST" enctype="multipart/form-data">
-    <div class="card mx-5">
-        <div class="card-header">
-            <h4>Courses</h4>
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <label for="txtID">Course ID</label>
-                <input type="text" class="form-control" id="txtID" name="id" readonly value="{{this.course.idCourse}}">
-            </div>
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Teacher ID is not exist! Please enter another Teacher ID',
+                                icon: 'error',
+                                confirmButtonText: 'Retry'
+                            });
+                        }
+                    })
+                }
 
-            <div class="form-group">
-                <label>Preview Image</label> <br>
-                <img style="width: 200px;" src="{{this.course.imagePath}}" alt="no preview image found">
-            </div>
-            <input type="hidden" value="{{this.course.imagePath}}" name="previewImage">
+            })
+        </script>
 
-            <div class="form-group">
-                <label for="txtImgPath">New Image</label>
-                <input type="file" class="form-control-file" id="txtImgPath" name="image">
-            </div>
+        {{/section}}
 
-            <div class="form-group">
-                <label for="txtVideoPath">Video Path</label>
-                <input type="text" class="form-control-file" id="txtImgPath" name="videoPath"
-                    value="{{this.course.videoPath}}">
-            </div>
+        <form id="frmEdit" method="POST" enctype="multipart/form-data">
+            <div class="card mx-5">
+                <div class="card-header">
+                    <h4>Courses</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="txtID">Course ID</label>
+                        <input type="text" class="form-control" id="txtID" name="id" readonly
+                            value="{{this.course.idCourse}}">
+                    </div>
 
-            <div class="form-group">
-                <label for="txtPrice">Price</label>
-                <input type="number" class="form-control-file" id="txtPrice" name="price" value="{{this.course.price}}">
-            </div>
+                    <div class="form-group">
+                        <label>Preview Image</label> <br>
+                        <img style="width: 200px;" src="{{this.course.imagePath}}" alt="no preview image found">
+                    </div>
+                    <input type="hidden" value="{{this.course.imagePath}}" name="previewImage">
 
-            <div class="form-group">
-                <label for="txtField">Field</label>
-                <input type="text" class="form-control" id="txtField" name="field" required
-                    value="{{this.course.field}}">
-            </div>
+                    <div class="form-group">
+                        <label for="txtImgPath">New Image</label>
+                        <input type="file" class="form-control-file" id="txtImgPath" name="image">
+                    </div>
 
-            <div class="form-group">
-                <label for="txtTitle">Title</label>
-                <input type="text" class="form-control" id="txtTitle" name="title" required
-                    value="{{this.course.title}}">
-            </div>
+                    <div class="form-group">
+                        <label for="txtPrice">Price</label>
+                        <input type="number" class="form-control-file" id="txtPrice" name="price"
+                            value="{{this.course.price}}">
+                    </div>
 
-            <div class="form-group">
-                <label for="txtDescription">Description</label>
-                <input type="text" class="form-control" id="txtDescription" name="description"
-                    value="{{this.course.description}}">
-            </div>
+                    <div class="form-group">
+                        <label for="txtField">Field</label>
+                        <input type="hidden" class="form-control" id="txtFieldtemp" name="fieldtemp" 
+                            value="{{this.course.idCat}}">
+                        <select class="form-control" name='field' id="txtField" value="{{this.course.idCat}}">
+                            {{#each listCategories}}
+                            <option value="{{idCategory}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
 
-            <div class="form-group">
-                <label for="txtDetail">Detail</label>
-                <textarea class="form-control" id="txtDetail" name="detail" rows="3">
+                    <div class="form-group">
+                        <label for="txtTitle">Title</label>
+                        <input type="text" class="form-control" id="txtTitle" name="title" required
+                            value="{{this.course.title}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtDescription">Description</label>
+                        <input type="text" class="form-control" id="txtDescription" name="description"
+                            value="{{this.course.description}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtDetail">Detail</label>
+                        <textarea class="form-control" id="txtDetail" name="detail" rows="3">
                 {{this.course.detail}}
                 </textarea>
-            </div>
+                    </div>
 
-            <div class="form-group">
-                <label for="txtLastModified">Last Modified</label>
-                <input type="text" class="form-control" id="txtLastModified" name="lastModified" readonly
-                    value="{{this.course.lastModified}}">
-            </div>
+                    <div class="form-group">
+                        <label for="txtLastModified">Last Modified</label>
+                        <input type="text" class="form-control" id="txtLastModified" name="lastModified" readonly
+                            value="{{this.course.lastModified}}">
+                    </div>
 
-            <div class="form-group">
-                <label for="txtIdTeacher">ID Teacher</label>
-                <input type="number" class="form-control" id="txtIdTeacher" name="idTeacher"
-                    value="{{this.course.idTeacher}}">
-            </div>
+                    <div class="form-group">
+                        <label for="txtIdTeacher">ID Teacher</label>
+                        <input type="number" class="form-control" id="txtIdTeacher" name="idTeacher"
+                            value="{{this.course.idTeacher}}">
+                    </div>
 
-            <div class="form-group">
-                <label for="txtPreviewDocument">Preview Document</label>
-                <textarea class="form-control" id="txtPreviewDocument" name="previewDocument" rows="3">
-                {{this.course.previewDocument}}
-                </textarea>
+                    <div class="form-group">
+                        <label for="txtStatus">Status</label>
+                        <input type="text" class="form-control" id="txtStatus" name="status"
+                            value="{{this.course.status}}">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" href="/admin/courses" role="button">
+                        <i class="fa fa-backward" aria-hidden="true"></i>
+                        Back to Courses
+                    </a>
+                    <button class="btn btn-danger" type="button" formaction="/admin/courses/delete" id="delete">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        Delete
+                    </button>
+                    <button class="btn btn-success" type="button" formaction="/admin/courses/patch" id="save">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Save
+                    </button>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="txtStatus">Status</label>
-                <input type="text" class="form-control" id="txtStatus" name="status" value="{{this.course.status}}">
-            </div>
-        </div>
-        <div class="card-footer">
-            <a class="btn btn-primary" href="/admin/courses" role="button">
-                <i class="fa fa-backward" aria-hidden="true"></i>
-                Back to Courses
-            </a>
-            <button class="btn btn-danger" type="button" formaction="/admin/courses/delete" id="delete">
-                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                Delete
-            </button>
-            <button class="btn btn-success" type="button" formaction="/admin/courses/patch" id="save">
-                <i class="fa fa-check" aria-hidden="true"></i>
-                Save
-            </button>
-        </div>
-    </div>
-</form>
+        </form>
