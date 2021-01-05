@@ -1,0 +1,78 @@
+{{#section 'js'}}
+{{!-- Editor > --}}
+<script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    plugins: 'paste image link autolink lists table media',
+    menubar: false,
+    toolbar: [
+      'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+    ],
+  });
+
+  $('#txtPoint').val($('#txtPointtemp').val());
+
+</script>
+{{!--< Editor --}}
+ {{/section}} 
+ <form id="frmFeedback" method="POST" action="">
+  <div class="card mx-5">
+    <div class="card-header">
+      <h4>Feedback</h4>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label>ID Feedback</label>
+        <input type="number" class="form-control" id="txtIdFeedback" name="idFeedback" value="{{this.feedback.idFeedback}}"
+          readonly>
+      </div>
+      <div class="form-group">
+        <label>ID User</label>
+        <input type="number" class="form-control" id="txtIdStudent" name="idStudent" value="{{this.feedback.idStudent}}"
+          readonly>
+      </div>
+      <div class="form-group">
+        <label>ID Course</label>
+        <input type="number" class="form-control" id="txtIdCourse" name="idCourse" value="{{this.feedback.idCourse}}"
+          readonly>
+      </div>
+      <div class="form-group">
+        <label>Rating Point</label>
+        <input type="hidden" id="txtPointtemp" value="{{this.feedback.ratingPoint}}">
+        <select class="form-control" name='ratingPoint' id="txtPoint" value="{{this.feedback.ratingPoint}}">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Rating Date</label>
+        <input type="text" class="form-control" id="txtDate" name="dateRating" value="{{this.feedback.dateRating}}"
+          readonly>
+      </div>
+
+      <div class="form-group">
+        <label>Rating Comment</label>
+        <textarea class="form-control" id="txtComment" name="ratingComment">{{this.feedback.ratingComment}}</textarea>
+      </div>
+    </div>
+    <div class="card-footer">
+      <a class="btn btn-primary" href="/admin/feedbacks" role="button">
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        Back to Feedbacks
+      </a>
+      <button class="btn btn-danger" type="submit" formaction="/admin/feedbacks/delete">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+        Delete
+      </button>
+      <button class="btn btn-success" type="submit" formaction="/admin/feedbacks/patch">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Save
+      </button>
+    </div>
+  </div>
+</form>

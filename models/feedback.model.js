@@ -2,7 +2,7 @@ const db = require('../utils/db');
 
 module.exports = {
   async all() {
-    const sql = 'select * from categories';
+    const sql = 'select * from feedbacks';
     const [rows, fields] = await db.load(sql);
     return rows;
   },
@@ -17,7 +17,7 @@ module.exports = {
   },
 
   async single(id) {
-    const sql = `select * from categories where idCategory = ${id}`;
+    const sql = `select * from feedbacks where idFeedback = ${id}`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0)
       return null;
@@ -25,27 +25,27 @@ module.exports = {
     return rows[0];
   },
 
-  async add(category) {
-    const [result, fields] = await db.add(category, 'categories');
+  async add(feedback) {
+    const [result, fields] = await db.add(feedback, 'feedbacks');
     console.log(result);
     return result;
   },
 
   async del(id) {
     const condition = {
-      idCategory: id
+      idFeedback : id
     };
-    const [result, fields] = await db.delete(condition, 'categories');
+    const [result, fields] = await db.delete(condition, 'feedbacks');
     return result;
   },
 
   async patch(entity) {
     const condition = {
-      idCategory: entity.idCategory
+        idFeedback: entity.idFeedback
     };
-    delete (entity.idCategory);
+    delete (entity.idFeedback);
 
-    const [result, fields] = await db.patch(entity, condition, 'categories');
+    const [result, fields] = await db.patch(entity, condition, 'feedbacks');
     return result;
   }
 };
