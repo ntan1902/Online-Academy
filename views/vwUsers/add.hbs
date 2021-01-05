@@ -1,11 +1,25 @@
 {{#section 'css'}}
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 {{/section}}
 
 {{#section 'js'}}
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+{{!-- Editor > --}}
+<script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+        ],
+    });
+</script>
+{{!--< Editor --}} <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+    </script>
     <script>
         function checkEmail(email) {
             if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
@@ -15,7 +29,6 @@
                 return false;
             }
         }
-
         $('#frmRegister').on('submit', function (e) {
             e.preventDefault();
             const username = $('#txtUsername').val();
@@ -24,6 +37,7 @@
             const email = $('#txtEmail').val();
             const dob = $('#txtDob').val();
             const role = $('#txtRole').val();
+            const description = $('#txtUserDescription').val();
 
             if (username.length === 0) {
                 Swal.fire({
@@ -65,7 +79,7 @@
                     confirmButtonText: 'Retry'
                 })
                 return;
-            } else if (role.length === 0) {
+            } else if (role === "Choose your role") {
                 Swal.fire({
                     title: 'Error!',
                     text: 'Invalid Role',
@@ -73,6 +87,13 @@
                     confirmButtonText: 'Retry'
                 })
                 return;
+            } else if (description.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid User Description',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                })
             } else {
                 $.getJSON(`/account/isAvailable?user=${username}`, function (data) {
                     if (data === true) {
@@ -104,47 +125,56 @@
             mask: true,
         });
     </script>
-{{/section}}
+    {{/section}}
 
-<form id="frmRegister" method="POST" action="">
-    <div class="card">
-        <div class="card-header">
-            <h4>New User</h4>
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <label for="txtUsername">Username</label>
-                <input type="text" class="form-control" id="txtUsername" name="username" autofocus required>
+    <form id="frmRegister" method="POST" action="">
+        <div class="card">
+            <div class="card-header">
+                <h4>New User</h4>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="txtUsername">Username</label>
+                    <input type="text" class="form-control" id="txtUsername" name="username" autofocus required>
 
-                <label for="txtPassword">Password</label>
-                <input type="password" class="form-control" id="txtPassword" name="password" required>
+                    <label for="txtPassword">Password</label>
+                    <input type="password" class="form-control" id="txtPassword" name="password" required>
 
-                <label for="txtName">Name</label>
-                <input type="text" class="form-control" id="txtName" name="fullname">
+                    <label for="txtName">Name</label>
+                    <input type="text" class="form-control" id="txtName" name="fullname">
+                    <div class="form-group">
+                        <label for="txtEmail">Email</label>
+                        <input type="text" class="form-control" id="txtEmail" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtRole" class="my-1 ml-3">Role</label>
+                        <select name='role' id="txtRole">
+                            <option selected>Choose your role</option>
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <label for="txtDob">Day of Birth</label>
+                    <input type="text" class="form-control" id="txtDob" name="dob">
 
-                <label for="txtEmail">Email</label>
-                <input type="text" class="form-control" id="txtEmail" name="email">
+                    <label for="txtUserDescription">User Description</label>
+                    <textarea class="form-control" id="txtUserDescription" name="userDescription"></textarea>
 
-                <label for="txtDob">Day of Birth</label>
-                <input type="text" class="form-control" id="txtDob" name="dob">
-
-                <label for="txtRole">Role</label>
-                <input type="text" class="form-control" id="txtRole" name="role">
-
-                {{!-- <input type="hidden" class="form-control" name="role" value="teacher"> --}}
+                    {{!-- <input type="hidden" class="form-control" name="role" value="teacher"> --}}
 
 
+                </div>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary" href="/admin/users" role="button">
+                    <i class="fa fa-backward" aria-hidden="true"></i>
+                    Back to List
+                </a>
+                <button class="btn btn-success" type="submit">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    Save
+                </button>
             </div>
         </div>
-        <div class="card-footer">
-            <a class="btn btn-primary" href="/admin/users" role="button">
-                <i class="fa fa-backward" aria-hidden="true"></i>
-                Back to List
-            </a>
-            <button class="btn btn-success" type="submit">
-                <i class="fa fa-check" aria-hidden="true"></i>
-                Save
-            </button>
-        </div>
-    </div>
-</form>
+    </form>

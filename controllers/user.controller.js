@@ -38,6 +38,7 @@ router.post("/add", async function (req, res) {
     email: req.body.email,
     dob: dob,
     role: req.body.role,
+    userDescription: req.body.userDescription
   };
 
   await userModel.add(user);
@@ -70,8 +71,18 @@ router.post("/delete/", async function (req, res) {
 });
 
 router.post("/patch/", async function (req, res) {
-  req.body.dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
-  await userModel.patch(req.body);
+  const dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
+  const new_user = {
+    idUser: req.body.idUser,
+    username: req.body.username,
+    fullname: req.body.fullname,
+    email: req.body.email,
+    dob: dob,
+    role: req.body.role,
+    userDescription: req.body.userDescription
+  }
+  console.log(new_user);
+  await userModel.patch(new_user);
   res.redirect("/admin/users");
 });
 

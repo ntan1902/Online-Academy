@@ -29,9 +29,9 @@ module.exports = {
 
   async patch(entity) {
     const condition = {
-      idUser: entity.id,
+      idUser: entity.idUser,
     };
-    delete entity.id;
+    delete entity.idUser;
 
     const [result, fields] = await db.patch(entity, condition, "users");
     return result;

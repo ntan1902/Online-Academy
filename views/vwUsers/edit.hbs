@@ -1,11 +1,25 @@
 {{#section 'css'}}
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 {{/section}}
 
 {{#section 'js'}}
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+{{!-- Editor > --}}
+<script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+        ],
+    });
+</script>
+{{!--< Editor --}} <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+    </script>
     <script>
 
         $('#txtDob').datetimepicker({
@@ -14,6 +28,8 @@
             mask: true,
             scrollInput: false
         });
+
+        $('#txtRole').val($('#txtRoletemp').val());
 
         function checkEmail(email) {
             if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
@@ -60,6 +76,7 @@
             const email = $('#txtEmail').val();
             const dob = $('#txtDob').val();
             const role = $('#txtRole').val();
+            const description = $('#txtUserDescription').val();
 
             if (username.length === 0) {
                 Swal.fire({
@@ -101,6 +118,13 @@
                     confirmButtonText: 'Retry'
                 })
                 return;
+            } else if (description.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid User Description',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                })
             } else {
                 if (username !== "{{this.user.username}}") {
                     $.getJSON(`/account/isAvailable?user=${username}`, function (data) {
@@ -129,57 +153,71 @@
         })
     </script>
 
-{{/section}}
-<form id="frmEdit" method="POST">
-    <div class="card">
-        <div class="card-header">
-            <h4>User</h4>
+    {{/section}}
+    <form id="frmEdit" method="POST">
+        <div class="card">
+            <div class="card-header">
+                <h4>User</h4>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="txtID">#</label>
+                    <input type="text" class="form-control" id="txtID" name="idUser" readonly
+                        value="{{this.user.idUser}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="txtUsername">Username</label>
+                    <input type="text" class="form-control" id="txtUsername" name="username" autofocus required
+                        value="{{this.user.username}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="txtFullName">Full name</label>
+                    <input type="text" class="form-control" id="txtFullName" name="fullname"
+                        value="{{this.user.fullname}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="txtEmail">Email</label>
+                    <input type="text" class="form-control" id="txtEmail" name="email" value="{{this.user.email}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="txtDob">Date of Birth</label>
+                    <input type="text" class="form-control" id="txtDob" name="dob" value="{{this.user.dob}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="txtRole" class="mt-1 ml-3"><b>Role</b></label>
+                    <input type="hidden" class="form-control" id="txtRoletemp" name="roletemp"
+                        value="{{this.user.role}}">
+                    <select name='role' id="txtRole" value="{{this.user.role}}">
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="txtUserDescription">User Description</label>
+                    <textarea class="form-control" id="txtUserDescription"
+                        name="userDescription">{{this.user.userDescription}}</textarea>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary" href="/admin/users" role="button">
+                    <i class="fa fa-backward" aria-hidden="true"></i>
+                    Back to List
+                </a>
+                <button class="btn btn-danger" type="button" formaction="/admin/users/delete" id="delete">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    Delete
+                </button>
+                <button class="btn btn-success" type="button" formaction="/admin/users/patch" id="save">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    Save
+                </button>
+            </div>
         </div>
-        <div class="card-body">
-            <div class="form-group">
-                <label for="txtID">#</label>
-                <input type="text" class="form-control" id="txtID" name="id" readonly value="{{this.user.idUser}}">
-            </div>
-
-            <div class="form-group">
-                <label for="txtUsername">Username</label>
-                <input type="text" class="form-control" id="txtUsername" name="username" autofocus required
-                    value="{{this.user.username}}">
-            </div>
-
-            <div class="form-group">
-                <label for="txtFullName">Full name</label>
-                <input type="text" class="form-control" id="txtFullName" name="fullname" value="{{this.user.fullname}}">
-            </div>
-
-            <div class="form-group">
-                <label for="txtEmail">Email</label>
-                <input type="text" class="form-control" id="txtEmail" name="email" value="{{this.user.email}}">
-            </div>
-
-            <div class="form-group">
-                <label for="txtDob">Date of Birth</label>
-                <input type="text" class="form-control" id="txtDob" name="dob" value="{{this.user.dob}}">
-            </div>
-
-            <div class="form-group">
-                <label for="txtRole">Role</label>
-                <input type="text" class="form-control" id="txtRole" name="role" value="{{this.user.role}}">
-            </div>
-        </div>
-        <div class="card-footer">
-            <a class="btn btn-primary" href="/admin/users" role="button">
-                <i class="fa fa-backward" aria-hidden="true"></i>
-                Back to List
-            </a>
-            <button class="btn btn-danger" type="button" formaction="/admin/users/delete" id="delete">
-                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                Delete
-            </button>
-            <button class="btn btn-success" type="button" formaction="/admin/users/patch" id="save">
-                <i class="fa fa-check" aria-hidden="true"></i>
-                Save
-            </button>
-        </div>
-    </div>
-</form>
+    </form>
