@@ -48,7 +48,7 @@ module.exports = {
     const sql = `select * from courses co, categories cat, lessons less where co.idCourse = ${id} and co.idCat = cat.idCategory and less.idCourse = co.idCourse`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
-    return rows[0];
+    return { course: rows[0], previews: rows };
   },
 
   async singleByIdTeacher(teacherID) {
@@ -67,8 +67,7 @@ module.exports = {
     return rows;
   },
 
-  
-  async topViewCourses(){
+  async topViewCourses() {
     const sql = `select c.*
                 from courses c, view v
                 where c.idCourse=v.idCourse
@@ -77,9 +76,9 @@ module.exports = {
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
     return rows;
-},
+  },
 
-async topRegistedCourses(){
+  async topRegistedCourses() {
     const sql = `select c.*
                 from courses c, register r
                 where c.idCourse= r.idCourse
@@ -88,29 +87,28 @@ async topRegistedCourses(){
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
     return rows;
-},
+  },
 
-async newCourses(){
-  const sql = `select c.*
+  async newCourses() {
+    const sql = `select c.*
               from courses c
               order by c.lastModified desc
               limit 10`;
-  const [rows, fields] = await db.load(sql);
-  if (rows.length === 0) return null;
-  return rows;
-},
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0) return null;
+    return rows;
+  },
 
-async topCourses(){
-  const sql = `select c.*
+  async topCourses() {
+    const sql = `select c.*
                 from courses c, view v
                 where yearweek(v.date) = yearweek(curdate()) and c.idCourse=v.idCourse
                 group by (c.idCourse)
                 order by count(*) desc limit 4`;
-  const [rows, fields] = await db.load(sql);
-  if (rows.length === 0) return null;
-  return rows;
-},
-
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0) return null;
+    return rows;
+  },
 
   async add(course) {
     const [result, fields] = await db.add(course, "courses");

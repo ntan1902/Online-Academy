@@ -3,8 +3,8 @@ const courseModel = require("../models/course.model");
 const { paginate } = require("../config/default.json");
 const moment = require("moment");
 const multer = require("multer");
-const path = require("path");
-
+const prettyMilliseconds = require("pretty-ms");
+const videoUrlLink = require("video-url-link");
 const router = express.Router();
 
 function paginating(nPages, page) {
@@ -135,9 +135,27 @@ router.post("/search", async function (req, res, next) {
   });
 });
 
+function getDuration(url) {
+  return new Promise((resolve, reject) => {
+    videoUrlLink.youtube.getInfo(url, { hl: "en" }, (error, info) => {
+      if (error) {
+        //   console.error(error);
+        return reject("ERROR : " + err);
+      } else {
+        const t = info.details;
+        const duration = prettyMilliseconds(Number(t.lengthSeconds * 1000), {
+          colonNotation: true,
+        });
+
+        return resolve(duration);
+      }
+    });
+  });
+}
+
 router.get("/detail/:id", async function (req, res) {
   const id = req.params.id;
-  const course = await courseModel.singleDetail(id);
+  const { course, previews } = await courseModel.singleDetail(id);
   const lastModified = moment(course.lastModified, "DD/MM/YYYY").format(
     "DD/MM/YYYY"
   );
@@ -146,11 +164,16 @@ router.get("/detail/:id", async function (req, res) {
     return res.redirect("/admin/courses");
   }
 
-  // res.json(course);
+  for (let index = 0; index < previews.length; index++) {
+    const dur = await getDuration(previews[index].videoPath);
+    previews[index].duration = dur;
+  }
 
-  // console.log(course);
+  // res.json({ course, previews });
+
   res.render("vwCourses/detail", {
     course,
+    previews,
   });
 });
 

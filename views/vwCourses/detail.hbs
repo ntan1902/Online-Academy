@@ -4,6 +4,43 @@
 
 {{/section}}
 
+{{#section 'js'}}
+  {{!-- <script src="https://cdn.plyr.io/3.6.3/demo.js"></script> --}}
+  <script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
+  <script src="https://cdn.plyr.io/3.6.3/demo.js"></script>
+  <script>
+    $('#displayModal').on('hide.bs.modal', function (e) {
+      const player = new Plyr('#player');
+      window.player = player;
+      player.stop();
+    })
+
+    $('button').click(function () {
+      {{#each this.previews }}
+        $('#{{chapter}}').css('background-color', 'transparent');
+      {{/each}}
+      
+      $(this).css('background-color', '#000');
+      //console.log($(this).val());
+      //console.log($('iframe').attr('src'));
+      //const player = new Plyr('#player');
+      //$('#player').attr('class', "plyr__video-embed");
+      //$('iframe').attr('src', $(this).val());
+
+      let player = $('#player');
+      player.attr('class', 'plyr__video-embed');
+      let frame = $('iframe');
+    
+      frame.attr('src', $(this).val());
+      frame.attr('allowFullScreen', '');
+      frame.attr('allowtransparency', '');
+      frame.attr('allow', 'autoplay');
+    
+      player.append(frame);
+      
+    })
+  </script>
+{{/section}}
 <!-- ================ start banner area ================= -->
 <section class="blog-banner-area" id="blog">
   <div class="container h-100">
@@ -70,7 +107,6 @@
   </div>
 </div>
 <!--================End Single Product Area =================-->
-
 <!--================Modal ==================-->
 <div class="modal fade" id="displayModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -80,6 +116,7 @@
           <h6 class="text-white-50">Preview</h6>
           <h4 class="text-white">{{this.course.title}}</h4>
         </div>
+
         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -87,10 +124,30 @@
       <div class="modal-body">
         <div class="container">
           <div class="embedded-media-player">
-            <div class="plyr__video-embed" id="player">
-              <iframe src="{{this.course.videoPath}}" allowfullscreen allowtransparency allow="autoplay"></iframe>
+            <div id="player">
+              <iframe src="" allowfullscreen allowtransparency allow="autoplay"></iframe>
             </div>
           </div>
+
+          <div class="preview-text">
+            <h6 class="text-white">Free Sample Videos:</h6>
+          </div>
+
+          {{#each this.previews }}
+            {{#if isPreview}}
+
+              <div class="course-previews">
+                <button class="course-preview-row" id="{{chapter}}" value="{{videoPath}}">
+                  <div class="course-preview-row-thumbnail">
+                    <img alt="" width="640" height="480" class="course-preview-row-thumbnail-img" src="{{imagePath}}">
+                  </div>
+                  <div class="course-preview-row-description">{{chapterName}}</div>
+                  <div class="course-preview-row-duration">{{duration}}</div>
+                </button>
+              </div>
+            {{/if}}
+          {{/each}}
+
         </div>
 
 
@@ -402,8 +459,3 @@
   </div>
 </section>
 <!--================ end related Product area =================-->
-
-{{#section 'js'}}
-  <script src="https://cdn.plyr.io/3.6.3/demo.js" crossorigin="anonymous"></script>
-
-{{/section}}
