@@ -2,8 +2,10 @@ const db = require("../utils/db");
 const { paginate } = require("../config/default.json");
 
 module.exports = {
-  async all() { //with detail now
-    const sql = "select * from courses co, categories cat where cat.idCategory = co.idCat";
+  async all() {
+    //with detail now
+    const sql =
+      "select * from courses co, categories cat where cat.idCategory = co.idCat";
     const [rows, fields] = await db.load(sql);
     return rows;
   },
@@ -60,7 +62,7 @@ module.exports = {
   },
 
   async allWithTeacher() {
-    const sql = `select * from courses co, users u where co.idTeacher=u.idUserUser 
+    const sql = `select * from courses co, users u where co.idTeacher=u.idUser 
                 order by co.title limit 10`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
@@ -68,9 +70,9 @@ module.exports = {
   },
 
   async topViewCourses() {
-    const sql = `select c.*
-                from courses c, view v
-                where c.idCourse=v.idCourse
+    const sql = `select c.*, u.fullname
+                from courses c, view v, users u
+                where c.idCourse = v.idCourse and c.idTeacher = u.idUser
                 group by c.idCourse
                 order by count(*) desc limit 10`;
     const [rows, fields] = await db.load(sql);
@@ -79,9 +81,9 @@ module.exports = {
   },
 
   async topRegistedCourses() {
-    const sql = `select c.*
-                from courses c, register r
-                where c.idCourse= r.idCourse
+    const sql = `select c.*, u.fullname
+                from courses c, register r, users u
+                where c.idCourse= r.idCourse and c.idTeacher = u.idUser
                 group by c.idCourse
                 order by count(*) desc limit 10`;
     const [rows, fields] = await db.load(sql);
@@ -90,8 +92,9 @@ module.exports = {
   },
 
   async newCourses() {
-    const sql = `select c.*
-              from courses c
+    const sql = `select c.*, u.fullname
+              from courses c, users u 
+              where c.idTeacher = u.idUser
               order by c.lastModified desc
               limit 10`;
     const [rows, fields] = await db.load(sql);
@@ -100,9 +103,9 @@ module.exports = {
   },
 
   async topCourses() {
-    const sql = `select c.*
-                from courses c, view v
-                where yearweek(v.date) = yearweek(curdate()) and c.idCourse=v.idCourse
+    const sql = `select c.*, u.fullname
+                from courses c, view v, users u
+                where yearweek(v.date) = yearweek(curdate()) and c.idCourse=v.idCourse and c.idTeacher = u.idUser
                 group by (c.idCourse)
                 order by count(*) desc limit 4`;
     const [rows, fields] = await db.load(sql);
@@ -144,21 +147,20 @@ module.exports = {
   },
 
   async pageCourseByKeyword(offset, keyword, sort) {
-    if(!(sort === "Rating")){
-      if(sort=== "Name"){
-        sort= "title";
+    if (!(sort === "Rating")) {
+      if (sort === "Name") {
+        sort = "title";
       }
-    const sql = `select distinct c.*
+      const sql = `select distinct c.*
                 from users u, courses c
                 where match(c.title) against ('${keyword}') or 
                   match(u.fullname) against('${keyword}') and u.idUser=c.idTeacher 
                   or match(c.description) against ('${keyword}')
                 order by ${sort}
                 limit ${paginate.limit} offset ${offset}`;
-    const [rows, fields] = await db.load(sql);
-    return rows;
-    }
-    else {
+      const [rows, fields] = await db.load(sql);
+      return rows;
+    } else {
       const sql = `select distinct c.*
                   from users u, courses c, feedbacks f
                   where (match(c.title) against ('${keyword}') or 
@@ -170,7 +172,6 @@ module.exports = {
       const [rows, fields] = await db.load(sql);
       return rows;
     }
-    
   },
 
   //categories
@@ -183,4 +184,3 @@ module.exports = {
     return rows;
   },
 };
-
