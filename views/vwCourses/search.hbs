@@ -1,13 +1,39 @@
 {{#section 'js'}}
 <script>
-    $(document).ready(function () {
-        $("#sort-keyword").change(function () {
-            const action = $(this).attr('href');
-            var selected = $(this).children("option:selected").val();
-            if (!(selected == $(this).attr('value')))
-                window.location = action + "/" + selected;
-        });
-    });
+
+    let urlParams = new URLSearchParams(location.search);
+    let params = {
+        search: "",
+        sort: ""
+    };
+
+    for (let key in params) {
+        if (!urlParams.has(key)) {
+            urlParams.append(key, params[key]);
+        }
+    }
+
+    if (urlParams.get('sort') == null) {
+        urlParams.set('search', $('#sort-keyword').val());
+        urlParams = new URLSearchParams(location.search.substring(2));
+        params = {
+            search: "",
+            sort: ""
+        };
+
+        for (let key in params) {
+            if (!urlParams.has(key)) {
+                urlParams.append(key, params[key]);
+            }
+        }
+    }
+
+    function selectParams(key, value) {
+        urlParams.set(key, value);
+        let url = `/courses/search/?${urlParams.toString()}`;
+        location.href = url;
+    }
+
 </script>
 {{/section}}
 
@@ -16,19 +42,21 @@
         <h3>Courses</h3>
         <h3> {{this.total}} result for "{{this.showKeyword}}" </h3>
 
+
         {{#if this.have}}
 
-        <select class="sort-keyword" value={{this.sort}} id="sort-keyword" href="/courses/search/{{this.showKeyword}}">
+        <select class="sort-keyword" id="sort-keyword" onchange="selectParams('sort',this.value)"
+            action="/courses/search">
             <option disabled>
                 Sort
             </option>
-            <option value="Name" data-display="{{this.sort}}">
+            <option value="title" data-display="{{this.sort}}">
                 Name
             </option>
-            <option value="Rating">
+            <option value="rating">
                 Rating
             </option>
-            <option value="Price">
+            <option value="price">
                 Price
             </option>
 

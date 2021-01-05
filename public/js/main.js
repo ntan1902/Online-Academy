@@ -72,7 +72,6 @@ $(function () {
   //   );
   // }
   $('#form-search').on('submit', function (e) {
-    e.preventDefault();
     const keyword = $('#input-search').val();
     if (keyword.length <= 2) {
         Swal.fire({
@@ -86,14 +85,6 @@ $(function () {
         return;
     }
     else {
-      const sort = $("#sort-keyword").children("option:selected").val() ;
-      if(sort == null){
-        $('#form-search').attr('action',$('#form-search').attr('action')+"/"+keyword+"/Name");
-      }
-      else{
-        $('#form-search').attr('action',$('#form-search').attr('action')+"/"+keyword+"/"+sort);
-      }
-      
       $('#form-search').off('submit').submit();
     }
   });
@@ -101,6 +92,24 @@ $(function () {
   $(document).ready(function() {
     $('select').niceSelect();
   });
+
+  let urlParams= new URLSearchParams(location.search);
+  let params={
+    search: "",
+    sort: ""
+  };
+
+  for (let key in params){
+    if(!urlParams.has(key)){
+      urlParams.append(key,params[key]);
+    }
+  }
+
+  function selectParams(key,value){
+    urlParams.set(key,value);
+    let url= `/courses/search/?=${urlParams.toString()}`;
+    location.href=url;
+  }
 });
 
 

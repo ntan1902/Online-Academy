@@ -147,10 +147,11 @@ module.exports = {
   },
 
   async pageCourseByKeyword(offset, keyword, sort) {
-    if (!(sort === "Rating")) {
-      if (sort === "Name") {
-        sort = "title";
-      }
+    if(sort == null){
+      sort="title";
+    }
+    if (sort !== "rating") {
+
       const sql = `select distinct c.*
                 from users u, courses c
                 where match(c.title) against ('${keyword}') or 
@@ -172,6 +173,15 @@ module.exports = {
       const [rows, fields] = await db.load(sql);
       return rows;
     }
+    /*const sql = `select distinct c.*
+                from users u, courses c
+                where match(c.title) against ('${keyword}') or 
+                  match(u.fullname) against('${keyword}') and u.idUser=c.idTeacher 
+                  or match(c.description) against ('${keyword}')
+
+                limit ${paginate.limit} offset ${offset}`;
+      const [rows, fields] = await db.load(sql);
+      return rows;*/
   },
 
   //categories

@@ -91,9 +91,10 @@ router.get("/byField/:field", async function (req, res) {
   });
 });
 
-router.post("/search/:keyword/:sort", async function (req, res) {
-  var keyword = req.params.keyword;
-  var sort = req.params.sort;
+
+router.get("/search", async function (req, res) {
+  var keyword = req.query.search;
+  var sort = req.query.sort;
 
   var page = req.query.page || 1;
 
@@ -106,76 +107,22 @@ router.post("/search/:keyword/:sort", async function (req, res) {
   let nPages = Math.floor(total / paginate.limit);
   if (total % paginate.limit > 0) nPages++; //for the remaining courses
 
-  let {
-    disablePrev,
-    disableNext,
-    prevPage,
-    nextPage,
-    page_numbers,
-  } = paginating(nPages, page);
+  let pagination = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourseByKeyword(
-    offset,
-    funcKeyword,
-    sort
-  );
+  const list_courses = await courseModel.pageCourseByKeyword(offset,funcKeyword,sort);
+
   res.render("vwCourses/search", {
-    sort,
     showKeyword,
-    total,
-    courses: list_courses,
-    page_numbers,
-    empty: list_courses.length === 0,
-    have: list_courses.length > 0,
-    prevPage,
-    nextPage,
-    disablePrev,
-    disableNext,
-  });
-});
-
-router.get("/search/:keyword/:sort", async function (req, res) {
-  var keyword = req.params.keyword;
-  var sort = req.params.sort;
-
-  var page = req.query.page || 1;
-
-  var funcKeyword = keyword.replace(/\s+/g, ",");
-
-  const total = await courseModel.countCourseByKeyword(funcKeyword);
-
-  var showKeyword = funcKeyword.split(",").join(" ");
-
-  let nPages = Math.floor(total / paginate.limit);
-  if (total % paginate.limit > 0) nPages++; //for the remaining courses
-
-  let {
-    disablePrev,
-    disableNext,
-    prevPage,
-    nextPage,
-    page_numbers,
-  } = paginating(nPages, page);
-
-  const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourseByKeyword(
-    offset,
-    funcKeyword,
-    sort
-  );
-  res.render("vwCourses/search", {
     sort,
-    showKeyword,
-    total,
     courses: list_courses,
-    page_numbers,
+    page_numbers: pagination.page_numbers,
     empty: list_courses.length === 0,
-    have: list_courses.length > 0,
-    prevPage,
-    nextPage,
-    disablePrev,
-    disableNext,
+    have: list_courses.length >0,
+    prevPage: pagination.prevPage,
+    nextPage: pagination.nextPage,
+    disablePrev: pagination.disablePrev,
+    disableNext: pagination.disableNext,
   });
 });
 
