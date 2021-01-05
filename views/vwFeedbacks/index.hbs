@@ -32,10 +32,10 @@
 <div class="card shadow">
 
     <div class="card-header d-flex justify-content-between">
-        <h4>Categories</h4>
-        <a class="btn btn-outline-success" href="/admin/categories/add" role="button">
+        <h4>Feedback</h4>
+        <a class="btn btn-outline-success" href="/admin/feedbacks/add" role="button">
             <i class="fa fa-plus" aria-hidden="true"></i>
-            Add Category
+            Add Feedback
         </a>
     </div>
     <div class="card-body">
@@ -43,8 +43,10 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Category Name</th>
-                    <th>Amount of Courses</th>
+                    <th>ID User</th>
+                    <th>ID Course</th>
+                    <th>Rating Point</th>
+                    <th>Rating Date</th>
                     <th>Edit</th>
 
                 </tr>
@@ -53,22 +55,25 @@
             <tfoot>
                 <tr>
                     <th>#</th>
-                    <th>Category Name</th>
-                    <th>Amount of Courses</th>
+                    <th>ID User</th>
+                    <th>ID Course</th>
+                    <th>Rating Point</th>
+                    <th>Rating Date</th>
                     <th>Edit</th>
-
                 </tr>
             </tfoot>
 
             <tbody>
-                {{#each listCategories}}
+                {{#each listFeedbacks}}
                 <tr>
-                    <th scope="row">{{idCategory}}</th>
-                    <td>{{name}}</td>
-                    <td>{{ProductCount}}</td>
+                    <th scope="row">{{idFeedback}}</th>
+                    <td>{{idStudent}}</td>
+                    <td>{{idCourse}}</td>
+                    <td>{{ratingPoint}}</td>
+                    <td>{{dateRating}}</td>
                     <td>
                         <a name="" id="" class="btn btn-sm btn-primary" title="Edit"
-                            href="/admin/categories/edit/{{idCategory}}" role="button">
+                            href="/admin/feedbacks/edit/{{idFeedback}}" role="button">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
                     </td>

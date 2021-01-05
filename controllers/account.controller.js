@@ -28,7 +28,7 @@ router.post("/signin", async function (req, res) {
   }
 
   req.session.auth = true;
-  req.session.authUser = user;
+  req.session.authUser = user; //initial authen session for user
   req.session.isAdmin = user.role === "admin";
   if (req.session.isAdmin) {
     res.redirect("/admin");

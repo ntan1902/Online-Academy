@@ -74,7 +74,8 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         {{#each listCategories}}
-                                        <a class="dropdown-item" href="/admin/courses/byField/{{this.name}}">{{this.name}}</a>
+                                        <a class="dropdown-item"
+                                            href="/admin/courses/byField/{{this.name}}">{{this.name}}</a>
                                         {{/each}}
                                     </div>
                                 </div>
@@ -84,6 +85,14 @@
                                 <div class="dropdown">
                                     <a href="/admin/categories">
                                         <b>Categories</b>
+                                    </a>
+                                </div>
+                            </div>
+                            <div
+                                class="list-group-item list-group-item-action {{#if manageFeedbacks}} list-group-item-info {{/if}}">
+                                <div class="dropdown">
+                                    <a href="/admin/feedbacks">
+                                        <b>Feedbacks</b>
                                     </a>
                                 </div>
                             </div>

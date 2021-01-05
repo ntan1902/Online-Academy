@@ -17,12 +17,15 @@ router.get('/edit/:id', async function (req, res) {
   }
 
   res.render('vwCategories/edit', {
+    layout: "admin.hbs",
     category
   });
 })
 
 router.get('/add', function (req, res) {
-  res.render('vwCategories/add');
+  res.render('vwCategories/add', {
+    layout: "admin.hbs"
+  });
 })
 
 router.post('/add', async function (req, res) {
