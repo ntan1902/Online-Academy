@@ -23,38 +23,6 @@ const upload = multer({
   limits: { fileSize: 1000000 },
 });
 
-function paginating(nPages, page) {
-  var page_numbers = [];
-  var disablePrev = false;
-  var disableNext = false;
-  var prevPage, nextPage;
-
-  for (i = 1; i <= nPages; i++) {
-    let currentPage = i === +page;
-    if (currentPage) {
-      if (i === 1) {
-        disablePrev = true;
-        if (nPages === 1) {
-          disableNext = true;
-        }
-      } else if (i === nPages) {
-        disableNext = true;
-        if (nPages === 1) {
-          disablePrev = true;
-        }
-      }
-      prevPage = i - 1;
-      nextPage = i + 1;
-    }
-    page_numbers.push({
-      value: i,
-      isCurrentPage: currentPage,
-    });
-  }
-
-  return { disablePrev, disableNext, prevPage, nextPage, page_numbers };
-}
-
 router.get("/", async function (req, res, next) {
   const list_courses = await courseModel.all();
 
@@ -62,7 +30,8 @@ router.get("/", async function (req, res, next) {
     layout: "admin.hbs",
     manageUsers: false,
     manageCourses: true,
-
+    manageCategories: false,
+    manageFeedbacks: false,
     courses: list_courses,
     empty: list_courses.length === 0,
   });

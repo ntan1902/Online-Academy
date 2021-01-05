@@ -155,30 +155,36 @@ function getDuration(url) {
 
 router.get("/detail/:id", async function (req, res) {
   const id = req.params.id;
-  const { course, previews } = await courseModel.singleDetail(id);
+
+  // Tui truy vấn lấy lên course với previews chung 1 hàm á ông, ông tách hàm ra đi
+  const course = await courseModel.single(id);
+  const previews = await courseModel.singlePreviews(id);
 
   // Invalid date
-  // const lastModified = moment(course.lastModified, "DD/MM/YYYY").format(
-  //   "DD/MM/YYYY"
-  // );
-  // course.lastModified = lastModified;
+  const lastModified = moment(course.lastModified, "YYYY-MM-DD").format(
+    "DD/MM/YYYY"
+  );
+  course.lastModified = lastModified;
   if (course === null) {
     return res.redirect("/admin/courses");
   }
 
-  for (let index = 0; index < previews.length; index++) {
-    const dur = await getDuration(previews[index].videoPath);
-    previews[index].duration = dur;
-    previews[index].isActive = false;
+  let firstPreview = null;
+  if (previews !== null) {
+    for (let index = 0; index < previews.length; index++) {
+      const dur = await getDuration(previews[index].videoPath);
+      previews[index].duration = dur;
+      previews[index].isActive = false;
+    }
+    previews[0].isActive = true;
+    firstPreview = previews[0];
   }
-  previews[0].isActive = true;
-
   // res.json({ course, previews });
 
   res.render("vwCourses/detail", {
     course,
     previews,
-    firstPreview: previews[0],
+    firstPreview,
   });
 });
 

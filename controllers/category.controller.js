@@ -6,6 +6,10 @@ const router = express.Router();
 router.get('/', async function (req, res) {
   res.render("vwCategories/index", {
     layout: "admin.hbs",
+    manageUsers: false,
+    manageCourses: false,
+    manageCategories: true,
+    manageFeedbacks: false,
   });
 })
 

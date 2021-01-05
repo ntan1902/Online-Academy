@@ -13,6 +13,8 @@ router.get("/", async function (req, res) {
     layout: "admin.hbs",
     manageUsers: true,
     manageCourses: false,
+    manageCategories: false,
+    manageFeedbacks: false,
     list: list,
     empty: list.length === 0,
   });

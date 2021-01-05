@@ -9,19 +9,20 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#">
+                <a class="nav-link" href="/courses">
                     <b>Categories</b>
                 </a>
-                <div class=" dropdown-menu">
-                    <div class="dropright btn-group w-100">
+                <div class="dropdown-menu">
+                    <div class="dropright btn-group w-50">
                         <a class="btn w-100 d-flex justify-content-between m-2">
                             IT
                             <i class="fa fa-caret-right mt-1" aria-hidden="true"></i>
                         </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/courses/">All Courses</a>
-                            <a class="dropdown-item" href="/courses/byField/web">IT Website</a>
-                            <a class="dropdown-item" href="/courses/byField/mobile">IT Mobile</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {{#each listCategories}}
+                            <a class="dropdown-item" href="/courses/byField/{{this.name}}"
+                                style="text-transform: capitalize;">{{this.name}}</a>
+                            {{/each}}
                         </div>
                     </div>
                 </div>
@@ -45,9 +46,14 @@
 
         <form id="frmSignout" action="/account/signout" method="POST"></form>
         <ul class="navbar-nav ml-auto">
+
             <li class="nav-item dropdown mr-5">
-                <a class="nav-link" href="/admin">
+                <a class="nav-link" href="#">
+                    {{#if isAdmin}}
                     <b class="text-warning">Welcome Admin</b>
+                    {{else}}
+                    <b class="text-dark">{{authUser.fullname}}</b>
+                    {{/if}}
                 </a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="/account/profile">
