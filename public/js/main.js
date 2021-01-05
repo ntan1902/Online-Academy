@@ -1,38 +1,6 @@
 $(function () {
   "use strict";
 
-  //------- Parallax -------//
-  skrollr.init({
-    forceHeight: false,
-  });
-
-  //------- Active Nice Select --------//
-  $("select").niceSelect();
-
-  //------- hero carousel -------//
-  $(".hero-carousel").owlCarousel({
-    items: 3,
-    margin: 10,
-    autoplay: false,
-    autoplayTimeout: 5000,
-    loop: true,
-    nav: false,
-    dots: false,
-    responsive: {
-      0: {
-        items: 1,
-      },
-      600: {
-        items: 2,
-      },
-      810: {
-        items: 3,
-      },
-    },
-  });
-
-  //------- Best Seller Carousel -------//
-
   if ($(".owl-carousel").length > 0) {
     $(".myCarousel").owlCarousel({
       loop: true,
@@ -71,51 +39,68 @@ $(function () {
     dots: false,
   });
 
-  //------- mailchimp --------//
-  function mailChimp() {
-    $("#mc_embed_signup").find("form").ajaxChimp();
-  }
-  mailChimp();
+  // //------- Price Range slider -------//
+  // if (document.getElementById("price-range")) {
+  //   var nonLinearSlider = document.getElementById("price-range");
 
-  //------- fixed navbar --------//
-  $(window).scroll(function () {
-    var sticky = $(".header_area"),
-      scroll = $(window).scrollTop();
+  //   noUiSlider.create(nonLinearSlider, {
+  //     connect: true,
+  //     behaviour: "tap",
+  //     start: [500, 4000],
+  //     range: {
+  //       // Starting at 500, step the value by 500,
+  //       // until 4000 is reached. From there, step by 1000.
+  //       min: [0],
+  //       "10%": [500, 500],
+  //       "50%": [4000, 1000],
+  //       max: [10000],
+  //     },
+  //   });
 
-    if (scroll >= 100) sticky.addClass("fixed");
-    else sticky.removeClass("fixed");
+  //   var nodes = [
+  //     document.getElementById("lower-value"), // 0
+  //     document.getElementById("upper-value"), // 1
+  //   ];
+
+  //   // Display the slider value and how far the handle moved
+  //   // from the left edge of the slider.
+  //   nonLinearSlider.noUiSlider.on(
+  //     "update",
+  //     function (values, handle, unencoded, isTap, positions) {
+  //       nodes[handle].innerHTML = values[handle];
+  //     }
+  //   );
+  // }
+  $('#form-search').on('submit', function (e) {
+    e.preventDefault();
+    const keyword = $('#input-search').val();
+    if (keyword.length <= 2) {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Keyword must have more than 2 character',
+            icon: 'error',
+            confirmButtonText: 'Retry'
+        }).then(function () {
+            $('#input-search').val("");
+        });
+        return;
+    }
+    else {
+      const sort = $("#sort-keyword").children("option:selected").val() ;
+      if(sort == null){
+        $('#form-search').attr('action',$('#form-search').attr('action')+"/"+keyword+"/Name");
+      }
+      else{
+        $('#form-search').attr('action',$('#form-search').attr('action')+"/"+keyword+"/"+sort);
+      }
+      
+      $('#form-search').off('submit').submit();
+    }
   });
 
-  //------- Price Range slider -------//
-  if (document.getElementById("price-range")) {
-    var nonLinearSlider = document.getElementById("price-range");
-
-    noUiSlider.create(nonLinearSlider, {
-      connect: true,
-      behaviour: "tap",
-      start: [500, 4000],
-      range: {
-        // Starting at 500, step the value by 500,
-        // until 4000 is reached. From there, step by 1000.
-        min: [0],
-        "10%": [500, 500],
-        "50%": [4000, 1000],
-        max: [10000],
-      },
-    });
-
-    var nodes = [
-      document.getElementById("lower-value"), // 0
-      document.getElementById("upper-value"), // 1
-    ];
-
-    // Display the slider value and how far the handle moved
-    // from the left edge of the slider.
-    nonLinearSlider.noUiSlider.on(
-      "update",
-      function (values, handle, unencoded, isTap, positions) {
-        nodes[handle].innerHTML = values[handle];
-      }
-    );
-  }
+  $(document).ready(function() {
+    $('select').niceSelect();
+  });
 });
+
+

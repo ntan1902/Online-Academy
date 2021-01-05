@@ -145,15 +145,34 @@ async topCourses(){
     return rows[0].total;
   },
 
-  async pageCourseByKeyword(offset, keyword) {
+  async pageCourseByKeyword(offset, keyword, sort) {
+    if(!(sort === "Rating")){
+      if(sort=== "Name"){
+        sort= "title";
+      }
     const sql = `select distinct c.*
-                    from users u, courses c
-                    where match(c.title) against ('${keyword}') or 
-                    match(u.fullname) against('${keyword}') and u.idUser=c.idTeacher 
-                    or match(c.description) against ('${keyword}') 
-                    limit ${paginate.limit} offset ${offset}`;
+                from users u, courses c
+                where match(c.title) against ('${keyword}') or 
+                  match(u.fullname) against('${keyword}') and u.idUser=c.idTeacher 
+                  or match(c.description) against ('${keyword}')
+                order by ${sort}
+                limit ${paginate.limit} offset ${offset}`;
     const [rows, fields] = await db.load(sql);
     return rows;
+    }
+    else {
+      const sql = `select distinct c.*
+                  from users u, courses c, feedbacks f
+                  where (match(c.title) against ('${keyword}') or 
+                    match(u.fullname) against('${keyword}') and u.idUser=c.idTeacher 
+                    or match(c.description) against ('${keyword}')) and f.idCourse=c.idCourse 
+                  group by c.idCourse
+                  order by avg (distinct f.ratingPoint) desc
+      limit ${paginate.limit} offset ${offset}`;
+      const [rows, fields] = await db.load(sql);
+      return rows;
+    }
+    
   },
 
   //categories
@@ -166,3 +185,4 @@ async topCourses(){
     return rows;
   },
 };
+

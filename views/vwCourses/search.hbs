@@ -1,8 +1,42 @@
+{{#section 'js'}}
+<script>
+    $(document).ready(function () {
+        $("#sort-keyword").change(function () {
+            const action = $(this).attr('href');
+            var selected = $(this).children("option:selected").val();
+            if (!(selected == $(this).attr('value')))
+                window.location = action + "/" + selected;
+        });
+    });
+</script>
+{{/section}}
+
 <div class="card shadow w-75 mx-auto mt-3 mb-3">
     <div class="card-header d-flex justify-content-between">
-        <h4>Courses</h4>
+        <h3>Courses</h3>
         <h3> {{this.total}} result for "{{this.showKeyword}}" </h3>
+
+        {{#if this.have}}
+
+        <select class="sort-keyword" value={{this.sort}} id="sort-keyword" href="/courses/search/{{this.showKeyword}}">
+            <option disabled data-display="{{this.sort}}">
+                Sort
+            </option>
+            <option value="Name">
+                Name
+            </option>
+            <option value="Rating">
+                Rating
+            </option>
+            <option value="Price">
+                Price
+            </option>
+
+        </select>
+
+        {{/if}}
     </div>
+
     <div class="card-body">
         {{#if this.empty}}
         <h4 class="card-title">Sorry, we couldn't find any results for "{{this.showKeyword}}"</h4>
@@ -15,6 +49,7 @@
         {{else}}
         <div class="container">
             <div class="row">
+
                 {{#each this.courses}}
                 <div class="col-md-3 col-sm-6 mb-2">
                     <div class="product-grid4 h-100">

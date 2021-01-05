@@ -91,22 +91,21 @@ router.get("/byField/:field", async function (req, res) {
   });
 });
 
-router.post("/search", async function (req, res, next) {
-  var keyword = req.body.search;
+router.post("/search/:keyword/:sort", async function (req, res) {
+  var keyword = req.params.keyword;
+  var sort = req.params.sort;
 
   var page = req.query.page || 1;
-  if (page < 1) page = 1;
 
   var funcKeyword = keyword.replace(/\s+/g, ",");
-  console.log(funcKeyword);
 
   const total = await courseModel.countCourseByKeyword(funcKeyword);
 
   var showKeyword = funcKeyword.split(",").join(" ");
-  console.log(total);
+
   let nPages = Math.floor(total / paginate.limit);
   if (total % paginate.limit > 0) nPages++; //for the remaining courses
-  console.log(nPages);
+
 
   let {
     disablePrev,
@@ -117,17 +116,56 @@ router.post("/search", async function (req, res, next) {
   } = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourseByKeyword(
-    offset,
-    funcKeyword
-  );
-
+  const list_courses = await courseModel.pageCourseByKeyword(offset,funcKeyword,sort);
   res.render("vwCourses/search", {
+    sort,
     showKeyword,
     total,
     courses: list_courses,
     page_numbers,
     empty: list_courses.length === 0,
+    have: list_courses.length > 0,
+    prevPage,
+    nextPage,
+    disablePrev,
+    disableNext,
+  });
+});
+
+router.get("/search/:keyword/:sort", async function (req, res) {
+  var keyword = req.params.keyword;
+  var sort = req.params.sort;
+
+  var page = req.query.page || 1;
+
+  var funcKeyword = keyword.replace(/\s+/g, ",");
+
+  const total = await courseModel.countCourseByKeyword(funcKeyword);
+
+  var showKeyword = funcKeyword.split(",").join(" ");
+
+  let nPages = Math.floor(total / paginate.limit);
+  if (total % paginate.limit > 0) nPages++; //for the remaining courses
+
+
+  let {
+    disablePrev,
+    disableNext,
+    prevPage,
+    nextPage,
+    page_numbers,
+  } = paginating(nPages, page);
+
+  const offset = (page - 1) * paginate.limit;
+  const list_courses = await courseModel.pageCourseByKeyword(offset,funcKeyword,sort);
+  res.render("vwCourses/search", {
+    sort,
+    showKeyword,
+    total,
+    courses: list_courses,
+    page_numbers,
+    empty: list_courses.length === 0,
+    have: list_courses.length > 0,
     prevPage,
     nextPage,
     disablePrev,
