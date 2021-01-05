@@ -4,17 +4,47 @@
 
 {{/section}}
 
+{{#section 'js'}}
+  {{!-- <script src="https://cdn.plyr.io/3.6.3/demo.js"></script> --}}
+  <script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const player = new Plyr('#player');
+      window.player = player;
+
+      $('#displayModal').on('hide.bs.modal', function (e) {
+        player.stop();
+      })
+
+      $('button').click(function () {
+        $("button").css('background-color', 'transparent');
+        $(this).css('background-color', '#000');
+
+        player.source = {
+          type: 'video',
+          sources: [
+            {
+              src: $(this).val(),
+              provider: 'youtube',
+            },
+          ],
+        };
+
+      });
+    })
+  </script>
+{{/section}}
 <!-- ================ start banner area ================= -->
 <section class="blog-banner-area" id="blog">
   <div class="container h-100">
     <div class="blog-banner">
       <div class="text-center">
-        <h1>Shop Single</h1>
+        <h1>Course Detail</h1>
         <nav aria-label="breadcrumb" class="banner-breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">
-              Shop Single
+              Course Detail
             </li>
           </ol>
         </nav>
@@ -30,7 +60,11 @@
       <div class="col-lg-6">
         <div class="single-prd-item btn" data-toggle="modal" data-target="#displayModal">
           <img class="detail-img" src="{{this.course.imagePath}}" alt="image" />
-          <i class="fa fa-play-circle fa-4x icon-play" aria-hidden="true"></i>
+          <div class="background-icon"></div>
+          <div class="icon-play">
+            <i class="fa fa-play-circle-o fa-4x" aria-hidden="true"></i>
+          </div>
+
         </div>
       </div>
       <div class="col-lg-5 offset-lg-1">
@@ -70,7 +104,6 @@
   </div>
 </div>
 <!--================End Single Product Area =================-->
-
 <!--================Modal ==================-->
 <div class="modal fade" id="displayModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -80,6 +113,7 @@
           <h6 class="text-white-50">Preview</h6>
           <h4 class="text-white">{{this.course.title}}</h4>
         </div>
+
         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -88,9 +122,30 @@
         <div class="container">
           <div class="embedded-media-player">
             <div class="plyr__video-embed" id="player">
-              <iframe src="{{this.course.videoPath}}" allowfullscreen allowtransparency allow="autoplay"></iframe>
+              <iframe src="{{this.firstPreview.videoPath}}" allowfullscreen allowtransparency allow="autoplay"></iframe>
             </div>
           </div>
+
+          <div class="preview-text">
+            <h6 class="text-white">Free Sample Videos:</h6>
+          </div>
+
+          {{#each this.previews }}
+            {{#if isPreview}}
+
+              <div class="course-previews">
+                <button class="course-preview-row" {{#if isActive}}style="background-color: #000;" {{/if}}
+                  id="{{chapter}}" value="{{videoPath}}">
+                  <div class="course-preview-row-thumbnail">
+                    <img alt="" width="640" height="480" class="course-preview-row-thumbnail-img" src="{{imagePath}}">
+                  </div>
+                  <div class="course-preview-row-description">{{chapterName}}</div>
+                  <div class="course-preview-row-duration">{{duration}}</div>
+                </button>
+              </div>
+            {{/if}}
+          {{/each}}
+
         </div>
 
 
@@ -402,8 +457,3 @@
   </div>
 </section>
 <!--================ end related Product area =================-->
-
-{{#section 'js'}}
-  <script src="https://cdn.plyr.io/3.6.3/demo.js" crossorigin="anonymous"></script>
-
-{{/section}}
