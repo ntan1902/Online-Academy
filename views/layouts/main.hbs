@@ -27,13 +27,15 @@
         href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-colvis-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.css" />
 
     <!-- Public Vendors -->
-    {{!-- <link rel="stylesheet" href="/public/vendors/themify-icons/themify-icons.css" /> --}}
+    {{!--
+    <link rel="stylesheet" href="/public/vendors/themify-icons/themify-icons.css" /> --}}
     <link rel="stylesheet" href="/public/vendors/linericon/style.css" />
     <link rel="stylesheet" href="/public/vendors/nice-select/nice-select.css" />
     <link rel="stylesheet" href="/public/vendors/owl-carousel/owl.theme.default.min.css" />
     <link rel="stylesheet" href="/public/vendors/owl-carousel/owl.carousel.min.css" />
 
-
+    <!--Nice Select -->
+    <link rel="stylesheet" href="path/to/nice-select.css">
 
     <link rel="stylesheet" href="/public/css/style.css" />
     {{!--
@@ -47,7 +49,7 @@
     {{#if auth}}
         {{> headerAuth}}
     {{else}}
-        {{> header }}
+    {{> header }}
     {{/if}}
     {{{body}}}
 
@@ -73,7 +75,12 @@
     <!-- Public Vendors -->
     <script src="/public/vendors/owl-carousel/owl.carousel.min.js"></script>
     <script src="/public/vendors/nice-select/jquery.nice-select.min.js"></script>
-    {{!-- <script src="/public/js/main.js"></script> --}}
+
+    <script src="/public/js/main.js"></script>
+
+    <!--Nice Select -->
+    <script src="path/to/jquery.js"></script>
+    <script src="path/to/jquery.nice-select.js"></script>
 
     {{{_sections.js}}}
 </body>
