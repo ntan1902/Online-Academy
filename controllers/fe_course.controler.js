@@ -113,6 +113,7 @@ router.get("/search", async function (req, res) {
   const list_courses = await courseModel.pageCourseByKeyword(offset,funcKeyword,sort);
 
   res.render("vwCourses/search", {
+    total,
     showKeyword,
     sort,
     courses: list_courses,

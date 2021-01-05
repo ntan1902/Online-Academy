@@ -31,9 +31,14 @@
     function selectParams(key, value) {
         urlParams.set(key, value);
         let url = `/courses/search/?${urlParams.toString()}`;
+        $('select').niceSelect('update'); //Tell the plugin to recreate the DIV.
         location.href = url;
     }
 
+    if (urlParams.get('sort') != "") {
+        $('select').val(urlParams.get('sort'));
+        $('select').niceSelect('update');
+    }
 </script>
 {{/section}}
 

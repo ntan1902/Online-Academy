@@ -89,9 +89,7 @@ $(function () {
     }
   });
 
-  $(document).ready(function() {
-    $('select').niceSelect();
-  });
+  $('select').niceSelect();
 
   let urlParams= new URLSearchParams(location.search);
   let params={
