@@ -4,7 +4,7 @@ const { paginate } = require("../config/default.json");
 const moment = require("moment");
 const multer = require("multer");
 const prettyMilliseconds = require("pretty-ms");
-const videoUrlLink = require("video-url-link");
+const videoUrlLink = require("../public/video-url-link");
 const router = express.Router();
 
 function paginating(nPages, page) {
@@ -156,10 +156,12 @@ function getDuration(url) {
 router.get("/detail/:id", async function (req, res) {
   const id = req.params.id;
   const { course, previews } = await courseModel.singleDetail(id);
-  const lastModified = moment(course.lastModified, "DD/MM/YYYY").format(
-    "DD/MM/YYYY"
-  );
-  course.lastModified = lastModified;
+
+  // Invalid date
+  // const lastModified = moment(course.lastModified, "DD/MM/YYYY").format(
+  //   "DD/MM/YYYY"
+  // );
+  // course.lastModified = lastModified;
   if (course === null) {
     return res.redirect("/admin/courses");
   }
@@ -169,7 +171,6 @@ router.get("/detail/:id", async function (req, res) {
     previews[index].duration = dur;
     previews[index].isActive = false;
   }
-
   previews[0].isActive = true;
 
   // res.json({ course, previews });
@@ -177,7 +178,7 @@ router.get("/detail/:id", async function (req, res) {
   res.render("vwCourses/detail", {
     course,
     previews,
-    firstPreview: previews[0]
+    firstPreview: previews[0],
   });
 });
 
