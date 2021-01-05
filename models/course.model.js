@@ -46,11 +46,11 @@ module.exports = {
     if (rows.length === 0) return null;
     return rows[0];
   },
-  async singleDetail(id) {
+  async singlePreviews(id) {
     const sql = `select * from courses co, categories cat, lessons less where co.idCourse = ${id} and co.idCat = cat.idCategory and less.idCourse = co.idCourse`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
-    return { course: rows[0], previews: rows };
+    return rows;
   },
 
   async singleByIdTeacher(teacherID) {

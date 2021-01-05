@@ -19,10 +19,10 @@
         {{#if this.have}}
 
         <select class="sort-keyword" value={{this.sort}} id="sort-keyword" href="/courses/search/{{this.showKeyword}}">
-            <option disabled data-display="{{this.sort}}">
+            <option disabled>
                 Sort
             </option>
-            <option value="Name">
+            <option value="Name" data-display="{{this.sort}}">
                 Name
             </option>
             <option value="Rating">

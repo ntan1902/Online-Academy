@@ -22,19 +22,23 @@
                 <div class="list-group-item list-group-item-action" id="dropdownMenuLink">
                     <div class="dropdown">
                         <a href="/admin/courses">
-                            <b>Course</b>
+                            <b>Courses</b>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             {{#each listCategories}}
-                                <a class="dropdown-item" href="/admin/courses/byField/{{this.name}}">{{this.name}}</a>
+                            <a class="dropdown-item" href="/admin/courses/byField/{{this.name}}"
+                                style="text-transform: capitalize;">{{this.name}}</a>
                             {{/each}}
                         </div>
                     </div>
-                    
+
                 </div>
 
-                <a href="/admin/courses" class="list-group-item list-group-item-action">
-                    <b>Category</b>
+                <a href="/admin/categories" class="list-group-item list-group-item-action">
+                    <b>Categories</b>
+                </a>
+                <a href="/admin/feedbacks" class="list-group-item list-group-item-action">
+                    <b>Feedbacks</b>
                 </a>
             </div>
         </div>

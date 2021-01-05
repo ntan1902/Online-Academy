@@ -9,19 +9,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="/courses">
+                <a class="nav-link " href="/courses">
                     <b>Categories</b>
                 </a>
                 <div class="dropdown-menu">
-                    <div class="dropright btn-group w-50">
+                    <div class="dropright btn-group w-100">
                         <a class="btn w-100 d-flex justify-content-between m-2">
                             IT
                             <i class="fa fa-caret-right mt-1" aria-hidden="true"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/courses">All Courses</a>
-                            <a class="dropdown-item" href="/courses/byField/web">IT Website</a>
-                            <a class="dropdown-item" href="/courses/byField/mobile">IT Mobile</a>
+                            {{#each listCategories}}
+                            <a class="dropdown-item" href="/courses/byField/{{this.name}}" style="text-transform: capitalize;">{{this.name}}</a>
+                            {{/each}}
                         </div>
                     </div>
                 </div>

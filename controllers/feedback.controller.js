@@ -12,6 +12,10 @@ router.get("/", async function (req, res) {
     res.render("vwFeedbacks/index", {
         layout: "admin.hbs",
         listFeedbacks,
+        manageUsers: false,
+        manageCourses: false,
+        manageCategories: false,
+        manageFeedbacks: true,
         empty: listFeedbacks.length === 0,
     });
 });
@@ -48,7 +52,7 @@ router.post("/add", async function (req, res) {
   }
   console.log(new_feedback);
   await feedbackModel.add(new_feedback);
-  res.redirect("/admin/feedbacks");
+  //res.redirect("/admin/feedbacks");
 });
 
 router.post("/delete", async function (req, res) {
@@ -71,5 +75,14 @@ router.post("/patch", async function (req, res) {
   await feedbackModel.patch(new_feedback);
   res.redirect("/admin/feedbacks");
 });
+
+router.get("/test", async function(req, res) {
+  res.render("vwFeedbacks/test");
+})
+
+router.post("/test", async function(req, res) {
+  console.log(req.body.getCount);
+  res.redirect("/admin/feedbacks/test")
+})
 
 module.exports = router;
