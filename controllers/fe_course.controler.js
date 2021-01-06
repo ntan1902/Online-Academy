@@ -6,6 +6,7 @@ const multer = require("multer");
 const prettyMilliseconds = require("pretty-ms");
 const videoUrlLink = require("../public/video-url-link");
 const router = express.Router();
+const feedbackModel = require("../models/feedback.model")
 
 function paginating(nPages, page) {
   var page_numbers = [];
@@ -172,12 +173,39 @@ router.get("/detail/:id", async function (req, res) {
     firstPreview = previews[0];
   }
   // res.json({ course, previews });
+  
+  const feedbacks = await feedbackModel.allwithIdCourse(id);
+  feedbacks.forEach((element) => {
+    element.dateRating = moment(element.dateRating, "YYYY-MM-DD").format('MMMM Do YYYY')
+  });
 
+  console.log(feedbacks);
   res.render("vwCourses/detail", {
     course,
     previews,
     firstPreview,
+    feedbacks,
   });
 });
+
+router.post("/detail/:id", async function(req, res) {
+  const idUser = req.body.idUser;
+  const idCourse = req.params.id;
+  const today = new Date();
+  const dateRating = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
+  const ratingPoint = req.body.ratingPoint;
+  const ratingComment = req.body.ratingComment;
+
+  const new_feedback = {
+    idStudent: idUser,
+    idCourse,
+    ratingPoint,
+    ratingComment,
+    dateRating,
+  }
+  console.log(new_feedback);
+  feedbackModel.add(new_feedback);
+  res.redirect('/detail/' + idCourse);
+})
 
 module.exports = router;

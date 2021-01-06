@@ -16,6 +16,16 @@ module.exports = {
     return rows;
   },
 
+  async allwithIdCourse(idCourse) {
+    const sql = `select * from feedbacks f, users u where f.idCourse = ${idCourse} and u.idUser = f.idStudent`
+    const [rows, fields] = await db.load(sql);
+    return rows;
+  },
+
+  async countFeedbackWithIdCourse(idCourse) {
+
+  },
+
   async single(id) {
     const sql = `select * from feedbacks where idFeedback = ${id}`;
     const [rows, fields] = await db.load(sql);

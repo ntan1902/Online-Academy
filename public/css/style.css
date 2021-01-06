@@ -4666,3 +4666,31 @@ a {
   letter-spacing: -0.02rem;
   font-size: 1rem;
 }
+
+/*For feedback * */
+
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+}
+.glyphicon-star:before {
+  font-family: FontAwesome;
+  content: "\f005";
+}
+.glyphicon-star-empty:before {
+  font-family: FontAwesome;
+  content: "\f006";
+}
+.starrr {
+    font-family: FontAwesome;
+    display: inline-block;
+    font-size: 20px;
+    padding: 0 1px;
+    cursor: pointer;
+    color:#ffd200;
+    text-decoration: none;
+}

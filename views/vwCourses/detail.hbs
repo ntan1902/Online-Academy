@@ -1,40 +1,170 @@
 {{#section 'css'}}
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
-
+{{!-- plyr.io --}}
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
+<link rel="" {{!-- stars --}} {{!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+  rel="stylesheet" id="bootstrap-css"> --}}
+<link rel="stylesheet" href="/public/css/style.css" />
 
 {{/section}}
 
 {{#section 'js'}}
-  {{!-- <script src="https://cdn.plyr.io/3.6.3/demo.js"></script> --}}
-  <script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const player = new Plyr('#player', {
-        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen']
-      });
-      window.player = player;
+{{!--
+<script src="https://cdn.plyr.io/3.6.3/demo.js"></script> --}}
+<script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const player = new Plyr('#player', {
+      controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen']
+    });
+    window.player = player;
 
-      $('#displayModal').on('hide.bs.modal', function (e) {
-        player.stop();
-      })
-
-      $('button').click(function () {
-        $("button").css('background-color', 'transparent');
-        $(this).css('background-color', '#000');
-
-        player.source = {
-          type: 'video',
-          sources: [
-            {
-              src: $(this).val(),
-              provider: 'youtube',
-            },
-          ],
-        };
-
-      });
+    $('#displayModal').on('hide.bs.modal', function (e) {
+      player.stop();
     })
-  </script>
+
+    $('button').click(function () {
+      $("button").css('background-color', 'transparent');
+      $(this).css('background-color', '#000');
+
+      player.source = {
+        type: 'video',
+        sources: [
+          {
+            src: $(this).val(),
+            provider: 'youtube',
+          },
+        ],
+      };
+
+    });
+  })
+</script>
+
+{{!-- Feedback Star's js --}}
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<script>
+  // Starrr plugin (https://github.com/dobtco/starrr)
+  var __slice = [].slice;
+
+  (function ($, window) {
+    var Starrr;
+
+    Starrr = (function () {
+      Starrr.prototype.defaults = {
+        rating: void 0,
+        numStars: 5,
+        change: function (e, value) { }
+      };
+
+      function Starrr($el, options) {
+        var i, _, _ref,
+          _this = this;
+
+        this.options = $.extend({}, this.defaults, options);
+        this.$el = $el;
+        _ref = this.defaults;
+        for (i in _ref) {
+          _ = _ref[i];
+          if (this.$el.data(i) != null) {
+            this.options[i] = this.$el.data(i);
+          }
+        }
+        this.createStars();
+        this.syncRating();
+        this.$el.on('mouseover.starrr', 'span', function (e) {
+          return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
+        });
+        this.$el.on('mouseout.starrr', function () {
+          return _this.syncRating();
+        });
+        this.$el.on('click.starrr', 'span', function (e) {
+          return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
+        });
+        this.$el.on('starrr:change', this.options.change);
+      }
+
+      Starrr.prototype.createStars = function () {
+        var _i, _ref, _results;
+
+        _results = [];
+        for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
+          _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
+        }
+        return _results;
+      };
+
+      Starrr.prototype.setRating = function (rating) {
+        if (this.options.rating === rating) {
+          rating = void 0;
+        }
+        this.options.rating = rating;
+        this.syncRating();
+        return this.$el.trigger('starrr:change', rating);
+      };
+
+      Starrr.prototype.syncRating = function (rating) {
+        var i, _i, _j, _ref;
+
+        rating || (rating = this.options.rating);
+        if (rating) {
+          for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+            this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+          }
+        }
+        if (rating && rating < 5) {
+          for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
+            this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+          }
+        }
+        if (!rating) {
+          return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+        }
+      };
+
+      return Starrr;
+
+    })();
+    return $.fn.extend({
+      starrr: function () {
+        var args, option;
+
+        option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+        return this.each(function () {
+          var data;
+
+          data = $(this).data('star-rating');
+          if (!data) {
+            $(this).data('star-rating', (data = new Starrr($(this), option)));
+          }
+          if (typeof option === 'string') {
+            return data[option].apply(data, args);
+          }
+        });
+      }
+    });
+  })(window.jQuery, window);
+
+  $(function () {
+    return $(".starrr").starrr();
+  });
+
+  $(document).ready(function () {
+
+    $('#stars').on('starrr:change', function (e, value) {
+      $('#count').html(value);
+    });
+
+    $('#stars-existing').on('starrr:change', function (e, value) {
+      $('#count-existing').html(value);
+    });
+  });
+
+  $('#frmFeedback').on('submit', function (e) {
+    $('#txtPoint').val($('#count').html());
+  })
+</script>
+{{!-- Feedback Star's js --}}
 {{/section}}
 <!-- ================ start banner area ================= -->
 <section class="blog-banner-area" id="blog">
@@ -133,19 +263,19 @@
           </div>
 
           {{#each this.previews }}
-            {{#if isPreview}}
+          {{#if isPreview}}
 
-              <div class="course-previews">
-                <button class="course-preview-row" {{#if isActive}}style="background-color: #000;" {{/if}}
-                  id="{{chapter}}" value="{{videoPath}}">
-                  <div class="course-preview-row-thumbnail">
-                    <img alt="" width="640" height="480" class="course-preview-row-thumbnail-img" src="{{imagePath}}">
-                  </div>
-                  <div class="course-preview-row-description">{{chapterName}}</div>
-                  <div class="course-preview-row-duration">{{duration}}</div>
-                </button>
+          <div class="course-previews">
+            <button class="course-preview-row" {{#if isActive}}style="background-color: #000;" {{/if}} id="{{chapter}}"
+              value="{{videoPath}}">
+              <div class="course-preview-row-thumbnail">
+                <img alt="" width="640" height="480" class="course-preview-row-thumbnail-img" src="{{imagePath}}">
               </div>
-            {{/if}}
+              <div class="course-preview-row-description">{{chapterName}}</div>
+              <div class="course-preview-row-duration">{{duration}}</div>
+            </button>
+          </div>
+          {{/if}}
           {{/each}}
 
         </div>
@@ -209,95 +339,55 @@
                     </li>
                     <li>
                       <a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a>
+                          class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i> 01</a>
                     </li>
                     <li>
                       <a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a>
+                          class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i> 01</a>
                     </li>
                     <li>
                       <a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a>
+                          class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i> 01</a>
                     </li>
                     <li>
-                      <a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a>
+                      <a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                          class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i> 01</a>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
             <div class="review_list">
+              {{#each feedbacks}}
               <div class="review_item">
                 <div class="media">
                   <div class="d-flex">
-                    <img src="img/product/review-1.png" alt="" />
+                    <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
                   </div>
                   <div class="media-body">
-                    <h4>Blake Ruiz</h4>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                    <h4>{{fullname}} - {{dateRating}}</h4>
+                    <script>
+                      for (let i = 0; i < {{ ratingPoint }}; i++) {
+                        document.write('<i class="fa fa-star"></i>');
+                      }
+                      for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
+                        document.write('<i class="fa fa-star-o"></i>');
+                      }
+                    </script>
                   </div>
                 </div>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                  sed do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                  ullamco laboris nisi ut aliquip ex ea commodo
+                  {{ratingComment}}
                 </p>
               </div>
-              <div class="review_item">
-                <div class="media">
-                  <div class="d-flex">
-                    <img src="img/product/review-2.png" alt="" />
-                  </div>
-                  <div class="media-body">
-                    <h4>Blake Ruiz</h4>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
-                </div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                  sed do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                  ullamco laboris nisi ut aliquip ex ea commodo
-                </p>
-              </div>
-              <div class="review_item">
-                <div class="media">
-                  <div class="d-flex">
-                    <img src="img/product/review-3.png" alt="" />
-                  </div>
-                  <div class="media-body">
-                    <h4>Blake Ruiz</h4>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
-                </div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                  sed do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                  ullamco laboris nisi ut aliquip ex ea commodo
-                </p>
-              </div>
+              {{/each}}
             </div>
           </div>
           <div class="col-lg-6">
             <div class="review_box">
               <h4>Add a Review</h4>
               <p>Your Rating:</p>
-              <ul class="list">
+              {{!-- <ul class="list">
                 <li>
                   <a href="#"><i class="fa fa-star"></i></a>
                 </li>
@@ -313,20 +403,16 @@
                 <li>
                   <a href="#"><i class="fa fa-star"></i></a>
                 </li>
-              </ul>
-              <p>Outstanding</p>
-              <form action="#/" class="form-contact form-review mt-3">
+              </ul> --}}
+              <form id="frmFeedback" method="POST" action="">
+                <div id="stars" class="starrr"></div>
+                <p>You gave a rating of <span id="count"> 0 </span> star(s)</p>
+                <input type="hidden" id="txtPoint" name="ratingPoint" value="">
+
+                <input type="hidden" name="idUser" value="{{authUser.idUser}}">
+
                 <div class="form-group">
-                  <input class="form-control" name="name" type="text" placeholder="Enter your name" required />
-                </div>
-                <div class="form-group">
-                  <input class="form-control" name="email" type="email" placeholder="Enter email address" required />
-                </div>
-                <div class="form-group">
-                  <input class="form-control" name="subject" type="text" placeholder="Enter Subject" />
-                </div>
-                <div class="form-group">
-                  <textarea class="form-control different-control w-100" name="textarea" id="textarea" cols="30"
+                  <textarea class="form-control different-control w-100" name="ratingComment" id="txtComment" cols="30"
                     rows="5" placeholder="Enter Message"></textarea>
                 </div>
                 <div class="form-group text-center text-md-right mt-3">
