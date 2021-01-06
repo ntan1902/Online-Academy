@@ -176,41 +176,36 @@ router.get("/detail/:id", async function (req, res) {
   // res.json({ course, previews });
 
   //Feedback's part
-  var count_feedbacks_star = {
-    star1: 0, star2:0, star3: 0, star4: 0, star5: 0
-  };
+  let count_feedbacks_star = [
+    { star: "1", count: 0 },
+    { star: "2", count: 0 },
+    { star: "3", count: 0 },
+    { star: "4", count: 0 },
+    { star: "5", count: 0 },
+  ];
 
-  var count_feedback=0, total_feedback_point=0;
-  const feedbacks = await feedbackModel.allwithIdCourse(id);
+  const feedbacks = await feedbackModel.allWithIdCourse(id);
 
   feedbacks.forEach((element) => {
-    element.dateRating = moment(element.dateRating, "YYYY-MM-DD").format('MMMM Do YYYY')
-    count_feedback++;
-    total_feedback_point += +element.ratingPoint;
-    if(element.ratingPoint === 1) {
-      count_feedbacks_star.star1++;
-    } else if(element.ratingPoint === 2) {
-      count_feedbacks_star.star2++;
-    } else if(element.ratingPoint === 3) {
-      count_feedbacks_star.star3++;
-    } else if(element.ratingPoint === 4) {
-      count_feedbacks_star.star4++;
-    } else if(element.ratingPoint === 5) {
-      count_feedbacks_star.star5++;
-    }
+    element.dateRating = moment(element.dateRating, "YYYY-MM-DD").format(
+      "MMMM Do YYYY"
+    );
+
+    count_feedbacks_star[element.ratingPoint - 1].count++;
   });
 
-  total_feedback_point = Math.round(total_feedback_point / count_feedback);
-  
-  console.log(count_feedback);
-  console.log(total_feedback_point);
+  feedbacks.total_point = Math.round(feedbacks.total_point / feedbacks.length);
+  count_feedbacks_star.reverse();
+
+  // console.log(count_feedback);
+  // console.log(total_feedback_point);
   res.render("vwCourses/detail", {
     course,
     lessons,
     firstLesson,
     feedbacks,
-    count_feedback,
-    total_feedback_point,
+    count_feedback: feedbacks.length,
+    total_feedback_point: feedbacks.total_point,
     count_feedbacks_star,
   });
 });
@@ -232,7 +227,7 @@ router.post("/detail/:id", async function (req, res) {
   };
   console.log(new_feedback);
   feedbackModel.add(new_feedback);
-  res.redirect(req.get('referer'));
-})
+  res.redirect(req.get("referer"));
+});
 
 module.exports = router;

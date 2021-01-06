@@ -381,31 +381,14 @@
                 <div class="rating_list">
                   <h3>Based on {{count_feedback}} Reviews</h3>
                   <ul class="list">
-                    <li>
-                      <a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                        {{count_feedbacks_star.star5}}</a>
-                    </li>
-                    <li>
-                      <a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i>
-                        {{count_feedbacks_star.star4}}</a>
-                    </li>
-                    <li>
-                      <a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                        {{count_feedbacks_star.star3}}</a>
-                    </li>
-                    <li>
-                      <a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                        {{count_feedbacks_star.star2}}</a>
-                    </li>
-                    <li>
-                      <a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star-o"></i><i
-                          class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                        {{count_feedbacks_star.star1}}</a>
-                    </li>
+                    {{#each count_feedbacks_star }}
+                      <li>
+                        <a href="#">{{star}} Star
+                          {{{calcStars star}}}
+                          {{count}}
+                        </a>
+                      </li>
+                    {{/each}}
                   </ul>
                 </div>
               </div>
