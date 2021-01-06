@@ -6,7 +6,7 @@ const multer = require("multer");
 const prettyMilliseconds = require("pretty-ms");
 const videoUrlLink = require("../public/video-url-link");
 const router = express.Router();
-const feedbackModel = require("../models/feedback.model")
+const feedbackModel = require("../models/feedback.model");
 
 function paginating(nPages, page) {
   var page_numbers = [];
@@ -92,7 +92,6 @@ router.get("/byField/:field", async function (req, res) {
   });
 });
 
-
 router.get("/search", async function (req, res) {
   var keyword = req.query.search;
   var sort = req.query.sort;
@@ -111,7 +110,11 @@ router.get("/search", async function (req, res) {
   let pagination = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourseByKeyword(offset,funcKeyword,sort);
+  const list_courses = await courseModel.pageCourseByKeyword(
+    offset,
+    funcKeyword,
+    sort
+  );
 
   res.render("vwCourses/search", {
     total,
@@ -120,7 +123,7 @@ router.get("/search", async function (req, res) {
     courses: list_courses,
     page_numbers: pagination.page_numbers,
     empty: list_courses.length === 0,
-    have: list_courses.length >0,
+    have: list_courses.length > 0,
     prevPage: pagination.prevPage,
     nextPage: pagination.nextPage,
     disablePrev: pagination.disablePrev,
@@ -149,9 +152,9 @@ function getDuration(url) {
 router.get("/detail/:id", async function (req, res) {
   const id = req.params.id;
 
-  // Tui truy vấn lấy lên course với previews chung 1 hàm á ông, ông tách hàm ra đi
+  // Tui truy vấn lấy lên course với lessons chung 1 hàm á ông, ông tách hàm ra đi
   const course = await courseModel.single(id);
-  const previews = await courseModel.singlePreviews(id);
+  const lessons = await courseModel.getLessons(id);
 
   // Invalid date
   const lastModified = moment(course.lastModified, "YYYY-MM-DD").format(
@@ -162,15 +165,13 @@ router.get("/detail/:id", async function (req, res) {
     return res.redirect("/admin/courses");
   }
 
-  let firstPreview = null;
-  if (previews !== null) {
-    for (let index = 0; index < previews.length; index++) {
-      const dur = await getDuration(previews[index].videoPath);
-      previews[index].duration = dur;
-      previews[index].isActive = false;
+  let firstLesson = null;
+  if (lessons !== null) {
+    for (let index = 0; index < lessons.length; index++) {
+      const dur = await getDuration(lessons[index].videoPath);
+      lessons[index].duration = dur;
     }
-    previews[0].isActive = true;
-    firstPreview = previews[0];
+    firstLesson = lessons[0];
   }
   // res.json({ course, previews });
 
@@ -205,8 +206,8 @@ router.get("/detail/:id", async function (req, res) {
   console.log(total_feedback_point);
   res.render("vwCourses/detail", {
     course,
-    previews,
-    firstPreview,
+    lessons,
+    firstLesson,
     feedbacks,
     count_feedback,
     total_feedback_point,
@@ -214,7 +215,7 @@ router.get("/detail/:id", async function (req, res) {
   });
 });
 
-router.post("/detail/:id", async function(req, res) {
+router.post("/detail/:id", async function (req, res) {
   const idUser = req.body.idUser;
   const idCourse = req.params.id;
   const today = new Date();
@@ -228,7 +229,7 @@ router.post("/detail/:id", async function(req, res) {
     ratingPoint,
     ratingComment,
     dateRating,
-  }
+  };
   console.log(new_feedback);
   feedbackModel.add(new_feedback);
   res.redirect(req.get('referer'));

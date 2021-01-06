@@ -46,7 +46,7 @@ module.exports = {
     if (rows.length === 0) return null;
     return rows[0];
   },
-  async singlePreviews(id) {
+  async getLessons(id) {
     const sql = `select * from courses co, categories cat, lessons less where co.idCourse = ${id} and co.idCat = cat.idCategory and less.idCourse = co.idCourse`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
@@ -147,11 +147,10 @@ module.exports = {
   },
 
   async pageCourseByKeyword(offset, keyword, sort) {
-    if(sort == null){
-      sort="title";
+    if (sort == null) {
+      sort = "title";
     }
     if (sort !== "rating") {
-
       const sql = `select distinct c.*
                 from users u, courses c
                 where match(c.title) against ('${keyword}') or 
