@@ -17,7 +17,7 @@ module.exports = {
   },
 
   async allWithIdCourse(idCourse) {
-    const sql = `select f.ratingPoint, f.dateRating, f.ratingComment, u.fullname , sum(ratingPoint) as total_point
+    const sql = `select f.ratingPoint, f.dateRating, f.ratingComment, u.fullname 
     from feedbacks f, users u 
     where f.idCourse = ${idCourse} and u.idUser = f.idStudent;`;
     const [rows, fields] = await db.load(sql);

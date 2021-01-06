@@ -108,7 +108,7 @@ router.get("/isAvailable", async function (req, res) {
 });
 
 router.get("/profile", auth, async function (req, res) {
-  const user = await userModel.single(req.session.authUser.id);
+  const user = await userModel.single(req.session.authUser.idUser);
   user.dob = moment(user.dob, "YYYY-MM-DD").format("DD/MM/YYYY");
   res.render("vwAccount/edit", {
     layout: "userProfile.hbs",
@@ -126,7 +126,7 @@ router.post("/patch", auth, async function (req, res) {
 });
 
 router.get("/changePassword", auth, async function (req, res) {
-  const user = await userModel.single(req.session.authUser.id);
+  const user = await userModel.single(req.session.authUser.idUser);
   res.render("vwAccount/changePassword", {
     layout: "userProfile.hbs",
     user,
@@ -151,7 +151,7 @@ router.post("/changePassword", auth, async function (req, res) {
     password: hash,
   });
 
-  req.session.authUser = await userModel.single(req.session.authUser.id);
+  req.session.authUser = await userModel.single(req.session.authUser.idUser);
   res.redirect("/account/changePassword");
 });
 

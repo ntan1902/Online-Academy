@@ -41,13 +41,13 @@ module.exports = {
   },
 
   async single(id) {
-    const sql = `select * from courses where idCourse = ${id}`;
+    const sql = `select co.*, cat.name, u.fullname as teacherName from courses co, users u, categories cat where co.idCourse = ${id} and co.idTeacher = u.idUser and co.idCat = cat.idCategory`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
     return rows[0];
   },
   async getLessons(id) {
-    const sql = `select * from courses co, categories cat, lessons less where co.idCourse = ${id} and co.idCat = cat.idCategory and less.idCourse = co.idCourse`;
+    const sql = `select less.* from courses co, lessons less where co.idCourse = ${id} and less.idCourse = co.idCourse`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
     return rows;

@@ -3,7 +3,7 @@ const courseModel = require("../models/course.model");
 const { paginate } = require("../config/default.json");
 const moment = require("moment");
 const multer = require("multer");
-const prettyMilliseconds = require("pretty-ms");
+const parseMilliseconds = require("parse-ms");
 const videoUrlLink = require("../public/video-url-link");
 const router = express.Router();
 const feedbackModel = require("../models/feedback.model");
@@ -139,10 +139,16 @@ function getDuration(url) {
         return reject("ERROR : " + err);
       } else {
         const t = info.details;
-        const duration = prettyMilliseconds(Number(t.lengthSeconds * 1000), {
-          colonNotation: true,
-        });
+        // const duration = prettyMilliseconds(Number(t.lengthSeconds * 1000), {
+        //   colonNotation: true,
+        // });
 
+        let duration = "";
+        const time = parseMilliseconds(t.lengthSeconds * 1000);
+        time.hours = (time.hours < 10 ? "0" : "") + time.hours;
+        time.minutes = (time.minutes < 10 ? "0" : "") + time.minutes;
+        time.seconds = (time.seconds < 10 ? "0" : "") + time.seconds;
+        duration = time.minutes + ":" + time.seconds;
         return resolve(duration);
       }
     });
@@ -185,6 +191,7 @@ router.get("/detail/:id", async function (req, res) {
   ];
 
   const feedbacks = await feedbackModel.allWithIdCourse(id);
+  let total_feedback_point = 0;
 
   feedbacks.forEach((element) => {
     element.dateRating = moment(element.dateRating, "YYYY-MM-DD").format(
@@ -192,20 +199,20 @@ router.get("/detail/:id", async function (req, res) {
     );
 
     count_feedbacks_star[element.ratingPoint - 1].count++;
+    total_feedback_point += element.ratingPoint;
   });
 
-  feedbacks.total_point = Math.round(feedbacks.total_point / feedbacks.length);
+  if (feedbacks.length !== 0)
+    total_feedback_point = Math.round(total_feedback_point / feedbacks.length);
   count_feedbacks_star.reverse();
 
-  // console.log(count_feedback);
-  // console.log(total_feedback_point);
   res.render("vwCourses/detail", {
     course,
     lessons,
     firstLesson,
     feedbacks,
     count_feedback: feedbacks.length,
-    total_feedback_point: feedbacks.total_point,
+    total_feedback_point,
     count_feedbacks_star,
   });
 });
