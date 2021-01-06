@@ -145,18 +145,19 @@
           <div class="form-group">
             <label>Images path</label>
             <input type="file" class="form-control-file" id="txtImgPath" name="image">
-            <br>
-            <label>Price</label>
-            <input type="number" class="form-control" id="txtPrice" name="price">
-
-            <label for="txtField">Field</label>
-            <select class="form-control" name='field' id="txtField">
-              <option selected>Choose your option</option> 
-              {{#each listCategories}}
-              <option value="{{idCategory}}">{{name}}</option>
-              {{/each}}
-            </select>
-
+            <div class="form-group">
+              <label>Price</label>
+              <input type="number" class="form-control" id="txtPrice" name="price">
+            </div>
+            <div class="form-group">
+              <label for="txtField" class="my-1 ml-3">Field</label>
+              <select name='field' id="txtField">
+                <option selected>Choose your option</option>
+                {{#each listCategories}}
+                <option value="{{idCategory}}">{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
             <label>Title</label>
             <input type="text" class="form-control" id="txtTitle" name="title">
 

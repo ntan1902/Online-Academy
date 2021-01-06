@@ -3,6 +3,24 @@ const userModel = require("../models/user.model");
 const moment = require("moment");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const multer = require("multer");
+const path = require("path");
+
+//Set Storage Engine
+const storage = multer.diskStorage({
+  destination: "./public/images/users",
+  filename: function (req, file, callback) {
+    callback(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+});
 
 router.get("/", async function (req, res) {
   const list = await userModel.all();
@@ -28,9 +46,15 @@ router.get("/add", async function (req, res) {
   });
 });
 
-router.post("/add", async function (req, res) {
+router.post("/add", upload.single("avatar"), async function (req, res) {
   const hash = bcrypt.hashSync(req.body.password, 10);
   const dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
+  let imgPath;
+  if(req.file === undefined) {
+    imgPath = "";
+  } else {
+    imgPath = "/public/images/users/" + req.file.filename;
+  }
   const user = {
     username: req.body.username,
     password: hash,
@@ -38,9 +62,9 @@ router.post("/add", async function (req, res) {
     email: req.body.email,
     dob: dob,
     role: req.body.role,
-    userDescription: req.body.userDescription
+    userDescription: req.body.userDescription,
+    avatar: imgPath
   };
-
   await userModel.add(user);
   res.render("vwUsers/add", {
     layout: "admin.hbs",
@@ -70,8 +94,14 @@ router.post("/delete/", async function (req, res) {
   res.redirect("/admin/users");
 });
 
-router.post("/patch/", async function (req, res) {
+router.post("/patch/", upload.single("avatar"), async function (req, res) {
   const dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
+  let imgPath;
+  if(req.file === undefined) {
+    imgPath = req.body.previewAvatar;
+  } else {
+    imgPath = "/public/images/users/" + req.file.filename;
+  }
   const new_user = {
     idUser: req.body.idUser,
     username: req.body.username,
@@ -79,9 +109,9 @@ router.post("/patch/", async function (req, res) {
     email: req.body.email,
     dob: dob,
     role: req.body.role,
-    userDescription: req.body.userDescription
+    userDescription: req.body.userDescription,
+    avatar: imgPath,
   }
-  console.log(new_user);
   await userModel.patch(new_user);
   res.redirect("/admin/users");
 });

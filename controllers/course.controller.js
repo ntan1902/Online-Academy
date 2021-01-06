@@ -9,7 +9,7 @@ const router = express.Router();
 
 //Set Storage Engine
 const storage = multer.diskStorage({
-  destination: "./public/images/",
+  destination: "./public/images/courses/",
   filename: function (req, file, callback) {
     callback(
       null,
@@ -67,7 +67,7 @@ router.post("/add", upload.single("image"), async function (req, res) {
   if (req.file === undefined) {
     imgPath = "";
   } else {
-    imgPath = "/public/images/" + req.file.filename;
+    imgPath = "/public/images/courses/" + req.file.filename;
   }
   console.log(req.body.field);
   const new_course = {
@@ -120,7 +120,7 @@ router.post("/patch/", upload.single("image"), async function (req, res) {
   if (req.file === undefined) {
     imgPath = req.body.previewImage;
   } else {
-    imgPath = "/public/images/" + req.file.filename;
+    imgPath = "/public/images/courses/" + req.file.filename;
   }
 
   const today = new Date();

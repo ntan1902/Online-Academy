@@ -1,6 +1,8 @@
 {{#section 'css'}}
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css">
+
 {{/section}}
 
 {{#section 'js'}}
@@ -17,11 +19,21 @@
         ],
     });
 </script>
-{{!--< Editor --}} <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
-    </script>
-    <script>
+{{!--< Editor --}} 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    {{!-- File Upload> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/themes/fa/theme.min.js"></script>
 
+    <script>
+        $('#txtAvatar').fileinput({
+            theme: 'fa',
+            allowedFileExtensions: ['jpg', 'png'],
+            dropZoneEnabled: false,
+        });
+    </script>
+    {{!-- < File Upload --}}
+    <script>
         $('#txtDob').datetimepicker({
             format: 'd/m/Y',
             timepicker: false,
@@ -118,13 +130,6 @@
                     confirmButtonText: 'Retry'
                 })
                 return;
-            } else if (description.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid User Description',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                })
             } else {
                 if (username !== "{{this.user.username}}") {
                     $.getJSON(`/account/isAvailable?user=${username}`, function (data) {
@@ -154,7 +159,7 @@
     </script>
 
     {{/section}}
-    <form id="frmEdit" method="POST">
+    <form id="frmEdit" method="POST" enctype="multipart/form-data">
         <div class="card">
             <div class="card-header">
                 <h4>User</h4>
@@ -165,7 +170,18 @@
                     <input type="text" class="form-control" id="txtID" name="idUser" readonly
                         value="{{this.user.idUser}}">
                 </div>
+                
+                <div class="form-group">
+                    <label>Preview Avatar</label> <br>
+                    <img style="width: 200px;" src="{{this.user.avatar}}" alt="no preview image found">
+                </div>
+                <input type="hidden" value="{{this.user.avatar}}" name="previewAvatar">
 
+                <div class="form-group">
+                    <label for="txtAvatar">New Avatar</label>
+                    <input type="file" class="form-control-file" id="txtAvatar" name="avatar">
+                </div>
+    
                 <div class="form-group">
                     <label for="txtUsername">Username</label>
                     <input type="text" class="form-control" id="txtUsername" name="username" autofocus required
@@ -189,7 +205,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="txtRole" class="mt-1 ml-3"><b>Role</b></label>
+                    <label for="txtRole" class="my-1 ml-3"><b>Role</b></label>
                     <input type="hidden" class="form-control" id="txtRoletemp" name="roletemp"
                         value="{{this.user.role}}">
                     <select name='role' id="txtRole" value="{{this.user.role}}">
