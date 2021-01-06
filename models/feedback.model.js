@@ -36,7 +36,6 @@ module.exports = {
 
   async add(feedback) {
     const [result, fields] = await db.add(feedback, "feedbacks");
-    console.log(result);
     return result;
   },
 

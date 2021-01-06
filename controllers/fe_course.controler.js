@@ -197,7 +197,6 @@ router.get("/detail/:id", async function (req, res) {
     element.dateRating = moment(element.dateRating, "YYYY-MM-DD").format(
       "MMMM Do YYYY"
     );
-
     count_feedbacks_star[element.ratingPoint - 1].count++;
     total_feedback_point += element.ratingPoint;
   });
@@ -233,7 +232,7 @@ router.post("/detail/:id", async function (req, res) {
     dateRating,
   };
   console.log(new_feedback);
-  feedbackModel.add(new_feedback);
+  await feedbackModel.add(new_feedback);
   res.redirect(req.get("referer"));
 });
 
