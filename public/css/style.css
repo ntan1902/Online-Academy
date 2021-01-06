@@ -4211,7 +4211,7 @@ a {
   border-radius: 3px;
   padding-left: 10px;
 }
-.product_count button {
+/* .product_count button {
   display: block;
   border: none;
   background: transparent;
@@ -4225,7 +4225,7 @@ a {
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
-}
+} */
 .product_count button:hover {
   color: #222;
 }

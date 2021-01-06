@@ -21,7 +21,7 @@ $(function () {
           nav: false,
         },
         1000: {
-          items: 5,
+          items: 4,
           nav: true,
           loop: false,
         },
@@ -71,43 +71,40 @@ $(function () {
   //     }
   //   );
   // }
-  $('#form-search').on('submit', function (e) {
-    const keyword = $('#input-search').val();
+  $("#form-search").on("submit", function (e) {
+    const keyword = $("#input-search").val();
     if (keyword.length <= 2) {
-        Swal.fire({
-            title: 'Error!',
-            text: 'Keyword must have more than 2 character',
-            icon: 'error',
-            confirmButtonText: 'Retry'
-        }).then(function () {
-            $('#input-search').val("");
-        });
-        return;
-    }
-    else {
-      $('#form-search').off('submit').submit();
+      Swal.fire({
+        title: "Error!",
+        text: "Keyword must have more than 2 character",
+        icon: "error",
+        confirmButtonText: "Retry",
+      }).then(function () {
+        $("#input-search").val("");
+      });
+      return;
+    } else {
+      $("#form-search").off("submit").submit();
     }
   });
 
-  $('select').niceSelect();
+  $("select").niceSelect();
 
-  let urlParams= new URLSearchParams(location.search);
-  let params={
+  let urlParams = new URLSearchParams(location.search);
+  let params = {
     search: "",
-    sort: ""
+    sort: "",
   };
 
-  for (let key in params){
-    if(!urlParams.has(key)){
-      urlParams.append(key,params[key]);
+  for (let key in params) {
+    if (!urlParams.has(key)) {
+      urlParams.append(key, params[key]);
     }
   }
 
-  function selectParams(key,value){
-    urlParams.set(key,value);
-    let url= `/courses/search/?=${urlParams.toString()}`;
-    location.href=url;
+  function selectParams(key, value) {
+    urlParams.set(key, value);
+    let url = `/courses/search/?=${urlParams.toString()}`;
+    location.href = url;
   }
 });
-
-

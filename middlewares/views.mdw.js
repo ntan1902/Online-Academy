@@ -19,6 +19,17 @@ module.exports = function (app) {
           }
           return res;
         },
+        calcStarsHome(star) {
+          let res = "";
+          for (let i = 0; i < 5; i++) {
+            if (i < star) {
+              res += '<li class="fa fa-star"></li>';
+            } else {
+              res += '<li class="fa fa-star disable"></li>';
+            }
+          }
+          return res;
+        },
       },
     })
   );
