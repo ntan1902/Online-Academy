@@ -4617,17 +4617,17 @@ a {
   flex-direction: column;
 }
 
-.preview-text {
+.lesson-text {
   padding: 1.6rem 0 0;
   line-height: 1.2;
   letter-spacing: 0.05rem;
 }
 
-.course-previews {
+.course-lessons {
   margin: 0 -1.9rem;
 }
 
-.course-preview-row {
+.course-lesson-row {
   background-color: transparent;
   color: #fff;
   border: 0;
@@ -4638,19 +4638,19 @@ a {
   padding: 1.2rem 2rem 1.2rem;
   width: 100%;
 }
-.course-preview-row-thumbnail {
+.course-lesson-row-thumbnail {
   width: 6.4rem;
   margin-right: 1rem;
 }
-.course-preview-row-thumbnail img {
+.course-lesson-row-thumbnail img {
   max-width: 100%;
 }
-.course-preview-row-thumbnail-img {
+.course-lesson-row-thumbnail-img {
   opacity: 0.6;
   width: auto;
   height: 3.6rem;
 }
-.course-preview-row-description {
+.course-lesson-row-description {
   flex: 1;
   text-align: left;
   margin-right: 1.6rem;
@@ -4660,11 +4660,57 @@ a {
   font-size: 1rem;
 }
 
-.course-preview-row-duration {
+.course-lesson-row-duration {
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.02rem;
   font-size: 1rem;
+}
+
+.course-lessons-content {
+  margin: 0 -1.9rem;
+}
+.course-lesson-content button:hover {
+  color: #384aeb;
+}
+.course-lesson-content-row {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 1.2rem 2rem 1.2rem;
+  width: 100%;
+}
+
+.course-lesson-content-row-name {
+  text-align: left;
+  margin: 0 1.6rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02rem;
+  font-size: 1rem;
+  text-decoration: underline;
+  color: #0f7c90;
+}
+
+.course-lesson-content-row-name:hover {
+  color: #384aeb;
+}
+
+.course-lesson-content-row-preview {
+  text-decoration: underline;
+  color: #0f7c90;
+  font-weight: 500;
+  line-height: 1.2;
+  font-size: 1rem;
+  margin-left: 3.2rem;
+}
+
+.course-lesson-content-row-duration {
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02rem;
+  font-size: 1rem;
+  margin-left: 3.2rem;
 }
 
 /*For feedback * */
@@ -4686,11 +4732,11 @@ a {
   content: "\f006";
 }
 .starrr {
-    font-family: FontAwesome;
-    display: inline-block;
-    font-size: 20px;
-    padding: 0 1px;
-    cursor: pointer;
-    color:#ffd200;
-    text-decoration: none;
+  font-family: FontAwesome;
+  display: inline-block;
+  font-size: 20px;
+  padding: 0 1px;
+  cursor: pointer;
+  color: #ffd200;
+  text-decoration: none;
 }

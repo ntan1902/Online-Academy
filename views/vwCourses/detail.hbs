@@ -1,170 +1,196 @@
 {{#section 'css'}}
-{{!-- plyr.io --}}
-<link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
-<link rel="" {{!-- stars --}} {{!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
-  rel="stylesheet" id="bootstrap-css"> --}}
-<link rel="stylesheet" href="/public/css/style.css" />
+  {{!-- plyr.io --}}
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
+  <link rel="" {{!-- stars --}} {{!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+    rel="stylesheet" id="bootstrap-css"> --}}
+  <link rel="stylesheet" href="/public/css/style.css" />
 
 {{/section}}
 
 {{#section 'js'}}
-{{!--
-<script src="https://cdn.plyr.io/3.6.3/demo.js"></script> --}}
-<script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const player = new Plyr('#player', {
-      controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen']
-    });
-    window.player = player;
+  <script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const player = new Plyr('#player');
+      window.player = player;
 
-    $('#displayModal').on('hide.bs.modal', function (e) {
-      player.stop();
+      $('#displayModal').on('hide.bs.modal', function (e) {
+        player.stop();
+        $('.course-lessons').css('background-color', 'transparent');
+      });
+      $('#displayModal').on('shown.bs.modal', function (e) {
+        const sourceVideo = $('#srcModal').val();
+        player.source = {
+          type: 'video',
+          sources: [
+            {
+              src: sourceVideo,
+              provider: 'youtube',
+            },
+          ],
+        };
+        let courseList = $('.course-lessons').toArray();
+        for (let i = 0; i < courseList.length; i++) {
+          if (courseList[i].dataset.src === sourceVideo) {
+            courseList[i].style.backgroundColor = '#000';
+          } else {
+            courseList[i].style.backgroundColor = 'transparent';
+          }
+        }
+      });
+
+      $('.course-lessons').click(function () {
+        $('.course-lessons').css('background-color', 'transparent');
+        $(this).css('background-color', '#000');
+
+        const sourceVideo = $(this).data('src');
+        player.source = {
+          type: 'video',
+          sources: [
+            {
+              src: sourceVideo,
+              provider: 'youtube',
+            },
+          ],
+        };
+      });
+
+      $('.course-lessons-content').click(function () {
+        $('#srcModal').val($(this).data('src'));
+
+      })
+
+      $('.single-prd-item').click(function () {
+        $('#srcModal').val($(this).data('src'));
+      });
     })
+  </script>
 
-    $('button').click(function () {
-      $("button").css('background-color', 'transparent');
-      $(this).css('background-color', '#000');
+  {{!-- Feedback Star's js --}}
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-      player.source = {
-        type: 'video',
-        sources: [
-          {
-            src: $(this).val(),
-            provider: 'youtube',
-          },
-        ],
-      };
+  <script>
+    // Starrr plugin (https://github.com/dobtco/starrr)
+    var __slice = [].slice;
 
-    });
-  })
-</script>
+    (function ($, window) {
+      var Starrr;
 
-{{!-- Feedback Star's js --}}
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+      Starrr = (function () {
+        Starrr.prototype.defaults = {
+          rating: void 0,
+          numStars: 5,
+          change: function (e, value) { }
+        };
 
-<script>
-  // Starrr plugin (https://github.com/dobtco/starrr)
-  var __slice = [].slice;
+        function Starrr($el, options) {
+          var i, _, _ref,
+            _this = this;
 
-  (function ($, window) {
-    var Starrr;
-
-    Starrr = (function () {
-      Starrr.prototype.defaults = {
-        rating: void 0,
-        numStars: 5,
-        change: function (e, value) { }
-      };
-
-      function Starrr($el, options) {
-        var i, _, _ref,
-          _this = this;
-
-        this.options = $.extend({}, this.defaults, options);
-        this.$el = $el;
-        _ref = this.defaults;
-        for (i in _ref) {
-          _ = _ref[i];
-          if (this.$el.data(i) != null) {
-            this.options[i] = this.$el.data(i);
+          this.options = $.extend({}, this.defaults, options);
+          this.$el = $el;
+          _ref = this.defaults;
+          for (i in _ref) {
+            _ = _ref[i];
+            if (this.$el.data(i) != null) {
+              this.options[i] = this.$el.data(i);
+            }
           }
+          this.createStars();
+          this.syncRating();
+          this.$el.on('mouseover.starrr', 'span', function (e) {
+            return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
+          });
+          this.$el.on('mouseout.starrr', function () {
+            return _this.syncRating();
+          });
+          this.$el.on('click.starrr', 'span', function (e) {
+            return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
+          });
+          this.$el.on('starrr:change', this.options.change);
         }
-        this.createStars();
-        this.syncRating();
-        this.$el.on('mouseover.starrr', 'span', function (e) {
-          return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
-        });
-        this.$el.on('mouseout.starrr', function () {
-          return _this.syncRating();
-        });
-        this.$el.on('click.starrr', 'span', function (e) {
-          return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
-        });
-        this.$el.on('starrr:change', this.options.change);
-      }
 
-      Starrr.prototype.createStars = function () {
-        var _i, _ref, _results;
+        Starrr.prototype.createStars = function () {
+          var _i, _ref, _results;
 
-        _results = [];
-        for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
-          _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
-        }
-        return _results;
-      };
-
-      Starrr.prototype.setRating = function (rating) {
-        if (this.options.rating === rating) {
-          rating = void 0;
-        }
-        this.options.rating = rating;
-        this.syncRating();
-        return this.$el.trigger('starrr:change', rating);
-      };
-
-      Starrr.prototype.syncRating = function (rating) {
-        var i, _i, _j, _ref;
-
-        rating || (rating = this.options.rating);
-        if (rating) {
-          for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-            this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+          _results = [];
+          for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
+            _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
           }
-        }
-        if (rating && rating < 5) {
-          for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
-            this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+          return _results;
+        };
+
+        Starrr.prototype.setRating = function (rating) {
+          if (this.options.rating === rating) {
+            rating = void 0;
           }
-        }
-        if (!rating) {
-          return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-        }
-      };
+          this.options.rating = rating;
+          this.syncRating();
+          return this.$el.trigger('starrr:change', rating);
+        };
 
-      return Starrr;
+        Starrr.prototype.syncRating = function (rating) {
+          var i, _i, _j, _ref;
 
-    })();
-    return $.fn.extend({
-      starrr: function () {
-        var args, option;
-
-        option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-        return this.each(function () {
-          var data;
-
-          data = $(this).data('star-rating');
-          if (!data) {
-            $(this).data('star-rating', (data = new Starrr($(this), option)));
+          rating || (rating = this.options.rating);
+          if (rating) {
+            for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+              this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+            }
           }
-          if (typeof option === 'string') {
-            return data[option].apply(data, args);
+          if (rating && rating < 5) {
+            for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
+              this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+            }
           }
-        });
-      }
-    });
-  })(window.jQuery, window);
+          if (!rating) {
+            return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+          }
+        };
 
-  $(function () {
-    return $(".starrr").starrr();
-  });
+        return Starrr;
 
-  $(document).ready(function () {
+      })();
+      return $.fn.extend({
+        starrr: function () {
+          var args, option;
 
-    $('#stars').on('starrr:change', function (e, value) {
-      $('#count').html(value);
+          option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+          return this.each(function () {
+            var data;
+
+            data = $(this).data('star-rating');
+            if (!data) {
+              $(this).data('star-rating', (data = new Starrr($(this), option)));
+            }
+            if (typeof option === 'string') {
+              return data[option].apply(data, args);
+            }
+          });
+        }
+      });
+    })(window.jQuery, window);
+
+    $(function () {
+      return $(".starrr").starrr();
     });
 
-    $('#stars-existing').on('starrr:change', function (e, value) {
-      $('#count-existing').html(value);
-    });
-  });
+    $(document).ready(function () {
 
-  $('#frmFeedback').on('submit', function (e) {
-    $('#txtPoint').val($('#count').html());
-  })
-</script>
-{{!-- Feedback Star's js --}}
+      $('#stars').on('starrr:change', function (e, value) {
+        $('#count').html(value);
+      });
+
+      $('#stars-existing').on('starrr:change', function (e, value) {
+        $('#count-existing').html(value);
+      });
+    });
+
+    $('#frmFeedback').on('submit', function (e) {
+      $('#txtPoint').val($('#count').html());
+    })
+  </script>
+  {{!-- Feedback Star's js --}}
 {{/section}}
 <!-- ================ start banner area ================= -->
 <section class="blog-banner-area" id="blog">
@@ -190,8 +216,10 @@
   <div class="container">
     <div class="row s_product_inner">
       <div class="col-lg-6">
-        <div class="single-prd-item btn" data-toggle="modal" data-target="#displayModal">
-          <img class="detail-img" src="{{this.course.imagePath}}" alt="image" />
+        <input type="hidden" id="srcModal">
+        <div class="single-prd-item btn" data-toggle="modal" data-target="#displayModal"
+          data-src="{{this.firstLesson.videoPath}}">
+          <img class=" detail-img" src="{{this.course.imagePath}}" alt="image" />
           <div class="background-icon"></div>
           <div class="icon-play">
             <i class="fa fa-play-circle-o fa-4x" aria-hidden="true"></i>
@@ -254,28 +282,27 @@
         <div class="container">
           <div class="embedded-media-player">
             <div class="plyr__video-embed" id="player">
-              <iframe src="{{this.firstPreview.videoPath}}" allowfullscreen allowtransparency allow="autoplay"></iframe>
+              <iframe src="{{this.firstLesson.videoPath}}" allowfullscreen allowtransparency allow="autoplay"></iframe>
             </div>
           </div>
 
-          <div class="preview-text">
-            <h6 class="text-white">Free Sample Videos:</h6>
+          <div class="lesson-text">
+            <h6 class="text-white">Lesson Videos:</h6>
           </div>
 
-          {{#each this.previews }}
-          {{#if isPreview}}
+          {{#each this.lessons }}
+            {{#if isPreview}}
 
-          <div class="course-previews">
-            <button class="course-preview-row" {{#if isActive}}style="background-color: #000;" {{/if}} id="{{chapter}}"
-              value="{{videoPath}}">
-              <div class="course-preview-row-thumbnail">
-                <img alt="" width="640" height="480" class="course-preview-row-thumbnail-img" src="{{imagePath}}">
+              <div class="course-lessons" data-src="{{videoPath}}">
+                <div class="course-lesson-row">
+                  <div class="course-lesson-row-thumbnail">
+                    <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img" src="{{imagePath}}">
+                  </div>
+                  <div class="course-lesson-row-description">{{chapterName}}</div>
+                  <div class="course-lesson-row-duration">{{duration}}</div>
+                </div>
               </div>
-              <div class="course-preview-row-description">{{chapterName}}</div>
-              <div class="course-preview-row-duration">{{duration}}</div>
-            </button>
-          </div>
-          {{/if}}
+            {{/if}}
           {{/each}}
 
         </div>
@@ -301,7 +328,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-          aria-selected="false">Preview Document</a>
+          aria-selected="false">Course Content</a>
       </li>
       <li class="nav-item">
         <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
@@ -312,12 +339,33 @@
       <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
         {{{this.course.description}}}
       </div>
+
       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
         {{{this.course.detail}}}
       </div>
+
       <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-        {{{this.course.previewDocument}}}
+        <div>
+          {{#each this.lessons }}
+            <div class="course-lessons-content" {{#if isPreview}}data-toggle="modal" data-target="#displayModal"
+              data-src="{{videoPath}}" {{/if}}>
+              <div class="course-lesson-content-row row" id="{{chapter}}">
+                <div class="col-md-1"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
+                <div class="col-md-9">
+                  <div class="course-lesson-content-row-name">{{chapterName}}</div>
+                </div>
+
+                <div class="col-md-1"><span
+                    class="course-lesson-content-row-preview">{{#if isPreview}}Preview{{/if}}</span>
+                </div>
+
+                <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
       </div>
+
       <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
         <div class="row">
           <div class="col-lg-6">
@@ -359,27 +407,27 @@
             </div>
             <div class="review_list">
               {{#each feedbacks}}
-              <div class="review_item">
-                <div class="media">
-                  <div class="d-flex">
-                    <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
+                <div class="review_item">
+                  <div class="media">
+                    <div class="d-flex">
+                      <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
+                    </div>
+                    <div class="media-body">
+                      <h4>{{fullname}} - {{dateRating}}</h4>
+                      <script>
+                        for (let i = 0; i < {{ ratingPoint }}; i++) {
+                          document.write('<i class="fa fa-star"></i>');
+                        }
+                        for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
+                          document.write('<i class="fa fa-star-o"></i>');
+                        }
+                      </script>
+                    </div>
                   </div>
-                  <div class="media-body">
-                    <h4>{{fullname}} - {{dateRating}}</h4>
-                    <script>
-                      for (let i = 0; i < {{ ratingPoint }}; i++) {
-                        document.write('<i class="fa fa-star"></i>');
-                      }
-                      for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
-                        document.write('<i class="fa fa-star-o"></i>');
-                      }
-                    </script>
-                  </div>
+                  <p>
+                    {{ratingComment}}
+                  </p>
                 </div>
-                <p>
-                  {{ratingComment}}
-                </p>
-              </div>
               {{/each}}
             </div>
           </div>
