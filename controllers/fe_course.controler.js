@@ -185,27 +185,30 @@ router.get("/detail/:id", async function (req, res) {
   ];
 
   const feedbacks = await feedbackModel.allWithIdCourse(id);
-
+  var total_feedback_point = 0;
   feedbacks.forEach((element) => {
     element.dateRating = moment(element.dateRating, "YYYY-MM-DD").format(
       "MMMM Do YYYY"
     );
-
     count_feedbacks_star[element.ratingPoint - 1].count++;
+    total_feedback_point += element.ratingPoint;
   });
 
-  feedbacks.total_point = Math.round(feedbacks.total_point / feedbacks.length);
+  if(feedbacks.length === 0) {
+    total_feedback_point = 0;
+  } else {
+    total_feedback_point = Math.round(total_feedback_point / feedbacks.length);
+  }
+
   count_feedbacks_star.reverse();
 
-  // console.log(count_feedback);
-  // console.log(total_feedback_point);
   res.render("vwCourses/detail", {
     course,
     lessons,
     firstLesson,
     feedbacks,
     count_feedback: feedbacks.length,
-    total_feedback_point: feedbacks.total_point,
+    total_feedback_point,
     count_feedbacks_star,
   });
 });
@@ -226,7 +229,7 @@ router.post("/detail/:id", async function (req, res) {
     dateRating,
   };
   console.log(new_feedback);
-  feedbackModel.add(new_feedback);
+  await feedbackModel.add(new_feedback);
   res.redirect(req.get("referer"));
 });
 
