@@ -7,6 +7,7 @@ const parseMilliseconds = require("parse-ms");
 const videoUrlLink = require("../public/video-url-link");
 const router = express.Router();
 const feedbackModel = require("../models/feedback.model");
+const registerModel = require("../models/register.model");
 
 function paginating(nPages, page) {
   var page_numbers = [];
@@ -158,9 +159,18 @@ function getDuration(url) {
 router.get("/detail/:id", async function (req, res) {
   const id = req.params.id;
 
-  // Tui truy vấn lấy lên course với lessons chung 1 hàm á ông, ông tách hàm ra đi
   const course = await courseModel.single(id);
   const lessons = await courseModel.getLessons(id);
+  const feedbacks = await feedbackModel.allWithIdCourse(id);
+
+  let isRegister = false;
+  if (req.session.auth) {
+    isRegister = await registerModel.isRegister(
+      req.session.authUser.idUser,
+      id
+    );
+  }
+  console.log("The user has registered this course? " + isRegister);
 
   // Invalid date
   const lastModified = moment(course.lastModified, "YYYY-MM-DD").format(
@@ -179,7 +189,6 @@ router.get("/detail/:id", async function (req, res) {
     }
     firstLesson = lessons[0];
   }
-  // res.json({ course, previews });
 
   //Feedback's part
   let count_feedbacks_star = [
@@ -189,8 +198,6 @@ router.get("/detail/:id", async function (req, res) {
     { star: "4", count: 0 },
     { star: "5", count: 0 },
   ];
-
-  const feedbacks = await feedbackModel.allWithIdCourse(id);
   let total_feedback_point = 0;
 
   feedbacks.forEach((element) => {
@@ -209,6 +216,7 @@ router.get("/detail/:id", async function (req, res) {
     course,
     lessons,
     firstLesson,
+    isRegister,
     feedbacks,
     count_feedback: feedbacks.length,
     total_feedback_point,

@@ -251,9 +251,12 @@
           <p>
             {{this.course.description}}
           </p>
-          <div class="product_count">
-            <a class="button primary-btn" href="#">Add to Cart</a>
-          </div>
+          {{#unless isRegister}}
+            <div class="product_count">
+              <a class="button primary-btn" href="#">Add to Cart</a>
+            </div>
+          {{/unless}}
+
           <div class="card_area d-flex align-items-center">
             <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
             <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
@@ -291,8 +294,7 @@
           </div>
 
           {{#each this.lessons }}
-            {{#if isPreview}}
-
+            {{#if ../isRegister}}
               <div class="course-lessons" data-src="{{videoPath}}">
                 <div class="course-lesson-row">
                   <div class="course-lesson-row-thumbnail">
@@ -302,6 +304,19 @@
                   <div class="course-lesson-row-duration">{{duration}}</div>
                 </div>
               </div>
+            {{else}}
+              {{#if isPreview}}
+
+                <div class="course-lessons" data-src="{{videoPath}}">
+                  <div class="course-lesson-row">
+                    <div class="course-lesson-row-thumbnail">
+                      <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img" src="{{imagePath}}">
+                    </div>
+                    <div class="course-lesson-row-description">{{chapterName}}</div>
+                    <div class="course-lesson-row-duration">{{duration}}</div>
+                  </div>
+                </div>
+              {{/if}}
             {{/if}}
           {{/each}}
 
@@ -347,21 +362,39 @@
       <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
         <div>
           {{#each this.lessons }}
-            <div class="course-lessons-content" {{#if isPreview}}data-toggle="modal" data-target="#displayModal"
-              data-src="{{videoPath}}" {{/if}}>
-              <div class="course-lesson-content-row row" id="{{chapter}}">
-                <div class="col-md-1"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-                <div class="col-md-9">
-                  <div class="course-lesson-content-row-name">{{chapterName}}</div>
-                </div>
+            {{#if ../isRegister}}
+              <div class="course-lessons-content" data-toggle="modal" data-target="#displayModal"
+                data-src="{{videoPath}}">
+                <div class="course-lesson-content-row row" id="{{chapter}}">
+                  <div class="col-md-1"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
+                  <div class="col-md-9">
+                    <div class="course-lesson-content-row-name">{{chapterName}}</div>
+                  </div>
 
-                <div class="col-md-1"><span
-                    class="course-lesson-content-row-preview">{{#if isPreview}}Preview{{/if}}</span>
-                </div>
+                  <div class="col-md-1"><span
+                      class="course-lesson-content-row-preview">{{#if isPreview}}Preview{{/if}}</span>
+                  </div>
 
-                <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
+                  <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
+                </div>
               </div>
-            </div>
+            {{else}}
+              <div class="course-lessons-content" {{#if isPreview}}data-toggle="modal" data-target="#displayModal"
+                data-src="{{videoPath}}" {{/if}}>
+                <div class="course-lesson-content-row row" id="{{chapter}}">
+                  <div class="col-md-1"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
+                  <div class="col-md-9">
+                    <div class="course-lesson-content-row-name">{{chapterName}}</div>
+                  </div>
+
+                  <div class="col-md-1"><span
+                      class="course-lesson-content-row-preview">{{#if isPreview}}Preview{{/if}}</span>
+                  </div>
+
+                  <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
+                </div>
+              </div>
+            {{/if}}
           {{/each}}
         </div>
       </div>
@@ -420,11 +453,12 @@
               {{/each}}
             </div>
           </div>
-          <div class="col-lg-6">
-            <div class="review_box">
-              <h3>Add a Review</h3>
-              <p>Your Rating:</p>
-              {{!-- <ul class="list">
+          {{#if isRegister}}
+            <div class="col-lg-6">
+              <div class="review_box">
+                <h3>Add a Review</h3>
+                <p>Your Rating:</p>
+                {{!-- <ul class="list">
                 <li>
                   <a href="#"><i class="fa fa-star"></i></a>
                 </li>
@@ -441,25 +475,27 @@
                   <a href="#"><i class="fa fa-star"></i></a>
                 </li>
               </ul> --}}
-              <form id="frmFeedback" method="POST" action="">
-                <div id="stars" class="starrr"></div>
-                <p>You gave a rating of <span id="count"> 0 </span> star(s)</p>
-                <input type="hidden" id="txtPoint" name="ratingPoint" value="">
+                <form id="frmFeedback" method="POST" action="">
+                  <div id="stars" class="starrr"></div>
+                  <p>You gave a rating of <span id="count"> 0 </span> star(s)</p>
+                  <input type="hidden" id="txtPoint" name="ratingPoint" value="">
 
-                <input type="hidden" name="idUser" value="{{authUser.idUser}}">
+                  <input type="hidden" name="idUser" value="{{authUser.idUser}}">
 
-                <div class="form-group">
-                  <textarea class="form-control different-control w-100" name="ratingComment" id="txtComment" cols="30"
-                    rows="5" placeholder="Enter Message"></textarea>
-                </div>
-                <div class="form-group text-center text-md-right mt-3">
-                  <button type="submit" class="button button--active button-review">
-                    Submit Now
-                  </button>
-                </div>
-              </form>
+                  <div class="form-group">
+                    <textarea class="form-control different-control w-100" name="ratingComment" id="txtComment"
+                      cols="30" rows="5" placeholder="Enter Message"></textarea>
+                  </div>
+                  <div class="form-group text-center text-md-right mt-3">
+                    <button type="submit" class="button button--active button-review">
+                      Submit Now
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
+
+          {{/if}}
         </div>
       </div>
     </div>

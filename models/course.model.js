@@ -82,7 +82,7 @@ module.exports = {
 
   async topRegistedCourses() {
     const sql = `select c.*, u.fullname
-                from courses c, register r, users u
+                from courses c, registers r, users u
                 where c.idCourse= r.idCourse and c.idTeacher = u.idUser
                 group by c.idCourse
                 order by count(*) desc limit 10`;
