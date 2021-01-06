@@ -325,33 +325,38 @@
               <div class="col-6">
                 <div class="box_total">
                   <h5>Overall</h5>
-                  <h4>4.0</h4>
-                  <h6>(03 Reviews)</h6>
+                  <h4>{{total_feedback_point}}</h4>
+                  <h6>({{count_feedback}} Reviews)</h6>
                 </div>
               </div>
               <div class="col-6">
                 <div class="rating_list">
-                  <h3>Based on 3 Reviews</h3>
+                  <h3>Based on {{count_feedback}} Reviews</h3>
                   <ul class="list">
                     <li>
                       <a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> 01</a>
+                          class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                        {{count_feedbacks_star.star5}}</a>
                     </li>
                     <li>
                       <a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i> 01</a>
+                          class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i>
+                        {{count_feedbacks_star.star4}}</a>
                     </li>
                     <li>
                       <a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i> 01</a>
+                          class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+                        {{count_feedbacks_star.star3}}</a>
                     </li>
                     <li>
                       <a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                          class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i> 01</a>
+                          class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+                        {{count_feedbacks_star.star2}}</a>
                     </li>
                     <li>
                       <a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star-o"></i><i
-                          class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i> 01</a>
+                          class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+                        {{count_feedbacks_star.star1}}</a>
                     </li>
                   </ul>
                 </div>
@@ -385,7 +390,7 @@
           </div>
           <div class="col-lg-6">
             <div class="review_box">
-              <h4>Add a Review</h4>
+              <h3>Add a Review</h3>
               <p>Your Rating:</p>
               {{!-- <ul class="list">
                 <li>
