@@ -4,7 +4,25 @@ const moment = require("moment");
 const userModel = require("../models/user.model");
 const auth = require("../middlewares/auth.mdw").auth;
 const mail = require("../controllers/mail.controller");
+const multer = require("multer");
+const path = require("path");
 const router = express.Router();
+
+//Set Storage Engine
+const storage = multer.diskStorage({
+  destination: "./public/images/users",
+  filename: function (req, file, callback) {
+    callback(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+});
 
 router.get("/signin", function (req, res) {
   res.render("vwAccount/signin", { layout: "main.hbs" });
@@ -118,9 +136,32 @@ router.get("/profile", auth, async function (req, res) {
   });
 });
 
-router.post("/patch", auth, async function (req, res) {
-  req.body.dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
-  await userModel.patch(req.body);
+router.post("/patch", upload.single("avatar"), auth, async function (req, res) {
+  const dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
+  let imgPath;
+  if(req.file === undefined) {
+    imgPath = req.body.previewAvatar;
+  } else {
+    imgPath = "/public/images/users/" + req.file.filename;
+  }
+  let userDescript;
+  if(req.body.userDescription === "") {
+    userDescript = req.body.tempUserDescription;
+  } else {
+    userDescript = req.body.userDescription;
+  }
+  const new_user = {
+    idUser: req.body.idUser,
+    username: req.body.username,
+    fullname: req.body.fullname,
+    email: req.body.email,
+    dob: dob,
+    role: req.body.role,
+    userDescription: userDescript,
+    avatar: imgPath,
+  }
+  console.log(new_user);
+  await userModel.patch(new_user);
   req.session.authUser = await userModel.singleByUserName(req.body.username);
   res.redirect("/account/profile");
 });
