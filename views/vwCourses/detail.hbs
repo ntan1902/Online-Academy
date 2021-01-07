@@ -253,7 +253,8 @@
           </p>
           {{#unless isRegister}}
           <div class="product_count">
-            <button class="button primary-btn" href="#">Add to Cart</button>
+            <button class="button primary-btn" type="submit">Add to Cart</button>
+            <input type="hidden" value="{{this.course.idCourse}}" name="id">
           </div>
           {{/unless}}
 
@@ -546,7 +547,7 @@
     <h4>{{fullname}}</h4>
     <hr>
     <div class="media">
-      <img src="/public/images/user-male.png" style="width: 180px; height:180px" alt=""/>
+      <img src="/public/images/user-male.png" style="width: 180px; height:180px" alt="" />
       <div class="media-body ml-3">
         <i class="fa fa-star my-2" aria-hidden="true"></i> <br>
         <i class="fa fa-anchor my-2" aria-hidden="true"></i> <br>

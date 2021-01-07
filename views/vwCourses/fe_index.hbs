@@ -1,3 +1,13 @@
+{{#section 'js'}}
+<script>
+  $('.addItem').on('click', function () {
+    const id = $(this).data('id');
+    $('#courseID').val(id);
+    $('#frmAddItem').submit();
+  })
+</script>
+{{/section}}
+
 <div class="card shadow">
   <div class="card-header d-flex justify-content-between">
     <h4>Courses</h4>
@@ -9,85 +19,88 @@
 
   <div class="card-body">
     {{#if this.empty}}
-      <h5 class="card-title">There is no data</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <h5 class="card-title">There is no data</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
     {{else}}
-      <div class="container">
-        <div class="row">
-          {{#each this.courses}}
-            <div class="col-md-3 col-sm-6 mb-4">
-              <div class="product-grid4 h-100">
-                <div class="product-image4">
-                  <a href="#">
-                    <img class="pic-1" style="height: 150px" src="{{imagePath}}">
-                    <img class="pic-2" style="height: 150px" src="{{imagePath}}">
-                  </a>
-                  <ul class="social">
-                    <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
-                          class="fa fa-eye"></i></a></li>
-                    <li><a href="#" data-tip="Like the course" role="button"><i
-                          class="fa fa-heart"></i></a></li>
-                    <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
-                  </ul>
-                  <span class="product-new-label">New</span>
-                  <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                  <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
-                  <span class="teacher"><a href="">{{fullname}}</a></span>
-                  <ul class="rating">
-                    {{!-- <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star disable"></li>
-                    <li class="fa fa-star disable"></li> --}}
-                    {{{calcStars totalPoint}}}
-                  </ul>
-                  <div class="price">
-                    ${{price}}
-                    <span>$5.00</span>
-                  </div>
-                  <a class="add-to-cart" href="#">ADD TO CART</a>
-                </div>
-              </div>
+    <form action="/cart/add" id="frmAddItem" method="post">
+      <input type="hidden" id="courseID" name="id">
+    </form>
+    <div class="container">
+      <div class="row">
+        {{#each this.courses}}
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="product-grid4 h-100">
+            <div class="product-image4">
+              <a href="#">
+                <img class="pic-1" style="height: 150px" src="{{imagePath}}">
+                <img class="pic-2" style="height: 150px" src="{{imagePath}}">
+              </a>
+              <ul class="social">
+                <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
+                      class="fa fa-eye"></i></a></li>
+                <li><a href="#" data-tip="Like the course" role="button"><i class="fa fa-heart"></i></a></li>
+                <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
+                      class="fa fa-shopping-cart "></i></a></li>
+              </ul>
+              <span class="product-new-label">New</span>
+              <span class="product-discount-label">-10%</span>
             </div>
-          {{/each}}
+            <div class="product-content">
+              <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
+              <span class="teacher"><a href="">{{fullname}}</a></span>
+              <ul class="rating">
+                {{!-- <li class="fa fa-star"></li>
+                <li class="fa fa-star"></li>
+                <li class="fa fa-star"></li>
+                <li class="fa fa-star disable"></li>
+                <li class="fa fa-star disable"></li> --}}
+                {{{calcStars totalPoint}}}
+              </ul>
+              <div class="price">
+                ${{price}}
+                <span>$5.00</span>
+              </div>
+              <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+            </div>
+          </div>
         </div>
-        <div class="card-body d-flex justify-content-between">
-          <ul class="pagination mx-auto">
-            {{#if disablePrev}}
-              <li class="page-item disabled" id="prev">
-                <a class="page-link" href="?page={{prevPage}}" id="prev-link">Previous</a>
-              </li>
-            {{else}}
-              <li class="page-item" id="prev">
-                <a class="page-link" href="?page={{prevPage}}" id="prev-link">Previous</a>
-              </li>
-            {{/if}}
-            {{#each this.page_numbers}}
-              {{#if isCurrentPage}}
-                <li class="page-item active">
-                  <a class="page-link" href="javascript:;" id="cur-link">{{value}}</a>
-                </li>
-              {{else}}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{value}}" id="click-link">{{value}}</a>
-                </li>
-              {{/if}}
-            {{/each}}
-
-            {{#if disableNext}}
-              <li class="page-item disabled" id="next">
-                <a class="page-link" href="?page={{nextPage}}" id="next-link">Next</a>
-              </li>
-            {{else}}
-              <li class="page-item" id="next">
-                <a class="page-link" href="?page={{nextPage}}" id="next-link">Next</a>
-              </li>
-            {{/if}}
-          </ul>
-        </div>
+        {{/each}}
       </div>
+      <div class="card-body d-flex justify-content-between">
+        <ul class="pagination mx-auto">
+          {{#if disablePrev}}
+          <li class="page-item disabled" id="prev">
+            <a class="page-link" href="?page={{prevPage}}" id="prev-link">Previous</a>
+          </li>
+          {{else}}
+          <li class="page-item" id="prev">
+            <a class="page-link" href="?page={{prevPage}}" id="prev-link">Previous</a>
+          </li>
+          {{/if}}
+          {{#each this.page_numbers}}
+          {{#if isCurrentPage}}
+          <li class="page-item active">
+            <a class="page-link" href="javascript:;" id="cur-link">{{value}}</a>
+          </li>
+          {{else}}
+          <li class="page-item">
+            <a class="page-link" href="?page={{value}}" id="click-link">{{value}}</a>
+          </li>
+          {{/if}}
+          {{/each}}
+
+          {{#if disableNext}}
+          <li class="page-item disabled" id="next">
+            <a class="page-link" href="?page={{nextPage}}" id="next-link">Next</a>
+          </li>
+          {{else}}
+          <li class="page-item" id="next">
+            <a class="page-link" href="?page={{nextPage}}" id="next-link">Next</a>
+          </li>
+          {{/if}}
+        </ul>
+      </div>
+    </div>
     {{/if}}
   </div>
 </div>

@@ -47,8 +47,16 @@
 
         <form id="frmSignout" action="/account/signout" method="POST"></form>
         <ul class="navbar-nav ml-auto">
-
+            <ul class="nav-shop">
+                <li class="nav-item mt-2">
+                    <a href="/cart">
+                        <i class="ti-shopping-cart"></i>
+                        <span class="nav-shop__circle">{{this.cartSummary}}</span>
+                    </a>
+                </li>
+            </ul>
             <li class="nav-item dropdown mr-5">
+
                 <a class="nav-link" href="#">
                     {{#if isAdmin}}
                     <b class="text-warning">Welcome Admin</b>
