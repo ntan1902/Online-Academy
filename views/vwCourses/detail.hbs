@@ -227,42 +227,41 @@
 
         </div>
       </div>
-
       <div class="col-lg-5 offset-lg-1">
-        <form id="form-cart" action="/cart/add" method="POST">
-          <div class="s_product_text">
-            <h3><strong>{{this.course.title}}</strong></h3>
-            <h2>${{this.course.price}}</h2>
-            <ul class="list">
-              <li>
-                <a class="active" href="#">
-                  <span>Field</span> : <strong>{{this.course.name}}</strong>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Teacher ID</span> : {{this.course.idTeacher}}
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Last update</span> : {{this.course.lastModified}}
-                </a>
-              </li>
-            </ul>
-            <p>
-              {{this.course.description}}
-            </p>
-            <div class="product_count">
-              <button class="button primary-btn" type="submit">Add to Cart</button>
-              <input type="hidden" value="{{this.course.idCourse}}" name="id">
-            </div>
-            <div class="card_area d-flex align-items-center">
-              <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
-              <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
-            </div>
+        <div class="s_product_text">
+          <h3><strong>{{this.course.title}}</strong></h3>
+          <h2>${{this.course.price}}</h2>
+          <ul class="list">
+            <li>
+              <a class="active" style="text-transform: capitalize;" href="#">
+                <h4><span><strong>Field</strong></span> : {{this.course.name}}</h4>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <h4><span><strong>Teacher</strong></span> : {{this.course.teacherName}}</h4>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <h4><span><strong>Last-update</strong></span> : {{this.course.lastModified}}</h4>
+              </a>
+            </li>
+          </ul>
+          <p>
+            {{this.course.description}}
+          </p>
+          {{#unless isRegister}}
+          <div class="product_count">
+            <button class="button primary-btn" href="#">Add to Cart</button>
           </div>
-        </form>
+          {{/unless}}
+
+          <div class="card_area d-flex align-items-center">
+            <a class="icon_btn" href="#"><i class="lnr lnr lnr-eye"></i></a>
+            <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -295,35 +294,35 @@
           </div>
 
           {{#each this.lessons }}
-          <<<<<<< Updated upstream {{#if ../isRegister}}======={{#if isPreview}}>>>>>>> Stashed changes
-            <div class="course-lessons" data-src="{{videoPath}}">
-              <div class="course-lesson-row">
-                <div class="course-lesson-row-thumbnail">
-                  <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img" src="{{imagePath}}">
-                </div>
-                <div class="course-lesson-row-description">{{chapterName}}</div>
-                <div class="course-lesson-row-duration">{{duration}}</div>
+          {{#if ../isRegister}}
+          <div class="course-lessons" data-src="{{videoPath}}">
+            <div class="course-lesson-row">
+              <div class="course-lesson-row-thumbnail">
+                <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img" src="{{imagePath}}">
               </div>
+              <div class="course-lesson-row-description">{{chapterName}}</div>
+              <div class="course-lesson-row-duration">{{duration}}</div>
             </div>
-            <<<<<<< Updated upstream {{else}} {{#if isPreview}} <div class="course-lessons" data-src="{{videoPath}}">
-              <div class="course-lesson-row">
-                <div class="course-lesson-row-thumbnail">
-                  <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img" src="{{imagePath}}">
-                </div>
-                <div class="course-lesson-row-description">{{chapterName}}</div>
-                <div class="course-lesson-row-duration">{{duration}}</div>
+          </div>
+          {{else}}
+          {{#if isPreview}}
+          <div class="course-lessons" data-src="{{videoPath}}">
+            <div class="course-lesson-row">
+              <div class="course-lesson-row-thumbnail">
+                <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img" src="{{imagePath}}">
               </div>
-        </div>
-        {{/if}}
-        =======
-        >>>>>>> Stashed changes
-        {{/if}}
-        {{/each}}
+              <div class="course-lesson-row-description">{{chapterName}}</div>
+              <div class="course-lesson-row-duration">{{duration}}</div>
+            </div>
+          </div>
+          {{/if}}
+          {{/if}}
+          {{/each}}
 
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 <!--================End Modal ==================-->
 
@@ -361,192 +360,179 @@
       <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
         <div>
           {{#each this.lessons }}
-          <<<<<<< Updated upstream {{#if ../isRegister}} <div class="course-lessons-content" data-toggle="modal"
-            data-target="#displayModal" data-src="{{videoPath}}">
-            =======
-            <div class="course-lessons-content" {{#if isPreview}}data-toggle="modal" data-target="#displayModal"
-              data-src="{{videoPath}}" {{/if}}>
-              >>>>>>> Stashed changes
-              <div class="course-lesson-content-row row" id="{{chapter}}">
-                <div class="col-md-1"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-                <div class="col-md-9">
-                  <div class="course-lesson-content-row-name">{{chapterName}}</div>
-                </div>
-                <<<<<<< Updated upstream <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
-                    isPreview}}Preview{{/if}}</span>
+          {{#if ../isRegister}}
+          <div class="course-lessons-content" data-toggle="modal" data-target="#displayModal" data-src="{{videoPath}}">
+            <div class="course-lesson-content-row row" id="{{chapter}}">
+              <div class="col-md-1"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
+              <div class="col-md-9">
+                <div class="course-lesson-content-row-name">{{chapterName}}</div>
+              </div>
+
+              <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
+                  isPreview}}Preview{{/if}}</span>
               </div>
 
               <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
             </div>
-        </div>
-        {{else}}
-        <div class="course-lessons-content" {{#if isPreview}}data-toggle="modal" data-target="#displayModal"
-          data-src="{{videoPath}}" {{/if}}>
-          <div class="course-lesson-content-row row" id="{{chapter}}">
-            <div class="col-md-1"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
-            <div class="col-md-9">
-              <div class="course-lesson-content-row-name">{{chapterName}}</div>
-            </div>
-
-            <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
-                isPreview}}Preview{{/if}}</span>
-            </div>
-
-            <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
           </div>
-        </div>
-        {{/if}}
-        =======
-
-        <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
-            isPreview}}Preview{{/if}}</span>
-        </div>
-
-        <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
-      </div>
-    </div>
-    >>>>>>> Stashed changes
-    {{/each}}
-  </div>
-  </div>
-  <!--================Course's Reviews =================-->
-  <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
-    {{#if isRegister}}
-    <div class="row">
-      <div class="col-lg-6">
-        <div class="row total_rate">
-          <div class="col-6">
-            <div class="box_total">
-              <h5>Overall</h5>
-              <h4>{{total_feedback_point}}</h4>
-              <h6>({{count_feedback}} Reviews)</h6>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="rating_list">
-              <h3>Based on {{count_feedback}} Reviews</h3>
-              <ul class="list">
-                {{#each count_feedbacks_star }}
-                <li>
-                  <a href="#">{{star}} Star
-                    <<<<<<< Updated upstream {{{calcStarsDetail star}}}======={{{calcStars star}}}>>>>>>> Stashed
-                      changes
-                      {{count}}
-                  </a>
-                </li>
-                {{/each}}
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="review_list">
-          {{#each feedbacks}}
-          <div class="review_item">
-            <div class="media">
-              <div class="d-flex">
-                <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
+          {{else}}
+          <div class="course-lessons-content" {{#if isPreview}}data-toggle="modal" data-target="#displayModal"
+            data-src="{{videoPath}}" {{/if}}>
+            <div class="course-lesson-content-row row" id="{{chapter}}">
+              <div class="col-md-1"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
+              <div class="col-md-9">
+                <div class="course-lesson-content-row-name">{{chapterName}}</div>
               </div>
-              <div class="media-body">
-                <h4>{{fullname}} - {{dateRating}}</h4>
-                <script>
-                  for (let i = 0; i < {{ ratingPoint }}; i++) {
-                    document.write('<i class="fa fa-star"></i>');
-                  }
-                  for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
-                    document.write('<i class="fa fa-star-o"></i>');
-                  }
-                </script>
+
+              <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
+                  isPreview}}Preview{{/if}}</span>
               </div>
+
+              <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
             </div>
-            <p>
-              {{ratingComment}}
-            </p>
           </div>
+          {{/if}}
           {{/each}}
         </div>
       </div>
-      <div class="col-lg-6">
-        <div class="review_box">
-          <h3>Add a Review</h3>
-          <p>Your Rating:</p>
-          <form id="frmFeedback" method="POST" action="">
-            <div id="stars" class="starrr"></div>
-            <p>You gave a rating of <span id="count"> 0 </span> star(s)</p>
-            <input type="hidden" id="txtPoint" name="ratingPoint" value="">
-
-            <input type="hidden" name="idUser" value="{{authUser.idUser}}">
-
-            <div class="form-group">
-              <textarea class="form-control different-control w-100" name="ratingComment" id="txtComment" cols="30"
-                rows="5" placeholder="Enter Message"></textarea>
-            </div>
-            <div class="form-group text-center text-md-right mt-3">
-              <button type="submit" class="button button--active button-review">
-                Submit Now
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-      {{else}}
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="row total_rate">
-            <div class="col-12">
-              <div class="box_total">
-                <h5>Overall</h5>
-                <h4>{{total_feedback_point}}</h4>
-                <h6>({{count_feedback}} Reviews)</h6>
-              </div>
-            </div>
-            <div class="col-12 d-flex justify-content-center mt-3">
-              <div class="rating_list">
-                <h3>Based on {{count_feedback}} Reviews</h3>
-                <ul class="list">
-                  {{#each count_feedbacks_star }}
-                  <li>
-                    <a href="#">{{star}} Star
-                      {{{calcStarsDetail star}}}
-
-                      {{count}}
-                    </a>
-                  </li>
-                  {{/each}}
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="review_list">
-            {{#each feedbacks}}
-            <div class="review_item">
-              <div class="media">
-                <div class="d-flex">
-                  <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
-                </div>
-                <div class="media-body">
-                  <h4>{{fullname}} - {{dateRating}}</h4>
-                  <script>
-                    for (let i = 0; i < {{ ratingPoint }}; i++) {
-                      document.write('<i class="fa fa-star"></i>');
-                    }
-                    for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
-                      document.write('<i class="fa fa-star-o"></i>');
-                    }
-                  </script>
+      <!--================Course's Reviews =================-->
+      <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+        {{#if isRegister}}
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="row total_rate">
+              <div class="col-6">
+                <div class="box_total">
+                  <h5>Overall</h5>
+                  <h4>{{total_feedback_point}}</h4>
+                  <h6>({{count_feedback}} Reviews)</h6>
                 </div>
               </div>
-              <p>
-                {{ratingComment}}
-              </p>
+              <div class="col-6">
+                <div class="rating_list">
+                  <h3>Based on {{count_feedback}} Reviews</h3>
+                  <ul class="list">
+                    {{#each count_feedbacks_star }}
+                    <li>
+                      <a href="#">{{star}} Star
+                        {{{calcStarsDetail star}}}
+
+                        {{count}}
+                      </a>
+                    </li>
+                    {{/each}}
+                  </ul>
+                </div>
+              </div>
             </div>
-            {{/each}}
+            <div class="review_list">
+              {{#each feedbacks}}
+              <div class="review_item">
+                <div class="media">
+                  <div class="d-flex">
+                    <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
+                  </div>
+                  <div class="media-body">
+                    <h4>{{fullname}} - {{dateRating}}</h4>
+                    <script>
+                      for (let i = 0; i < {{ ratingPoint }}; i++) {
+                        document.write('<i class="fa fa-star"></i>');
+                      }
+                      for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
+                        document.write('<i class="fa fa-star-o"></i>');
+                      }
+                    </script>
+                  </div>
+                </div>
+                <p>
+                  {{ratingComment}}
+                </p>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="review_box">
+              <h3>Add a Review</h3>
+              <p>Your Rating:</p>
+              <form id="frmFeedback" method="POST" action="">
+                <div id="stars" class="starrr"></div>
+                <p>You gave a rating of <span id="count"> 0 </span> star(s)</p>
+                <input type="hidden" id="txtPoint" name="ratingPoint" value="">
+
+                <input type="hidden" name="idUser" value="{{authUser.idUser}}">
+
+                <div class="form-group">
+                  <textarea class="form-control different-control w-100" name="ratingComment" id="txtComment" cols="30"
+                    rows="5" placeholder="Enter Message"></textarea>
+                </div>
+                <div class="form-group text-center text-md-right mt-3">
+                  <button type="submit" class="button button--active button-review">
+                    Submit Now
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          {{else}}
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="row total_rate">
+                <div class="col-12">
+                  <div class="box_total">
+                    <h5>Overall</h5>
+                    <h4>{{total_feedback_point}}</h4>
+                    <h6>({{count_feedback}} Reviews)</h6>
+                  </div>
+                </div>
+                <div class="col-12 d-flex justify-content-center mt-3">
+                  <div class="rating_list">
+                    <h3>Based on {{count_feedback}} Reviews</h3>
+                    <ul class="list">
+                      {{#each count_feedbacks_star }}
+                      <li>
+                        <a href="#">{{star}} Star
+                          {{{calcStarsDetail star}}}
+
+                          {{count}}
+                        </a>
+                      </li>
+                      {{/each}}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="review_list">
+                {{#each feedbacks}}
+                <div class="review_item">
+                  <div class="media">
+                    <div class="d-flex">
+                      <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
+                    </div>
+                    <div class="media-body">
+                      <h4>{{fullname}} - {{dateRating}}</h4>
+                      <script>
+                        for (let i = 0; i < {{ ratingPoint }}; i++) {
+                          document.write('<i class="fa fa-star"></i>');
+                        }
+                        for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
+                          document.write('<i class="fa fa-star-o"></i>');
+                        }
+                      </script>
+                    </div>
+                  </div>
+                  <p>
+                    {{ratingComment}}
+                  </p>
+                </div>
+                {{/each}}
+              </div>
+            </div>
+            {{/if}}
           </div>
         </div>
-        {{/if}}
       </div>
     </div>
-  </div>
-  </div>
 </section>
 <!--================End Product Description Area =================-->
 

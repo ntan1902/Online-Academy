@@ -1,6 +1,5 @@
 const categoryModel = require("../models/category.model");
 const courseModel = require("../models/course.model");
-const cartModel = require("../models/cart.model");
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -8,15 +7,10 @@ module.exports = function (app) {
       req.session.auth = false;
     }
 
-    if(req.session.auth === false){
-      req.session.cart=[];
-    }
-
     res.locals.auth = req.session.auth;
     res.locals.authUser = req.session.authUser;
     if (req.session.authUser)
       res.locals.isAdmin = req.session.authUser.role === "admin";
-    res.locals.cartSummary = cartModel.getNumberOfItems(req.session.cart);
     next();
   });
 

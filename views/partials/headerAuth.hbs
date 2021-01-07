@@ -45,39 +45,29 @@
             </li>
         </ul>
 
-        <form id="frmSignout" action="/account/signout" method="POST">
-            <ul class="navbar-nav ml-auto">
-                <ul class="nav-shop">
-                    <li class="nav-item mt-2">
-                        <a href="/cart">
-                            <i class="ti-shopping-cart"></i>
-                            <span class="nav-shop__circle">{{this.cartSummary}}</span>
-                        </a>
-                    </li>
-                </ul>
+        <form id="frmSignout" action="/account/signout" method="POST"></form>
+        <ul class="navbar-nav ml-auto">
 
-
-                <li class="nav-item dropdown mr-5">
-                    <a class="nav-link" href="#">
-                        {{#if isAdmin}}
-                        <b class="text-warning">Welcome Admin</b>
-                        {{else}}
-                        <b class="text-dark">{{authUser.fullname}}</b>
-                        {{/if}}
+            <li class="nav-item dropdown mr-5">
+                <a class="nav-link" href="#">
+                    {{#if isAdmin}}
+                    <b class="text-warning">Welcome Admin</b>
+                    {{else}}
+                    <b class="text-dark">{{authUser.fullname}}</b>
+                    {{/if}}
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/account/profile">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        Profile
                     </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/account/profile">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            Profile
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript: $('#frmSignout').submit();">
-                            <i class="fa fa-sign-out" aria-hidden="true"></i>
-                            Sign Out
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </form>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="javascript: $('#frmSignout').submit();">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        Sign Out
+                    </a>
+                </div>
+            </li>
+        </ul>
     </div>
 </nav>
