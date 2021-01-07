@@ -113,12 +113,13 @@ router.get("/search", async function (req, res) {
   let pagination = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourseByKeyword(
+  var list_courses = await courseModel.pageCourseByKeyword(
     offset,
     funcKeyword,
     sort
   );
 
+  list_courses = await feedbackModel.getRatingPoints(list_courses);
   res.render("vwCourses/search", {
     total,
     showKeyword,

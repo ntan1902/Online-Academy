@@ -7,6 +7,7 @@ module.exports = {
     }
     return courses;
   },
+
   async getRatingPoint(idCourse) {
     const sql = `select f.ratingPoint, f.dateRating, f.ratingComment
     from feedbacks f
@@ -22,6 +23,7 @@ module.exports = {
     }
     return totalPoint;
   },
+  
   async all() {
     const sql = "select * from feedbacks";
     const [rows, fields] = await db.load(sql);

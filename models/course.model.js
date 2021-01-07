@@ -17,7 +17,7 @@ module.exports = {
   },
 
   async pageCourse(offset) {
-    const sql = `select * from courses limit ${paginate.limit} offset ${offset}`;
+    const sql = `select co.*, u.fullname from courses co, users u where co.idTeach = u. limit ${paginate.limit} offset ${offset}`;
     const [rows, fields] = await db.load(sql);
     return rows;
   },
@@ -151,11 +151,11 @@ module.exports = {
       sort = "title";
     }
     if (sort !== "rating") {
-      const sql = `select distinct c.*
+      const sql = `select distinct c.*, u.fullname
                 from users u, courses c
-                where match(c.title) against ('${keyword}') or 
-                  match(u.fullname) against('${keyword}') and u.idUser=c.idTeacher 
-                  or match(c.description) against ('${keyword}')
+                where u.idUser=c.idTeacher and (match(c.title) against ('${keyword}') or 
+                  match(u.fullname) against('${keyword}')
+                  or match(c.description) against ('${keyword}'))
                 order by ${sort}
                 limit ${paginate.limit} offset ${offset}`;
       const [rows, fields] = await db.load(sql);
