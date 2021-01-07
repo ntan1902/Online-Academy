@@ -17,7 +17,7 @@ module.exports = {
   },
 
   async pageCourse(offset) {
-    const sql = `select co.*, u.fullname from courses co, users u where co.idTeach = u. limit ${paginate.limit} offset ${offset}`;
+    const sql = `select co.*, u.fullname from courses co, users u where co.idTeacher = u.idUser limit ${paginate.limit} offset ${offset}`;
     const [rows, fields] = await db.load(sql);
     return rows;
   },
@@ -86,6 +86,17 @@ module.exports = {
                 where c.idCourse= r.idCourse and c.idTeacher = u.idUser
                 group by c.idCourse
                 order by count(*) desc limit 10`;
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0) return null;
+    return rows;
+  },
+
+  async topRegistedCoursesWithIdCat(idCat) {
+    const sql = `select c.*, u.fullname
+                from courses c, registers r, users u
+                where c.idCourse= r.idCourse and c.idTeacher = u.idUser and c.idCat = ${idCat}
+                group by c.idCourse
+                order by count(*) desc limit 5`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
     return rows;

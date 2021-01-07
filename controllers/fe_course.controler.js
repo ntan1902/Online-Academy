@@ -213,6 +213,10 @@ router.get("/detail/:id", async function (req, res) {
   let total_feedback_point = await feedbackModel.getRatingPoint(
     course.idCourse
   );
+
+  console.log(course.idCat);
+  const topRegister = await courseModel.topRegistedCoursesWithIdCat(course.idCat);
+
   res.render("vwCourses/detail", {
     course,
     lessons,
@@ -222,6 +226,7 @@ router.get("/detail/:id", async function (req, res) {
     count_feedback: feedbacks.length,
     total_feedback_point,
     count_feedbacks_star,
+    topRegister,
   });
 });
 
