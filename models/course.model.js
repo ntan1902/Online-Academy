@@ -41,7 +41,7 @@ module.exports = {
   },
 
   async single(id) {
-    const sql = `select co.*, cat.name, u.fullname as teacherName from courses co, users u, categories cat where co.idCourse = ${id} and co.idTeacher = u.idUser and co.idCat = cat.idCategory`;
+    const sql = `select co.*, cat.name, u.fullname, u.userDescription as teacherName from courses co, users u, categories cat where co.idCourse = ${id} and co.idTeacher = u.idUser and co.idCat = cat.idCategory`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
     return rows[0];
