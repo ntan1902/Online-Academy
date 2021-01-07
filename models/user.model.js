@@ -6,9 +6,14 @@ module.exports = {
     const [rows, fields] = await db.load(sql);
     return rows;
   },
+  async allByRole(role) {
+    const sql = `select * from users where role = '${role}'`;
+    const [rows, fields] = await db.load(sql);
+    return rows;
+  },
 
-  async add(student) {
-    const [result, fields] = await db.add(student, "users");
+  async add(user) {
+    const [result, fields] = await db.add(user, "users");
     return result;
   },
   async singleByUserName(username) {

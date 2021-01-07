@@ -50,7 +50,7 @@ router.post("/add", upload.single("avatar"), async function (req, res) {
   const hash = bcrypt.hashSync(req.body.password, 10);
   const dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
   let imgPath;
-  if(req.file === undefined) {
+  if (req.file === undefined) {
     imgPath = "";
   } else {
     imgPath = "/public/images/users/" + req.file.filename;
@@ -63,7 +63,7 @@ router.post("/add", upload.single("avatar"), async function (req, res) {
     dob: dob,
     role: req.body.role,
     userDescription: req.body.userDescription,
-    avatar: imgPath
+    avatar: imgPath,
   };
   await userModel.add(user);
   res.render("vwUsers/add", {
@@ -89,6 +89,19 @@ router.get("/edit/:id", async function (req, res) {
   });
 });
 
+router.get("/:role", async function (req, res) {
+  const users = await userModel.allByRole(req.params.role);
+  res.render("vwUsers/index", {
+    layout: "admin.hbs",
+    manageUsers: true,
+    manageCourses: false,
+    manageCategories: false,
+    manageFeedbacks: false,
+    list: users,
+    empty: users.length === 0,
+  });
+});
+
 router.post("/delete/", async function (req, res) {
   await userModel.delete(req.body.id);
   res.redirect("/admin/users");
@@ -97,7 +110,7 @@ router.post("/delete/", async function (req, res) {
 router.post("/patch/", upload.single("avatar"), async function (req, res) {
   const dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
   let imgPath;
-  if(req.file === undefined) {
+  if (req.file === undefined) {
     imgPath = req.body.previewAvatar;
   } else {
     imgPath = "/public/images/users/" + req.file.filename;
@@ -111,7 +124,7 @@ router.post("/patch/", upload.single("avatar"), async function (req, res) {
     role: req.body.role,
     userDescription: req.body.userDescription,
     avatar: imgPath,
-  }
+  };
   await userModel.patch(new_user);
   res.redirect("/admin/users");
 });

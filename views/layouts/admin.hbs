@@ -60,8 +60,8 @@
                                         <b>Users</b>
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="/admin/teachers">Teachers</a>
-                                        <a class="dropdown-item" href="/admin/students">Students</a>
+                                        <a class="dropdown-item" href="/admin/users/teacher">Teachers</a>
+                                        <a class="dropdown-item" href="/admin/users/student">Students</a>
 
                                     </div>
                                 </div>
@@ -74,8 +74,8 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         {{#each listCategories}}
-                                        <a class="dropdown-item"
-                                            href="/admin/courses/byField/{{this.name}}" style="text-transform: capitalize;">{{this.name}}</a>
+                                            <a class="dropdown-item" href="/admin/courses/byField/{{this.name}}"
+                                                style="text-transform: capitalize;">{{this.name}}</a>
                                         {{/each}}
                                     </div>
                                 </div>
