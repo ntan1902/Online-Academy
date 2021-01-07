@@ -8,7 +8,7 @@ module.exports = function (app) {
       defaultLayout: "main.hbs",
       helpers: {
         section: hbs_sections(),
-        calcStars(star) {
+        calcStarsDetail(star) {
           let res = "";
           for (let i = 0; i < 5; i++) {
             if (i < star) {
@@ -19,7 +19,7 @@ module.exports = function (app) {
           }
           return res;
         },
-        calcStarsHome(star) {
+        calcStars(star) {
           let res = "";
           for (let i = 0; i < 5; i++) {
             if (i < star) {

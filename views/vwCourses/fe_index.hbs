@@ -35,11 +35,12 @@
                 <div class="product-content">
                   <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
                   <ul class="rating">
-                    <li class="fa fa-star"></li>
+                    {{!-- <li class="fa fa-star"></li>
                     <li class="fa fa-star"></li>
                     <li class="fa fa-star"></li>
                     <li class="fa fa-star disable"></li>
-                    <li class="fa fa-star disable"></li>
+                    <li class="fa fa-star disable"></li> --}}
+                    {{{calcStars totalPoint}}}
                   </ul>
                   <div class="price">
                     ${{price}}

@@ -1,6 +1,27 @@
 const db = require("../utils/db");
 
 module.exports = {
+  async getRatingPoints(courses) {
+    for (let i = 0; i < courses.length; i++) {
+      courses[i].totalPoint = await this.getRatingPoint(courses[i].idCourse);
+    }
+    return courses;
+  },
+  async getRatingPoint(idCourse) {
+    const sql = `select f.ratingPoint, f.dateRating, f.ratingComment
+    from feedbacks f
+    where f.idCourse = ${idCourse}`;
+    const [rows, fields] = await db.load(sql);
+
+    let totalPoint = 0;
+    for (let i = 0; i < rows.length; i++) {
+      totalPoint += rows[i].ratingPoint;
+    }
+    if (rows.length !== 0) {
+      totalPoint = Math.round(totalPoint / rows.length);
+    }
+    return totalPoint;
+  },
   async all() {
     const sql = "select * from feedbacks";
     const [rows, fields] = await db.load(sql);

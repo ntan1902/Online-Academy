@@ -52,7 +52,8 @@ router.get("/", async function (req, res, next) {
   let pagination = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourse(offset);
+  let list_courses = await courseModel.pageCourse(offset);
+  list_courses = await feedbackModel.getRatingPoints(list_courses);
 
   res.render("vwCourses/fe_index", {
     courses: list_courses,
@@ -80,7 +81,8 @@ router.get("/byField/:field", async function (req, res) {
   let pagination = paginating(nPages, page);
 
   const offset = (page - 1) * paginate.limit;
-  const list_courses = await courseModel.pageCourseByField(offset, field);
+  let list_courses = await courseModel.pageCourseByField(offset, field);
+  list_courses = await feedbackModel.getRatingPoints(list_courses);
 
   res.render("vwCourses/fe_index", {
     courses: list_courses,
@@ -198,20 +200,18 @@ router.get("/detail/:id", async function (req, res) {
     { star: "4", count: 0 },
     { star: "5", count: 0 },
   ];
-  let total_feedback_point = 0;
 
   feedbacks.forEach((element) => {
     element.dateRating = moment(element.dateRating, "YYYY-MM-DD").format(
       "MMMM Do YYYY"
     );
     count_feedbacks_star[element.ratingPoint - 1].count++;
-    total_feedback_point += element.ratingPoint;
   });
-
-  if (feedbacks.length !== 0)
-    total_feedback_point = Math.round(total_feedback_point / feedbacks.length);
   count_feedbacks_star.reverse();
 
+  let total_feedback_point = await feedbackModel.getRatingPoint(
+    course.idCourse
+  );
   res.render("vwCourses/detail", {
     course,
     lessons,
