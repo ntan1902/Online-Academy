@@ -6,6 +6,7 @@ const auth = require("../middlewares/auth.mdw").auth;
 const mail = require("../controllers/mail.controller");
 const multer = require("multer");
 const path = require("path");
+const favoriteCourses = require("../models/favoriteCourses.model");
 const router = express.Router();
 
 //Set Storage Engine
@@ -204,4 +205,36 @@ router.post("/signout", auth, async function (req, res) {
   const url = req.headers.referer || "/";
   res.redirect(url);
 });
+
+router.get("/favoriteCourses", auth, async function (req, res) {
+  const list_favorites = await favoriteCourses.allByUser(req.session.authUser.idUser);
+  res.render("vwAccount/favoriteCourses", {
+    favorite: true,
+    edit: false,
+    change: false,
+    layout: "userProfile.hbs",
+    list_favorites,
+  });
+});
+
+router.get("/favoriteCourses/add/:idCourse", async function (req, res) {
+  const idStudent = req.session.authUser.idUser;
+  const idCourse = req.params.idCourse;
+  const new_favorite = {
+    idCourse,
+    idStudent,
+  }
+  console.log(new_favorite);
+  await favoriteCourses.add(new_favorite);
+  res.redirect(req.get("referer"));
+});
+
+router.get("/favoriteCourses/delete/:idCourse", async function (req, res) {
+  const idStudent = req.session.authUser.idUser;
+  const idCourse = req.params.idCourse;
+  console.log("hi");
+  await favoriteCourses.delete(idCourse, idStudent);
+  res.redirect("/account/favoriteCourses");
+});
+
 module.exports = router;

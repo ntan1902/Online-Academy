@@ -239,7 +239,7 @@
             </li>
             <li>
               <a href="#">
-                <h4><span><strong>Teacher</strong></span> : {{this.course.teacherName}}</h4>
+                <h4><span><strong>Teacher</strong></span> : {{this.course.fullname}}</h4>
               </a>
             </li>
             <li>
@@ -260,7 +260,9 @@
 
           <div class="card_area d-flex align-items-center">
             <a class="icon_btn" href="#"><i class="lnr lnr lnr-eye"></i></a>
+          {{#unless isFavorite}}
             <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+          {{/unless}}
           </div>
         </div>
       </div>
