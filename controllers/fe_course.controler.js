@@ -56,6 +56,13 @@ router.get("/", async function (req, res, next) {
   let list_courses = await courseModel.pageCourse(offset);
   list_courses = await feedbackModel.getRatingPoints(list_courses);
 
+  if(req.session.auth) {
+    for(let i=0; i < list_courses.length; i++) {
+      list_courses[i].isRegister = await registerModel.isRegister(req.session.authUser.idUser, list_courses[i].idCourse);
+      list_courses[i].isFavorite = await favoriteCoursesModel.isFavoriteCourse(req.session.authUser.idUser, list_courses[i].idCourse);
+    }
+  }
+
   res.render("vwCourses/fe_index", {
     courses: list_courses,
     page_numbers: pagination.page_numbers,
@@ -141,7 +148,7 @@ function getDuration(url) {
     videoUrlLink.youtube.getInfo(url, { hl: "en" }, (error, info) => {
       if (error) {
         //   console.error(error);
-        return reject("ERROR : " + err);
+        return reject("ERROR : " + error);
       } else {
         const t = info.details;
         // const duration = prettyMilliseconds(Number(t.lengthSeconds * 1000), {

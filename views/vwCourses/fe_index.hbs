@@ -38,9 +38,14 @@
               <ul class="social">
                 <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
                       class="fa fa-eye"></i></a></li>
-                <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course" role="button"><i class="fa fa-heart"></i></a></li>
+                {{#unless isFavorite}}
+                <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course" role="button"><i
+                      class="fa fa-heart"></i></a></li>
+                {{/unless}}
+                {{#unless isRegister}}
                 <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
                       class="fa fa-shopping-cart "></i></a></li>
+                {{/unless}}
               </ul>
               <span class="product-new-label">New</span>
               <span class="product-discount-label">-10%</span>

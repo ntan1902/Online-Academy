@@ -58,13 +58,13 @@
                     // User name is Unique
                     if (data === true) {
                         $('#frmRegister').off('submit').submit();
-                        Swal.fire({
-                            title: 'Sending E-mail...Please wait',
-                            timerProgressBar: true,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            }
-                        });
+                        //Swal.fire({
+                        //    title: 'Sending E-mail...Please wait',
+                        //    timerProgressBar: true,
+                        //    didOpen: () => {
+                        //        Swal.showLoading();
+                        //    }
+                        //});
                     } else {
                         Swal.fire({
                             title: 'Error!',

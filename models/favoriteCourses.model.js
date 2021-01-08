@@ -21,13 +21,9 @@ module.exports = {
   },
 
   async delete(idCourse, idStudent) {
-    const condition = {
-      idCourse: idCourse,
-      idStudent: idStudent
-    };
+    const condition = [{ idCourse: idCourse }, { idStudent: idStudent }];
     // const sql = `where idCourse = ${idCourse} and idStudent = ${idStudent}`;
     const [result, fields] = await db.delete(condition, "favoriteCourses");
     return result;
   },
-  
 };

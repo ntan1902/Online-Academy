@@ -78,21 +78,30 @@ router.post("/signup", async function (req, res) {
   req.session.hash = hash;
   req.session.host = req.get("host");
   req.session.authUser = user;
-  link = req.protocol + "://" + req.get("host") + "/account/verify?id=" + hash;
 
-  mail
-    .send(req.body.email, link)
-    .then((response) => {
-      console.log("Message sent: " + response.message);
-      res.render("vwAccount/signup", {
-        message: `Email is sent at ${req.body.email}. Please check your mail to verify the account`,
-        type: "warning",
-      });
-    })
-    .catch((err) => {
-      console.log(error);
-      res.end("Error");
-    });
+
+  //TEST start
+  await userModel.add(user);
+  res.render("vwAccount/signup", {
+    message: `Email ${req.session.authUser.email} is been successfully verified`,
+    type: "success",
+  });
+  //TEST end
+  // link = req.protocol + "://" + req.get("host") + "/account/verify?id=" + hash;
+
+  // mail
+  //   .send(req.body.email, link)
+  //   .then((response) => {
+  //     console.log("Message sent: " + response.message);
+  //     res.render("vwAccount/signup", {
+  //       message: `Email is sent at ${req.body.email}. Please check your mail to verify the account`,
+  //       type: "warning",
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //     res.end("Error");
+  //   });
 });
 
 router.get("/verify", async function (req, res) {
@@ -217,7 +226,7 @@ router.get("/favoriteCourses", auth, async function (req, res) {
   });
 });
 
-router.get("/favoriteCourses/add/:idCourse", async function (req, res) {
+router.get("/favoriteCourses/add/:idCourse"/*, auth*/, async function (req, res) {
   const idStudent = req.session.authUser.idUser;
   const idCourse = req.params.idCourse;
   const new_favorite = {
