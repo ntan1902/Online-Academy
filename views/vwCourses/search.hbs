@@ -94,9 +94,15 @@
                             <ul class="social">
                                 <li><a href="/admin/courses/edit/{{idCourse}}" data-tip="Quick View" role="button"><i
                                             class="fa fa-eye"></i></a></li>
+                                {{#if ../auth}}
+                                {{#unless isFavorite}}
                                 <li><a href="/courses/detail/{{idCourse}}" data-tip="Like the course" role="button"><i
                                             class="fa fa-heart"></i></a></li>
+                                {{/unless}}
+                                {{#unless isRegister}}
                                 <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                                {{/unless}}
+                                {{/if}}
                             </ul>
                             <span class="product-new-label">New</span>
                             <span class="product-discount-label">-10%</span>
@@ -116,7 +122,11 @@
                                 ${{price}}
                                 <span>$5.00</span>
                             </div>
+                            {{#if ../auth}}
+                            {{#unless isRegister}}
                             <a class="add-to-cart" href="#">ADD TO CART</a>
+                            {{/unless}}
+                            {{/if}}
                         </div>
                     </div>
                 </div>

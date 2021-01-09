@@ -131,11 +131,6 @@
                     <p>No Review</p>
                     {{else}}
                     <ul class="rating">
-                        {{!-- <li class="fa fa-star"></li>
-                        <li class="fa fa-star"></li>
-                        <li class="fa fa-star"></li>
-                        <li class="fa fa-star disable"></li>
-                        <li class="fa fa-star disable"></li> --}}
                         {{{calcStars totalPoint}}}
                     </ul>
                     {{/if}}
@@ -143,7 +138,11 @@
                         ${{price}}
                         <span>$5.00</span>
                     </div>
+                    {{#if ../auth}}
+                    {{#unless isRegister}}
                     <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+                    {{/unless}}
+                    {{/if}}
                 </div>
             </div>
             {{!-- <div class="card card-course">
@@ -160,7 +159,6 @@
                             <h4>${{price}}</h4>
                         </div>
                     </div>
-
                 </a>
             </div> --}}
             {{/each}}
@@ -207,11 +205,6 @@
                     <p>No Review</p>
                     {{else}}
                     <ul class="rating">
-                        {{!-- <li class="fa fa-star"></li>
-                        <li class="fa fa-star"></li>
-                        <li class="fa fa-star"></li>
-                        <li class="fa fa-star disable"></li>
-                        <li class="fa fa-star disable"></li> --}}
                         {{{calcStars totalPoint}}}
                     </ul>
                     {{/if}}
@@ -219,7 +212,11 @@
                         ${{price}}
                         <span>$5.00</span>
                     </div>
+                    {{#if ../auth}}
+                    {{#unless isRegister}}
                     <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+                    {{/unless}}
+                    {{/if}}
                 </div>
             </div>
             {{/each}}
@@ -266,11 +263,6 @@
                     <p>No Review</p>
                     {{else}}
                     <ul class="rating">
-                        {{!-- <li class="fa fa-star"></li>
-                        <li class="fa fa-star"></li>
-                        <li class="fa fa-star"></li>
-                        <li class="fa fa-star disable"></li>
-                        <li class="fa fa-star disable"></li> --}}
                         {{{calcStars totalPoint}}}
                     </ul>
                     {{/if}}
@@ -278,7 +270,11 @@
                         ${{price}}
                         <span>$5.00</span>
                     </div>
+                    {{#if ../auth}}
+                    {{#unless isRegister}}
                     <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+                    {{/unless}}
+                    {{/if}}
                 </div>
             </div>
             {{/each}}
@@ -325,11 +321,6 @@
                     <p>No Review</p>
                     {{else}}
                     <ul class="rating">
-                        {{!-- <li class="fa fa-star"></li>
-                        <li class="fa fa-star"></li>
-                        <li class="fa fa-star"></li>
-                        <li class="fa fa-star disable"></li>
-                        <li class="fa fa-star disable"></li> --}}
                         {{{calcStars totalPoint}}}
                     </ul>
                     {{/if}}
@@ -337,7 +328,11 @@
                         ${{price}}
                         <span>$5.00</span>
                     </div>
+                    {{#if ../auth}}
+                    {{#unless isRegister}}
                     <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+                    {{/unless}}
+                    {{/if}}
                 </div>
             </div>
             {{/each}}

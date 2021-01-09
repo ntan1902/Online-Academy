@@ -103,6 +103,25 @@ router.get("/byField/:field", async function (req, res) {
   let list_courses = await courseModel.pageCourseByField(offset, field);
   list_courses = await feedbackModel.getRatingPoints(list_courses);
 
+  //isRegister and isFavorite for Auth
+  if (req.session.auth) {
+    for (let i = 0; i < list_courses.length; i++) {
+      list_courses[i].isRegister = await registerModel.isRegister(
+        req.session.authUser.idUser,
+        list_courses[i].idCourse
+      );
+      list_courses[i].isFavorite = await favoriteCoursesModel.isFavoriteCourse(
+        req.session.authUser.idUser,
+        list_courses[i].idCourse
+      );
+      list_courses[i].notReview = list_courses[i].totalPoint === 0;
+    }
+  } else {
+    for (let i = 0; i < list_courses.length; i++) {
+      list_courses[i].notReview = list_courses[i].totalPoint === 0;
+    }
+  }
+
   res.render("vwCourses/fe_index", {
     courses: list_courses,
     page_numbers: pagination.page_numbers,
@@ -139,6 +158,25 @@ router.get("/search", async function (req, res) {
   );
 
   list_courses = await feedbackModel.getRatingPoints(list_courses);
+
+  if (req.session.auth) {
+    for (let i = 0; i < list_courses.length; i++) {
+      list_courses[i].isRegister = await registerModel.isRegister(
+        req.session.authUser.idUser,
+        list_courses[i].idCourse
+      );
+      list_courses[i].isFavorite = await favoriteCoursesModel.isFavoriteCourse(
+        req.session.authUser.idUser,
+        list_courses[i].idCourse
+      );
+      list_courses[i].notReview = list_courses[i].totalPoint === 0;
+    }
+  } else {
+    for (let i = 0; i < list_courses.length; i++) {
+      list_courses[i].notReview = list_courses[i].totalPoint === 0;
+    }
+  }
+
   res.render("vwCourses/search", {
     total,
     showKeyword,

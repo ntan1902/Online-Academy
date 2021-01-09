@@ -72,7 +72,11 @@
                     ${{price}}
                     <span>$5.00</span>
                   </div>
+                  {{#if ../auth}}
+                  {{#unless isRegister}}
                   <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+                  {{/unless}}
+                  {{/if}}
                 </div>
               </div>
             </div>
