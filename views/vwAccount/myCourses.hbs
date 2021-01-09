@@ -1,3 +1,31 @@
+{{#section 'js'}}
+<script>
+    $('.delete').click(function () {
+        const del = $(this);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                ).then(function () {
+                    $('#txtIdCourse').val(del.data('id'));
+                    console.log($('#txtIdCourse').val());
+                    $('#frmDelete').submit();
+                });
+            }
+        });
+    });
+</script>
+{{/section}}
 <!-- ================ start banner area ================= -->
 <section class="blog-banner-area" id="category">
     <div class="container h-100">
@@ -32,6 +60,11 @@
 </section>
 
 {{else}}
+<form id="frmDelete" action="/account/teacher/myCourses/delete/" method="POST">
+    <input type="hidden" name="idCourse" id="txtIdCourse">
+</form>
+
+
 <section class="cart_area">
     <div class="container">
         <div class="cart_inner">
@@ -73,7 +106,7 @@
                             </td>
 
                             <td class="pt-2">
-                                <a href="/account/teacher/myCourses/delete/{{this.idCourse}}" class="btn btn-outline-danger">
+                                <a class="delete btn btn-outline-danger" data-id="{{this.idCourse}}">
                                     <i class="fa fa-trash p fa-lg" aria-hidden="true"></i>
                                 </a>
                             </td>

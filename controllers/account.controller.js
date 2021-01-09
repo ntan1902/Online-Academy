@@ -21,10 +21,26 @@ const storage = multer.diskStorage({
   },
 });
 
+//Set Storage Engine
+const storage2 = multer.diskStorage({
+  destination: "./public/images/courses",
+  filename: function (req, file, callback) {
+    callback(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
 const upload = multer({
   storage: storage,
   limits: { fileSize: 1000000 },
 });
+
+const upload2 = multer({
+  storage: storage2,
+  limits: { fileSize: 1000000 },
+})
 
 router.get("/signin", function (req, res) {
   res.render("vwAccount/signin", { layout: "main.hbs" });
@@ -268,13 +284,45 @@ router.get("/teacher/myCourses", async function (req, res) {
 });
 
 router.get("/teacher/myCourses/add", async function (req, res) {
+  const idTeacher = req.session.authUser.idUser;
   res.render("vwCourses/add", {
     layout: "userProfile",
+    idTeacher,
+    teacherAdd: true,
   })
 });
 
-router.post("/teacher/myCourses/add", async function (req, res) {
+router.post("/teacher/myCourses/add", upload2.single('image'), async function (req, res) {
+  const today = new Date();
+  const lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
+  let imgPath;
+  if (req.file === undefined) {
+    imgPath = "";
+  } else {
+    imgPath = "/public/images/courses/" + req.file.filename;
+  }
 
+  const new_course = {
+    imagePath: imgPath,
+    price: req.body.price,
+    idCat: req.body.field,
+    title: req.body.title,
+    description: req.body.description,
+    detail: req.body.detail,
+    lastModified: lastModified,
+    idTeacher: req.body.idTeacher,
+    status: req.body.status,
+  };
+  console.log(new_course);
+  await courseModel.add(new_course);
+  res.render("vwCourses/add", {
+    layout: "userProfile.hbs",
+  });
+});
+
+router.post("/teacher/myCourses/delete/", async function (req, res) {
+  await courseModel.delete(req.body.idCourse);
+  res.redirect("/account/teacher/myCourses");
 });
 
 module.exports = router;
