@@ -57,9 +57,10 @@ router.post("/signin", async function (req, res) {
     res.redirect(url);
   }
 });
-router.get("/signup", function (req, res) {
+router.get("/signup/:role", function (req, res) {
   res.render("vwAccount/signup", {
     layout: "main.hbs",
+    role: req.params.role,
   });
 });
 
@@ -80,7 +81,6 @@ router.post("/signup", async function (req, res) {
   req.session.host = req.get("host");
   req.session.authUser = user;
 
-
   //TEST start
   await userModel.add(user);
   res.render("vwAccount/signup", {
@@ -88,6 +88,7 @@ router.post("/signup", async function (req, res) {
     type: "success",
   });
   //TEST end
+
   // link = req.protocol + "://" + req.get("host") + "/account/verify?id=" + hash;
 
   // mail
@@ -148,16 +149,16 @@ router.get("/profile", auth, async function (req, res) {
   });
 });
 
-router.post("/patch", upload.single("avatar"), auth, async function (req, res) {
+router.post("/patch", auth, upload.single("avatar"), async function (req, res) {
   const dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
   let imgPath;
-  if(req.file === undefined) {
+  if (req.file === undefined) {
     imgPath = req.body.previewAvatar;
   } else {
     imgPath = "/public/images/users/" + req.file.filename;
   }
   let userDescript;
-  if(req.body.userDescription === "") {
+  if (req.body.userDescription === "") {
     userDescript = req.body.tempUserDescription;
   } else {
     userDescript = req.body.userDescription;
@@ -171,7 +172,7 @@ router.post("/patch", upload.single("avatar"), auth, async function (req, res) {
     role: req.body.role,
     userDescription: userDescript,
     avatar: imgPath,
-  }
+  };
   console.log(new_user);
   await userModel.patch(new_user);
   req.session.authUser = await userModel.singleByUserName(req.body.username);
@@ -212,13 +213,15 @@ router.post("/signout", auth, async function (req, res) {
   req.session.auth = false;
   req.session.authUser = null;
   req.session.retUrl = null;
-  req.session.cart =[];
+  req.session.cart = [];
   const url = req.headers.referer || "/";
   res.redirect(url);
 });
 
 router.get("/favoriteCourses", auth, async function (req, res) {
-  const list_favorites = await favoriteCourses.allByUser(req.session.authUser.idUser);
+  const list_favorites = await favoriteCourses.allByUser(
+    req.session.authUser.idUser
+  );
   res.render("vwAccount/favoriteCourses", {
     favorite: true,
     edit: false,
@@ -228,25 +231,29 @@ router.get("/favoriteCourses", auth, async function (req, res) {
   });
 });
 
-router.get("/favoriteCourses/add/:idCourse"/*, auth*/, async function (req, res) {
+router.get("/favoriteCourses/add/:idCourse", auth, async function (req, res) {
   const idStudent = req.session.authUser.idUser;
   const idCourse = req.params.idCourse;
   const new_favorite = {
     idCourse,
     idStudent,
-  }
+  };
   console.log(new_favorite);
   await favoriteCourses.add(new_favorite);
   res.redirect(req.get("referer"));
 });
 
-router.get("/favoriteCourses/delete/:idCourse", async function (req, res) {
-  const idStudent = req.session.authUser.idUser;
-  const idCourse = req.params.idCourse;
-  console.log("hi");
-  await favoriteCourses.delete(idCourse, idStudent);
-  res.redirect("/account/favoriteCourses");
-});
+router.get(
+  "/favoriteCourses/delete/:idCourse",
+  auth,
+  async function (req, res) {
+    const idStudent = req.session.authUser.idUser;
+    const idCourse = req.params.idCourse;
+    console.log("hi");
+    await favoriteCourses.delete(idCourse, idStudent);
+    res.redirect("/account/favoriteCourses");
+  }
+);
 
 //Teacher's Part
 router.get("/teacher/myCourses", async function (req, res) {

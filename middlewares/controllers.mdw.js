@@ -25,17 +25,27 @@ module.exports = function (app) {
     });
   });
 
-  app.use("/admin/feedbacks/", require("../controllers/feedback.controller"));
-  app.use("/admin/categories/", require("../controllers/category.controller"));
+  app.use(
+    "/admin/feedbacks/",
+    authAdmin,
+    require("../controllers/feedback.controller")
+  );
+  app.use(
+    "/admin/categories/",
+    authAdmin,
+    require("../controllers/category.controller")
+  );
   app.use("/account/", require("../controllers/account.controller"));
-  app.use("/admin/", /*authAdmin,*/ require("../controllers/admin.controller"));
+  app.use("/admin/", authAdmin, require("../controllers/admin.controller"));
   app.use(
     "/admin/users/",
-    /*authAdmin,*/ require("../controllers/user.controller")
+    authAdmin,
+    require("../controllers/user.controller")
   );
   app.use(
     "/admin/courses/",
-    /*authAdmin,*/ require("../controllers/course.controller")
+    authAdmin,
+    require("../controllers/course.controller")
   );
   app.use("/courses", require("../controllers/fe_course.controler"));
   app.use("/cart", auth, require("../controllers/cart.controller"));

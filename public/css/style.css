@@ -51,7 +51,7 @@ a:hover {
   padding: 4px 11px 6px;
   box-sizing: border-box;
   border-radius: 16px;
-  margin: 3px 10px 0;
+  margin: 6px 10px 0;
 }
 #input-search {
   border: none;
@@ -4695,9 +4695,8 @@ a {
 
 .course-lesson-content-row-name {
   text-align: left;
-  margin: 0 1.6rem;
-  font-weight: 500;
-  line-height: 1.2;
+  margin-top: 0.5rem;
+  font-weight: 800;
   letter-spacing: -0.02rem;
   font-size: 1rem;
   text-decoration: underline;

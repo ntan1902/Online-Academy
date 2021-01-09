@@ -64,7 +64,7 @@ router.get("/", async function (req, res, next) {
       list_courses[i].notReview = list_courses[i].totalPoint === 0;
     }
   } else {
-    for(let i=0; i < list_courses.length; i++) {
+    for (let i = 0; i < list_courses.length; i++) {
       list_courses[i].notReview = list_courses[i].totalPoint === 0;
     }
   }
@@ -161,7 +161,7 @@ function getDuration(url) {
         // });
 
         let duration = "";
-        if(typeof t !== "undefined") {
+        if (typeof t !== "undefined") {
           const time = parseMilliseconds(t.lengthSeconds * 1000);
           time.hours = (time.hours < 10 ? "0" : "") + time.hours;
           time.minutes = (time.minutes < 10 ? "0" : "") + time.minutes;
@@ -184,8 +184,14 @@ router.get("/detail/:id", async function (req, res) {
   let isRegister = false;
   let isFavorite = false;
   if (req.session.auth) {
-    isRegister = await registerModel.isRegister(req.session.authUser.idUser, id);
-    isFavorite = await favoriteCoursesModel.isFavoriteCourse(req.session.authUser.idUser, id);
+    isRegister = await registerModel.isRegister(
+      req.session.authUser.idUser,
+      id
+    );
+    isFavorite = await favoriteCoursesModel.isFavoriteCourse(
+      req.session.authUser.idUser,
+      id
+    );
   }
   console.log("The user has registered this course? " + isRegister);
 
@@ -229,7 +235,9 @@ router.get("/detail/:id", async function (req, res) {
   );
 
   console.log(course.idCat);
-  const topRegister = await courseModel.topRegistedCoursesWithIdCat(course.idCat);
+  const topRegister = await courseModel.topRegistedCoursesWithIdCat(
+    course.idCat
+  );
 
   res.render("vwCourses/detail", {
     course,
