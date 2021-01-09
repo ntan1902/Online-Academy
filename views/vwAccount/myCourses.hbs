@@ -1,0 +1,106 @@
+<!-- ================ start banner area ================= -->
+<section class="blog-banner-area" id="category">
+    <div class="container h-100">
+        <div class="blog-banner">
+            <div class="text-center">
+                <h1>My Courses</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">My Courses</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================ end banner area ================= -->
+
+
+<!--================Favorite Courses Area =================-->
+{{#if this.emtpy }}
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive align-items-center">
+                <h3>
+                    Your Course-List is empty,
+                    <a href="admin/courses/add" class="badge badge-primary"> Add some courses now !!!</a>
+                </h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{else}}
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Course</th>
+                            <th scope="col">
+                                &nbsp;
+                            </th>
+                            <th scope="col">Lesson(s)</th>
+                            <th scope="col">
+                                &nbsp;
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each list_my_courses}}
+                        <tr>
+                            <td>
+                                <a href="/courses/detail/{{this.idCourse}}">
+                                    <div class="media-body d-flex justify-content-between">
+                                        <img style="height: 150px; width:255px" src="{{this.imagePath}}">
+                                        <div>
+                                            <p class="pl-2">{{this.title}}</p>
+                                            {{!-- <p class="pl-2 font-weight-bold">{{this.fullname}}</p> --}}
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+
+                            <td class="pt-3">
+                                <h5>123</h5>
+                            </td>
+
+                            <td class="pt-2">
+                                <a href="/account/teacher/myCourses/delete/{{this.idCourse}}" class="btn btn-outline-danger">
+                                    <i class="fa fa-trash p fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                        <tr>
+
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                <a href="/account/teacher/myCourses/add" class="btn btn-success">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{{/if}}
+<!--================End Cart Area =================-->

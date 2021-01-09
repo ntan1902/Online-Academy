@@ -7,6 +7,7 @@ const mail = require("../controllers/mail.controller");
 const multer = require("multer");
 const path = require("path");
 const favoriteCourses = require("../models/favoriteCourses.model");
+const courseModel = require("../models/course.model");
 const router = express.Router();
 
 //Set Storage Engine
@@ -137,6 +138,7 @@ router.get("/isAvailable", async function (req, res) {
 
 router.get("/profile", auth, async function (req, res) {
   const user = await userModel.single(req.session.authUser.idUser);
+
   user.dob = moment(user.dob, "YYYY-MM-DD").format("DD/MM/YYYY");
   res.render("vwAccount/edit", {
     layout: "userProfile.hbs",
@@ -244,6 +246,28 @@ router.get("/favoriteCourses/delete/:idCourse", async function (req, res) {
   console.log("hi");
   await favoriteCourses.delete(idCourse, idStudent);
   res.redirect("/account/favoriteCourses");
+});
+
+//Teacher's Part
+router.get("/teacher/myCourses", async function (req, res) {
+  const idTeacher = req.session.authUser.idUser;
+  list_my_courses = await courseModel.allByIdTeacher(idTeacher);
+
+  res.render("vwAccount/myCourses", {
+    layout: "userProfile",
+    list_my_courses,
+    mycourses: true
+  });
+});
+
+router.get("/teacher/myCourses/add", async function (req, res) {
+  res.render("vwCourses/add", {
+    layout: "userProfile",
+  })
+});
+
+router.post("/teacher/myCourses/add", async function (req, res) {
+
 });
 
 module.exports = router;

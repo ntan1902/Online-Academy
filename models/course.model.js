@@ -69,6 +69,13 @@ module.exports = {
     return rows;
   },
 
+  async allByIdTeacher(idTeacher) {
+    const sql = `select * from courses co where co.idTeacher = ${idTeacher}`
+    const [rows, fields] = await db.load(sql);
+    if(rows.length === 0) return null;
+    return rows;
+  },
+
   async topViewCourses() {
     const sql = `select c.*, u.fullname
                 from courses c, view v, users u

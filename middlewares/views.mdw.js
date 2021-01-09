@@ -30,6 +30,17 @@ module.exports = function (app) {
           }
           return res;
         },
+        checkStudentRole(role) {
+          if(role === "student") {
+            return true;
+          } else return false;
+
+        },
+        checkTeacherRole(role) {
+            if(role === "teacher") {
+              return true;
+            } else return false;
+        }
       },
     })
   );

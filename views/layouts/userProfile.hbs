@@ -60,10 +60,18 @@
                             class="list-group-item list-group-item-action {{#if change}} list-group-item-info {{/if}}">
                             <b>Change Password</b>
                         </a>
+                        {{#if (checkStudentRole authUser.role)}}
                         <a href="{{#if favorite}} javascript:; {{else}} /account/favoriteCourses {{/if}}"
                             class="list-group-item list-group-item-action {{#if favorite}} list-group-item-info {{/if}}">
                             <b>Favorite Courses</b>
-                        </a>                    
+                        </a>
+                        {{/if}}
+                        {{#if (checkTeacherRole authUser.role)}}
+                        <a href="{{#if mycourses}} javascript:; {{else}} /account/teacher/myCourses {{/if}}"
+                            class="list-group-item list-group-item-action {{#if mycourses}} list-group-item-info {{/if}}">
+                            <b>My Courses</b>
+                        </a>
+                        {{/if}}
                     </div>
                 </div>
             </div>

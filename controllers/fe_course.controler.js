@@ -59,10 +59,9 @@ router.get("/", async function (req, res, next) {
   //isRegister and isFavorite for Auth
   if(req.session.auth) {
     for(let i=0; i < list_courses.length; i++) {
-      console.log(i);
-      console.log(list_courses[i].totalPoint);
       list_courses[i].isRegister = await registerModel.isRegister(req.session.authUser.idUser, list_courses[i].idCourse);
       list_courses[i].isFavorite = await favoriteCoursesModel.isFavoriteCourse(req.session.authUser.idUser, list_courses[i].idCourse);
+      list_courses[i].notReview = list_courses[i].totalPoint === 0;
     }
   } else {
     for(let i=0; i < list_courses.length; i++) {
