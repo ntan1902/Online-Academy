@@ -57,10 +57,16 @@ router.get("/", async function (req, res, next) {
   list_courses = await feedbackModel.getRatingPoints(list_courses); //include list_courses.totalPoint
 
   //isRegister and isFavorite for Auth
-  if(req.session.auth) {
-    for(let i=0; i < list_courses.length; i++) {
-      list_courses[i].isRegister = await registerModel.isRegister(req.session.authUser.idUser, list_courses[i].idCourse);
-      list_courses[i].isFavorite = await favoriteCoursesModel.isFavoriteCourse(req.session.authUser.idUser, list_courses[i].idCourse);
+  if (req.session.auth) {
+    for (let i = 0; i < list_courses.length; i++) {
+      list_courses[i].isRegister = await registerModel.isRegister(
+        req.session.authUser.idUser,
+        list_courses[i].idCourse
+      );
+      list_courses[i].isFavorite = await favoriteCoursesModel.isFavoriteCourse(
+        req.session.authUser.idUser,
+        list_courses[i].idCourse
+      );
       list_courses[i].notReview = list_courses[i].totalPoint === 0;
     }
   } else {
@@ -180,6 +186,7 @@ router.get("/detail/:id", async function (req, res) {
   const course = await courseModel.single(id);
   const lessons = await courseModel.getLessons(id);
   const feedbacks = await feedbackModel.allWithIdCourse(id);
+  course.studentNumber = await registerModel.getStudentNumbers(id);
 
   let isRegister = false;
   let isFavorite = false;

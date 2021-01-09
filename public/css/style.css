@@ -4127,21 +4127,24 @@ a {
 }
 .s_product_text .list li {
   margin-bottom: 5px;
-}
-.s_product_text .list li a {
   font-size: 15px;
   font-weight: normal;
   color: #777777;
 }
-.s_product_text .list li a span {
+/* .s_product_text .list li {
+  font-size: 15px;
+  font-weight: normal;
+  color: #777777;
+} */
+.s_product_text .list li span {
   width: 120px;
   display: inline-block;
   color: #555555;
 }
-.s_product_text .list li a span:hover {
+.s_product_text .list li span:hover {
   color: #555;
 }
-.s_product_text .list li a.active span {
+.s_product_text .list li span {
   color: #555;
   -webkit-text-fill-color: #555;
 }
