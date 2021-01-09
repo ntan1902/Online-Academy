@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const cartModel = require("../models/cart.model");
 const courseModel = require("../models/course.model");
+const moment = require("moment");
 
 
 router.get("/", async function (req, res, next) {
@@ -40,7 +41,29 @@ router.post("/remove", async function (req, res) {
   res.redirect(req.headers.referer);
  });
  
+ router.get("/checkout", async function (req, res) {
+ 
+  const registers = [];
 
+
+  for(const ci of req.session.cart){
+    const course = await courseModel.single(ci.id);
+    registers.push({
+      idCourse: course.idCourse,
+      idStudent: req.session.authUser.idUser,
+      date: moment().format('YYYY-MM-DD')
+    })
+  }
+
+  for(const register of registers){
+    await cartModel.addRegister(register);
+  }
+  
+  
+  req.session.cart=[];
+  res.redirect(req.headers.referer);
+ });
 
 
 module.exports = router;
+

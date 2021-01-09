@@ -3919,6 +3919,7 @@ a {
   font-weight: 500;
   color: #fff;
 }
+/*
 .cart_inner .table tbody tr.bottom_button td .cupon_text .primary-btn {
   height: 40px;
   line-height: 38px;
@@ -3935,6 +3936,7 @@ a {
 .cart_inner .table tbody tr.bottom_button td .cupon_text .gray_btn {
   padding: 0px 40px;
 }
+*/
 .cart_inner .table tbody tr.shipping_area td:nth-child(3) {
   vertical-align: top;
 }
@@ -4756,12 +4758,12 @@ a {
 }
 
 .button-bottom {
-  padding-left: 20rem !important;
+  padding-left: 15rem !important;
 }
 
 .button-bottom .gray_btn {
   line-height: 38px;
-  background: #f1f6f7;
+  background: rgba(153, 153, 153, 0.3);
   border: 1px solid #eeeeee;
   padding: 0px 20px;
   border-radius: 30px;

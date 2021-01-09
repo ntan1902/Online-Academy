@@ -1,3 +1,5 @@
+const db = require('../utils/db');
+
 module.exports ={
     getNumberOfItems(cart){
         let n=0;
@@ -31,5 +33,11 @@ module.exports ={
             total+=items[i].price;
         }
         return total;
+    },
+
+    async addRegister(register) {
+        const [result, fields] = await db.add(register, 'registers');
+        console.log(result);
+        return result;
     },
 };

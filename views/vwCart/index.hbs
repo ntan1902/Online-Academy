@@ -1,3 +1,14 @@
+{{#section 'js'}}
+<script>
+    $('.removeItem').on('click', function () {
+        const id = $(this).data('id');
+        console.log(id);
+        $('#removeID').val(id);
+        $('#frmRemoveItem').submit();
+    })
+
+</script>
+{{/section}}
 <!-- ================ start banner area ================= -->
 <section class="blog-banner-area" id="category">
     <div class="container h-100">
@@ -15,15 +26,7 @@
     </div>
 </section>
 <!-- ================ end banner area ================= -->
-{{#section 'js'}}
-<script>
-    $('.removeItem').on('click', function () {
-        const id = $(this).data('id');
-        $('#removeID').val(id);
-        $('#frmRemoveItem').submit();
-    })
-</script>
-{{/section}}
+
 
 
 <!--================Cart Area =================-->
@@ -114,10 +117,14 @@
                         <tr>
 
                             <td class="button-bottom">
-                                <div>
+
+                                <div style="padding-left: 3rem">
                                     <a class="gray_btn text-center" href="#">Continue Shopping</a>
-                                    <a class="primary-btn" href="#">Proceed to checkout</a>
+                                    <a href="/cart/checkout" id="checkout" class="primary-btn" href="#">Proceed to
+                                        checkout
+                                    </a>
                                 </div>
+
                             </td>
                             <td>
                                 &nbsp;
@@ -137,4 +144,6 @@
     </div>
 </section>
 {{/if}}
+<form class="card" action="" method="post"></form>
+
 <!--================End Cart Area =================-->

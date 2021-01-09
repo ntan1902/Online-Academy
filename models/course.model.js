@@ -188,7 +188,18 @@ module.exports = {
                   order by avg (distinct f.ratingPoint) desc
       limit ${paginate.limit} offset ${offset}`;
       const [rows, fields] = await db.load(sql);
+      if(rows.length == 0){
+        const sql = `select distinct c.*, u.fullname
+                from users u, courses c
+                where u.idUser=c.idTeacher and (match(c.title) against ('${keyword}') or 
+                  match(u.fullname) against('${keyword}')
+                  or match(c.description) against ('${keyword}'))
+                limit ${paginate.limit} offset ${offset}`;
+      const [rows, fields] = await db.load(sql);
       return rows;
+      }
+      else
+        return rows;
     }
     /*const sql = `select distinct c.*
                 from users u, courses c
