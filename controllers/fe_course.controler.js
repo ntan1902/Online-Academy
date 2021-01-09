@@ -54,15 +54,21 @@ router.get("/", async function (req, res, next) {
 
   const offset = (page - 1) * paginate.limit;
   let list_courses = await courseModel.pageCourse(offset);
-  list_courses = await feedbackModel.getRatingPoints(list_courses);
+  list_courses = await feedbackModel.getRatingPoints(list_courses); //include list_courses.totalPoint
 
+  //isRegister and isFavorite for Auth
   if(req.session.auth) {
     for(let i=0; i < list_courses.length; i++) {
+      console.log(i);
+      console.log(list_courses[i].totalPoint);
       list_courses[i].isRegister = await registerModel.isRegister(req.session.authUser.idUser, list_courses[i].idCourse);
       list_courses[i].isFavorite = await favoriteCoursesModel.isFavoriteCourse(req.session.authUser.idUser, list_courses[i].idCourse);
     }
+  } else {
+    for(let i=0; i < list_courses.length; i++) {
+      list_courses[i].notReview = list_courses[i].totalPoint === 0;
+    }
   }
-
   res.render("vwCourses/fe_index", {
     courses: list_courses,
     page_numbers: pagination.page_numbers,

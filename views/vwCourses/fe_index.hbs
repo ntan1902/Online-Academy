@@ -38,6 +38,7 @@
               <ul class="social">
                 <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
                       class="fa fa-eye"></i></a></li>
+                {{#if auth}}
                 {{#unless isFavorite}}
                 <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course" role="button"><i
                       class="fa fa-heart"></i></a></li>
@@ -46,6 +47,8 @@
                 <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
                       class="fa fa-shopping-cart "></i></a></li>
                 {{/unless}}
+                {{/if}}
+
               </ul>
               <span class="product-new-label">New</span>
               <span class="product-discount-label">-10%</span>
@@ -53,6 +56,9 @@
             <div class="product-content">
               <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
               <span class="teacher"><a href="">{{fullname}}</a></span>
+              {{#if notReview}}
+              <p>No Review</p>
+              {{else}}
               <ul class="rating">
                 {{!-- <li class="fa fa-star"></li>
                 <li class="fa fa-star"></li>
@@ -61,6 +67,7 @@
                 <li class="fa fa-star disable"></li> --}}
                 {{{calcStars totalPoint}}}
               </ul>
+              {{/if}}
               <div class="price">
                 ${{price}}
                 <span>$5.00</span>

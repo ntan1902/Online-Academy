@@ -4134,7 +4134,7 @@ a {
   color: #777777;
 }
 .s_product_text .list li a span {
-  width: 100px;
+  width: 120px;
   display: inline-block;
   color: #555555;
 }
@@ -4778,4 +4778,8 @@ a {
   border-radius: 30px;
   color: #fff;
   font-weight: 500;
+}
+
+.detail-ul {
+  list-style-type: circle;
 }

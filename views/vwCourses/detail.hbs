@@ -251,19 +251,20 @@
           <p>
             {{this.course.description}}
           </p>
+          {{#if auth}}
           {{#unless isRegister}}
           <div class="product_count">
             <button class="button primary-btn" type="submit">Add to Cart</button>
             <input type="hidden" value="{{this.course.idCourse}}" name="id">
           </div>
           {{/unless}}
-
           <div class="card_area d-flex align-items-center">
             <a class="icon_btn" href="#"><i class="lnr lnr lnr-eye"></i></a>
-          {{#unless isFavorite}}
+            {{#unless isFavorite}}
             <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
-          {{/unless}}
+            {{/unless}}
           </div>
+          {{/if}}
         </div>
       </div>
     </div>
@@ -357,7 +358,9 @@
       </div>
       <!--================Course's Detail =================-->
       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        {{{this.course.detail}}}
+        <div class="detail-ul">
+          {{{this.course.detail}}}
+        </div>
       </div>
       <!--================Course's Content =================-->
       <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
