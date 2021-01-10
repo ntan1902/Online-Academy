@@ -1,203 +1,203 @@
 {{#section 'css'}}
-{{!-- plyr.io --}}
-<link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
-<link rel="" {{!-- stars --}} {{!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
-  rel="stylesheet" id="bootstrap-css"> --}}
-<link rel="stylesheet" href="/public/css/style.css" />
+  {{!-- plyr.io --}}
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
+  <link rel="" {{!-- stars --}} {{!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+    rel="stylesheet" id="bootstrap-css"> --}}
+  <link rel="stylesheet" href="/public/css/style.css" />
 
 {{/section}}
 
 {{#section 'js'}}
-<script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const player = new Plyr('#player');
-    window.player = player;
+  <script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const player = new Plyr('#player');
+      window.player = player;
 
-    $('#displayModal').on('hide.bs.modal', function (e) {
-      player.stop();
-      $('.course-lessons').css('background-color', 'transparent');
-    });
-    $('#displayModal').on('shown.bs.modal', function (e) {
-      const sourceVideo = $('#srcModal').val();
-      player.source = {
-        type: 'video',
-        sources: [
-          {
-            src: sourceVideo,
-            provider: 'youtube',
-          },
-        ],
-      };
-      let courseList = $('.course-lessons').toArray();
-      for (let i = 0; i < courseList.length; i++) {
-        if (courseList[i].dataset.src === sourceVideo) {
-          courseList[i].style.backgroundColor = '#000';
-        } else {
-          courseList[i].style.backgroundColor = 'transparent';
+      $('#displayModal').on('hide.bs.modal', function (e) {
+        player.stop();
+        $('.course-lessons').css('background-color', 'transparent');
+      });
+      $('#displayModal').on('shown.bs.modal', function (e) {
+        const sourceVideo = $('#srcModal').val();
+        player.source = {
+          type: 'video',
+          sources: [
+            {
+              src: sourceVideo,
+              provider: 'youtube',
+            },
+          ],
+        };
+        let courseList = $('.course-lessons').toArray();
+        for (let i = 0; i < courseList.length; i++) {
+          if (courseList[i].dataset.src === sourceVideo) {
+            courseList[i].style.backgroundColor = '#000';
+          } else {
+            courseList[i].style.backgroundColor = 'transparent';
+          }
         }
-      }
-    });
+      });
 
-    $('.course-lessons').click(function () {
-      $('.course-lessons').css('background-color', 'transparent');
-      $(this).css('background-color', '#000');
+      $('.course-lessons').click(function () {
+        $('.course-lessons').css('background-color', 'transparent');
+        $(this).css('background-color', '#000');
 
-      const sourceVideo = $(this).data('src');
-      player.source = {
-        type: 'video',
-        sources: [
-          {
-            src: sourceVideo,
-            provider: 'youtube',
-          },
-        ],
-        autoplay: true
-      };
-    });
+        const sourceVideo = $(this).data('src');
+        player.source = {
+          type: 'video',
+          sources: [
+            {
+              src: sourceVideo,
+              provider: 'youtube',
+            },
+          ],
+          autoplay: true
+        };
+      });
 
-    $('.course-lessons-content').click(function () {
-      $('#srcModal').val($(this).data('src'));
+      $('.course-lessons-content').click(function () {
+        $('#srcModal').val($(this).data('src'));
 
+      })
+
+      $('.single-prd-item').click(function () {
+        $('#srcModal').val($(this).data('src'));
+      });
     })
 
-    $('.single-prd-item').click(function () {
-      $('#srcModal').val($(this).data('src'));
-    });
-  })
+    $('.addItem').on('click', function () {
+      const id = $(this).data('id');
+      $('#courseID').val(id);
+      $('#frmAddItem').submit();
+    })
+  </script>
 
-  $('.addItem').on('click', function () {
-    const id = $(this).data('id');
-    $('#courseID').val(id);
-    $('#frmAddItem').submit();
-  })
-</script>
+  {{!-- Feedback Star's js --}}
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-{{!-- Feedback Star's js --}}
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script>
+    // Starrr plugin (https://github.com/dobtco/starrr)
+    var __slice = [].slice;
 
-<script>
-  // Starrr plugin (https://github.com/dobtco/starrr)
-  var __slice = [].slice;
+    (function ($, window) {
+      var Starrr;
 
-  (function ($, window) {
-    var Starrr;
+      Starrr = (function () {
+        Starrr.prototype.defaults = {
+          rating: void 0,
+          numStars: 5,
+          change: function (e, value) { }
+        };
 
-    Starrr = (function () {
-      Starrr.prototype.defaults = {
-        rating: void 0,
-        numStars: 5,
-        change: function (e, value) { }
-      };
+        function Starrr($el, options) {
+          var i, _, _ref,
+            _this = this;
 
-      function Starrr($el, options) {
-        var i, _, _ref,
-          _this = this;
-
-        this.options = $.extend({}, this.defaults, options);
-        this.$el = $el;
-        _ref = this.defaults;
-        for (i in _ref) {
-          _ = _ref[i];
-          if (this.$el.data(i) != null) {
-            this.options[i] = this.$el.data(i);
+          this.options = $.extend({}, this.defaults, options);
+          this.$el = $el;
+          _ref = this.defaults;
+          for (i in _ref) {
+            _ = _ref[i];
+            if (this.$el.data(i) != null) {
+              this.options[i] = this.$el.data(i);
+            }
           }
+          this.createStars();
+          this.syncRating();
+          this.$el.on('mouseover.starrr', 'span', function (e) {
+            return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
+          });
+          this.$el.on('mouseout.starrr', function () {
+            return _this.syncRating();
+          });
+          this.$el.on('click.starrr', 'span', function (e) {
+            return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
+          });
+          this.$el.on('starrr:change', this.options.change);
         }
-        this.createStars();
-        this.syncRating();
-        this.$el.on('mouseover.starrr', 'span', function (e) {
-          return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
-        });
-        this.$el.on('mouseout.starrr', function () {
-          return _this.syncRating();
-        });
-        this.$el.on('click.starrr', 'span', function (e) {
-          return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
-        });
-        this.$el.on('starrr:change', this.options.change);
-      }
 
-      Starrr.prototype.createStars = function () {
-        var _i, _ref, _results;
+        Starrr.prototype.createStars = function () {
+          var _i, _ref, _results;
 
-        _results = [];
-        for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
-          _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
-        }
-        return _results;
-      };
-
-      Starrr.prototype.setRating = function (rating) {
-        if (this.options.rating === rating) {
-          rating = void 0;
-        }
-        this.options.rating = rating;
-        this.syncRating();
-        return this.$el.trigger('starrr:change', rating);
-      };
-
-      Starrr.prototype.syncRating = function (rating) {
-        var i, _i, _j, _ref;
-
-        rating || (rating = this.options.rating);
-        if (rating) {
-          for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-            this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+          _results = [];
+          for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
+            _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
           }
-        }
-        if (rating && rating < 5) {
-          for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
-            this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+          return _results;
+        };
+
+        Starrr.prototype.setRating = function (rating) {
+          if (this.options.rating === rating) {
+            rating = void 0;
           }
-        }
-        if (!rating) {
-          return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-        }
-      };
+          this.options.rating = rating;
+          this.syncRating();
+          return this.$el.trigger('starrr:change', rating);
+        };
 
-      return Starrr;
+        Starrr.prototype.syncRating = function (rating) {
+          var i, _i, _j, _ref;
 
-    })();
-    return $.fn.extend({
-      starrr: function () {
-        var args, option;
-
-        option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-        return this.each(function () {
-          var data;
-
-          data = $(this).data('star-rating');
-          if (!data) {
-            $(this).data('star-rating', (data = new Starrr($(this), option)));
+          rating || (rating = this.options.rating);
+          if (rating) {
+            for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+              this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+            }
           }
-          if (typeof option === 'string') {
-            return data[option].apply(data, args);
+          if (rating && rating < 5) {
+            for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
+              this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+            }
           }
-        });
-      }
-    });
-  })(window.jQuery, window);
+          if (!rating) {
+            return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+          }
+        };
 
-  $(function () {
-    return $(".starrr").starrr();
-  });
+        return Starrr;
 
-  $(document).ready(function () {
+      })();
+      return $.fn.extend({
+        starrr: function () {
+          var args, option;
 
-    $('#stars').on('starrr:change', function (e, value) {
-      $('#count').html(value);
+          option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+          return this.each(function () {
+            var data;
+
+            data = $(this).data('star-rating');
+            if (!data) {
+              $(this).data('star-rating', (data = new Starrr($(this), option)));
+            }
+            if (typeof option === 'string') {
+              return data[option].apply(data, args);
+            }
+          });
+        }
+      });
+    })(window.jQuery, window);
+
+    $(function () {
+      return $(".starrr").starrr();
     });
 
-    $('#stars-existing').on('starrr:change', function (e, value) {
-      $('#count-existing').html(value);
-    });
-  });
+    $(document).ready(function () {
 
-  $('#frmFeedback').on('submit', function (e) {
-    $('#txtPoint').val($('#count').html());
-  })
-</script>
-{{!-- Feedback Star's js --}}
+      $('#stars').on('starrr:change', function (e, value) {
+        $('#count').html(value);
+      });
+
+      $('#stars-existing').on('starrr:change', function (e, value) {
+        $('#count-existing').html(value);
+      });
+    });
+
+    $('#frmFeedback').on('submit', function (e) {
+      $('#txtPoint').val($('#count').html());
+    })
+  </script>
+  {{!-- Feedback Star's js --}}
 {{/section}}
 <!-- ================ start banner area ================= -->
 <section class="blog-banner-area" id="blog">
@@ -260,19 +260,19 @@
               {{this.course.description}}
             </p>
             {{#if auth}}
-            {{#unless isRegister}}
-            <div class="product_count">
-              <button class="button primary-btn" type="submit">Add to Cart</button>
-              <form id="form-cart" action="/cart/add" method="POST"></form>
-              <input type="hidden" value="{{this.course.idCourse}}" name="id">
-            </div>
-            {{/unless}}
-            <div class="card_area d-flex align-items-center">
-              <a class="icon_btn" href="#"><i class="lnr lnr lnr-eye"></i></a>
-              {{#unless isFavorite}}
-              <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+              {{#unless isRegister}}
+                <div class="product_count">
+                  <button class="button primary-btn" type="submit">Add to Cart</button>
+                  <form id="form-cart" action="/cart/add" method="POST"></form>
+                  <input type="hidden" value="{{this.course.idCourse}}" name="id">
+                </div>
               {{/unless}}
-            </div>
+              <div class="card_area d-flex align-items-center">
+                <a class="icon_btn" href="#"><i class="lnr lnr lnr-eye"></i></a>
+                {{#unless isFavorite}}
+                  <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+                {{/unless}}
+              </div>
             {{/if}}
           </div>
         </form>
@@ -308,29 +308,29 @@
           </div>
 
           {{#each this.lessons }}
-          {{#if ../isRegister}}
-          <div class="course-lessons" data-src="{{videoPath}}">
-            <div class="course-lesson-row">
-              <div class="course-lesson-row-thumbnail">
-                <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img" src="{{imagePath}}">
+            {{#if ../isRegister}}
+              <div class="course-lessons" data-src="{{videoPath}}">
+                <div class="course-lesson-row">
+                  <div class="course-lesson-row-thumbnail">
+                    <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img" src="{{imagePath}}">
+                  </div>
+                  <div class="course-lesson-row-description">{{chapterName}}</div>
+                  <div class="course-lesson-row-duration">{{duration}}</div>
+                </div>
               </div>
-              <div class="course-lesson-row-description">{{chapterName}}</div>
-              <div class="course-lesson-row-duration">{{duration}}</div>
-            </div>
-          </div>
-          {{else}}
-          {{#if isPreview}}
-          <div class="course-lessons" data-src="{{videoPath}}">
-            <div class="course-lesson-row">
-              <div class="course-lesson-row-thumbnail">
-                <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img" src="{{imagePath}}">
-              </div>
-              <div class="course-lesson-row-description">{{chapterName}}</div>
-              <div class="course-lesson-row-duration">{{duration}}</div>
-            </div>
-          </div>
-          {{/if}}
-          {{/if}}
+            {{else}}
+              {{#if isPreview}}
+                <div class="course-lessons" data-src="{{videoPath}}">
+                  <div class="course-lesson-row">
+                    <div class="course-lesson-row-thumbnail">
+                      <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img" src="{{imagePath}}">
+                    </div>
+                    <div class="course-lesson-row-description">{{chapterName}}</div>
+                    <div class="course-lesson-row-duration">{{duration}}</div>
+                  </div>
+                </div>
+              {{/if}}
+            {{/if}}
           {{/each}}
 
         </div>
@@ -377,123 +377,124 @@
         <div>
           <h4 class="ml-2">Total lesson: {{this.lessons.length}}</h4>
           {{#each this.lessons }}
-          {{#if ../isRegister}}
-          <div class="course-lessons-content" data-toggle="modal" data-target="#displayModal" data-src="{{videoPath}}">
-            <div class="course-lesson-content-row row" id="{{chapter}}">
-              <div class="col-md-1"><i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i>
-              </div>
-              <div class="col-md-9 pl-0">
-                <div class="course-lesson-content-row-name">{{chapterName}}</div>
-              </div>
+            {{#if ../isRegister}}
+              <div class="course-lessons-content" data-toggle="modal" data-target="#displayModal"
+                data-src="{{videoPath}}">
+                <div class="course-lesson-content-row row" id="{{chapter}}">
+                  <div class="col-md-1"><i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i>
+                  </div>
+                  <div class="col-md-9 pl-0">
+                    <div class="course-lesson-content-row-name">{{chapterName}}</div>
+                  </div>
 
-              <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
+                  <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
                   isPreview}}Preview{{/if}}</span>
-              </div>
+                  </div>
 
-              <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
-            </div>
-          </div>
-          {{else}}
-          <div class="course-lessons-content" {{#if isPreview}}data-toggle="modal" data-target="#displayModal"
-            data-src="{{videoPath}}" {{/if}}>
-            <div class="course-lesson-content-row row" id="{{chapter}}">
-              <div class="col-md-1"><i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i>
+                  <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
+                </div>
               </div>
-              <div class="col-md-9 pl-0">
-                <div class="course-lesson-content-row-name">{{chapterName}}</div>
-              </div>
+            {{else}}
+              <div class="course-lessons-content" {{#if isPreview}}data-toggle="modal" data-target="#displayModal"
+                data-src="{{videoPath}}" {{/if}}>
+                <div class="course-lesson-content-row row" id="{{chapter}}">
+                  <div class="col-md-1"><i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i>
+                  </div>
+                  <div class="col-md-9 pl-0">
+                    <div class="course-lesson-content-row-name">{{chapterName}}</div>
+                  </div>
 
-              <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
+                  <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
                   isPreview}}Preview{{/if}}</span>
-              </div>
+                  </div>
 
-              <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
-            </div>
-          </div>
-          {{/if}}
+                  <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span></div>
+                </div>
+              </div>
+            {{/if}}
           {{/each}}
         </div>
       </div>
       <!--================Course's Reviews =================-->
       <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
         {{#if isRegister}}
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="row total_rate">
-              <div class="col-6">
-                <div class="box_total">
-                  <h5>Overall</h5>
-                  <h4>{{total_feedback_point}}</h4>
-                  <h6>({{count_feedback}} Reviews)</h6>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="rating_list">
-                  <h3>Based on {{count_feedback}} Reviews</h3>
-                  <ul class="list">
-                    {{#each count_feedbacks_star }}
-                    <li>
-                      <a href="#">{{star}} Star
-                        {{{calcStarsDetail star}}}
-
-                        {{count}}
-                      </a>
-                    </li>
-                    {{/each}}
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="review_list">
-              {{#each feedbacks}}
-              <div class="review_item">
-                <div class="media">
-                  <div class="d-flex">
-                    <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
-                  </div>
-                  <div class="media-body">
-                    <h4>{{fullname}} - {{dateRating}}</h4>
-                    <script>
-                      for (let i = 0; i < {{ ratingPoint }}; i++) {
-                        document.write('<i class="fa fa-star"></i>');
-                      }
-                      for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
-                        document.write('<i class="fa fa-star-o"></i>');
-                      }
-                    </script>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row total_rate">
+                <div class="col-6">
+                  <div class="box_total">
+                    <h5>Overall</h5>
+                    <h4>{{total_feedback_point}}</h4>
+                    <h6>({{count_feedback}} Reviews)</h6>
                   </div>
                 </div>
-                <p>
-                  {{ratingComment}}
-                </p>
+                <div class="col-6">
+                  <div class="rating_list">
+                    <h3>Based on {{count_feedback}} Reviews</h3>
+                    <ul class="list">
+                      {{#each count_feedbacks_star }}
+                        <li>
+                          <a href="#">{{star}} Star
+                            {{{calcStarsDetail star}}}
+
+                            {{count}}
+                          </a>
+                        </li>
+                      {{/each}}
+                    </ul>
+                  </div>
+                </div>
               </div>
-              {{/each}}
+              <div class="review_list">
+                {{#each feedbacks}}
+                  <div class="review_item">
+                    <div class="media">
+                      <div class="d-flex">
+                        <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
+                      </div>
+                      <div class="media-body">
+                        <h4>{{fullname}} - {{dateRating}}</h4>
+                        <script>
+                          for (let i = 0; i < {{ ratingPoint }}; i++) {
+                            document.write('<i class="fa fa-star"></i>');
+                          }
+                          for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
+                            document.write('<i class="fa fa-star-o"></i>');
+                          }
+                        </script>
+                      </div>
+                    </div>
+                    <p>
+                      {{ratingComment}}
+                    </p>
+                  </div>
+                {{/each}}
+              </div>
             </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="review_box">
-              <h3>Add a Review</h3>
-              <p>Your Rating:</p>
-              <form id="frmFeedback" method="POST" action="">
-                <div id="stars" class="starrr"></div>
-                <p>You gave a rating of <span id="count"> 0 </span> star(s)</p>
-                <input type="hidden" id="txtPoint" name="ratingPoint" value="">
+            <div class="col-lg-6">
+              <div class="review_box">
+                <h3>Add a Review</h3>
+                <p>Your Rating:</p>
+                <form id="frmFeedback" method="POST" action="">
+                  <div id="stars" class="starrr"></div>
+                  <p>You gave a rating of <span id="count"> 0 </span> star(s)</p>
+                  <input type="hidden" id="txtPoint" name="ratingPoint" value="">
 
-                <input type="hidden" name="idUser" value="{{authUser.idUser}}">
+                  <input type="hidden" name="idUser" value="{{authUser.idUser}}">
 
-                <div class="form-group">
-                  <textarea class="form-control different-control w-100" name="ratingComment" id="txtComment" cols="30"
-                    rows="5" placeholder="Enter Message"></textarea>
-                </div>
-                <div class="form-group text-center text-md-right mt-3">
-                  <button type="submit" class="button button--active button-review">
-                    Submit Now
-                  </button>
-                </div>
-              </form>
+                  <div class="form-group">
+                    <textarea class="form-control different-control w-100" name="ratingComment" id="txtComment"
+                      cols="30" rows="5" placeholder="Enter Message"></textarea>
+                  </div>
+                  <div class="form-group text-center text-md-right mt-3">
+                    <button type="submit" class="button button--active button-review">
+                      Submit Now
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
-          {{else}}
+        {{else}}
           <div class="row">
             <div class="col-lg-12">
               <div class="row total_rate">
@@ -509,13 +510,13 @@
                     <h3>Based on {{count_feedback}} Reviews</h3>
                     <ul class="list">
                       {{#each count_feedbacks_star }}
-                      <li>
-                        <a href="#">{{star}} Star
-                          {{{calcStarsDetail star}}}
+                        <li>
+                          <a href="#">{{star}} Star
+                            {{{calcStarsDetail star}}}
 
-                          {{count}}
-                        </a>
-                      </li>
+                            {{count}}
+                          </a>
+                        </li>
                       {{/each}}
                     </ul>
                   </div>
@@ -523,35 +524,35 @@
               </div>
               <div class="review_list">
                 {{#each feedbacks}}
-                <div class="review_item">
-                  <div class="media">
-                    <div class="d-flex">
-                      <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
+                  <div class="review_item">
+                    <div class="media">
+                      <div class="d-flex">
+                        <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
+                      </div>
+                      <div class="media-body">
+                        <h4>{{fullname}} - {{dateRating}}</h4>
+                        <script>
+                          for (let i = 0; i < {{ ratingPoint }}; i++) {
+                            document.write('<i class="fa fa-star"></i>');
+                          }
+                          for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
+                            document.write('<i class="fa fa-star-o"></i>');
+                          }
+                        </script>
+                      </div>
                     </div>
-                    <div class="media-body">
-                      <h4>{{fullname}} - {{dateRating}}</h4>
-                      <script>
-                        for (let i = 0; i < {{ ratingPoint }}; i++) {
-                          document.write('<i class="fa fa-star"></i>');
-                        }
-                        for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
-                          document.write('<i class="fa fa-star-o"></i>');
-                        }
-                      </script>
-                    </div>
+                    <p>
+                      {{ratingComment}}
+                    </p>
                   </div>
-                  <p>
-                    {{ratingComment}}
-                  </p>
-                </div>
                 {{/each}}
               </div>
             </div>
-            {{/if}}
-          </div>
-        </div>
+        {{/if}}
       </div>
     </div>
+  </div>
+  </div>
 </section>
 <!--================End Product Description Area =================-->
 
@@ -594,36 +595,36 @@
 
       <!-- Carousel items -->
       {{#each this.topRegister }}
-      <div class="product-grid4 h-100">
-        <div class="product-image4">
-          <a href="#">
-            <img class="pic-1" style="height: 150px; width:255px" src="{{imagePath}}">
-            <img class="pic-2" style="height: 150px; width:255px" src="{{imagePath}}">
-          </a>
-          <ul class="social">
-            <li><a href="/admin/courses/edit/{{idCourse}}" data-tip="Quick View" role="button"><i
-                  class="fa fa-eye"></i></a></li>
-            <li><a href="/courses/detail/{{idCourse}}" data-tip="Like the course" role="button"><i
-                  class="fa fa-heart"></i></a></li>
-            <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
-                  class="fa fa-shopping-cart "></i></a></li>
-          </ul>
-          <span class="product-new-label">New</span>
-          <span class="product-discount-label">-10%</span>
-        </div>
-        <div class="product-content">
-          <h3 class="title"><a href="">{{title}}</a></h3>
-          <span class="teacher"><a href="">{{fullname}}</a></span>
-          <ul class="rating">
-            {{{calcStars total_point}}}
-          </ul>
-          <div class="price">
-            ${{price}}
-            <span>$5.00</span>
+        <div class="product-grid4 h-100">
+          <div class="product-image4">
+            <a href="#">
+              <img class="pic-1" style="height: 150px; width:255px" src="{{imagePath}}">
+              <img class="pic-2" style="height: 150px; width:255px" src="{{imagePath}}">
+            </a>
+            <ul class="social">
+              <li><a href="/admin/courses/edit/{{idCourse}}" data-tip="Quick View" role="button"><i
+                    class="fa fa-eye"></i></a></li>
+              <li><a href="/courses/detail/{{idCourse}}" data-tip="Like the course" role="button"><i
+                    class="fa fa-heart"></i></a></li>
+              <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
+                    class="fa fa-shopping-cart "></i></a></li>
+            </ul>
+            <span class="product-new-label">New</span>
+            <span class="product-discount-label">-10%</span>
           </div>
-          <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+          <div class="product-content">
+            <h3 class="title"><a href="">{{title}}</a></h3>
+            <span class="teacher"><a href="">{{fullname}}</a></span>
+            <ul class="rating">
+              {{{calcStars total_point}}}
+            </ul>
+            <div class="price">
+              ${{price}}
+              <span>$5.00</span>
+            </div>
+            <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+          </div>
         </div>
-      </div>
       {{/each}}
     </div>
     <!--.Carousel-->

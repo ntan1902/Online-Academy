@@ -11,7 +11,7 @@ module.exports = {
       req.session.retUrl = req.originalUrl;
       return res.redirect("/account/signin");
     } else if (req.session.isAdmin === false) {
-      const url = req.headers.referer || "/";
+      const url = "/";
       res.redirect(url);
     }
     next();

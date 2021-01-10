@@ -7,12 +7,13 @@ module.exports = function (app) {
     if (typeof req.session.auth === "undefined") {
       req.session.auth = false;
     }
-    if(req.session.auth === false){
-      req.session.cart=[];
+    if (req.session.auth === false) {
+      req.session.cart = [];
     }
 
     res.locals.auth = req.session.auth;
     res.locals.authUser = req.session.authUser;
+    res.locals.isAdmin = false;
     if (req.session.authUser)
       res.locals.isAdmin = req.session.authUser.role === "admin";
 

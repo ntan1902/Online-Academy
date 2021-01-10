@@ -7,6 +7,7 @@ const favoriteCoursesModel = require("../models/favoriteCourses.model");
 
 module.exports = function (app) {
   app.get("/", async function (req, res) {
+    console.log("Controllers print locals.auth: " + res.locals.auth);
     let newCourses = await courseModel.newCourses();
     newCourses = await feedbackModel.getRatingPoints(newCourses);
 
@@ -87,7 +88,6 @@ module.exports = function (app) {
       // }
     }
 
-    
     res.render("home", {
       layout: "main.hbs",
       newCourses,

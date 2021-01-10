@@ -40,9 +40,10 @@ const upload = multer({
 const upload2 = multer({
   storage: storage2,
   limits: { fileSize: 1000000 },
-})
+});
 
 router.get("/signin", function (req, res) {
+  req.session.retUrl = req.headers.referer;
   res.render("vwAccount/signin", { layout: "main.hbs" });
 });
 
@@ -205,7 +206,7 @@ router.get("/changePassword", auth, async function (req, res) {
   });
 });
 
-router.get("/isValidPassword", auth, async function (req, res) {
+router.get("/isValidPassword", async function (req, res) {
   const password = req.query.password;
   const ret = bcrypt.compareSync(password, req.session.authUser.password);
   if (ret === false) {
@@ -225,7 +226,7 @@ router.post("/changePassword", auth, async function (req, res) {
   res.redirect("/account/changePassword");
 });
 
-router.post("/signout", auth, async function (req, res) {
+router.post("/signout", function (req, res) {
   req.session.auth = false;
   req.session.authUser = null;
   req.session.retUrl = null;
@@ -279,7 +280,7 @@ router.get("/teacher/myCourses", async function (req, res) {
   res.render("vwAccount/myCourses", {
     layout: "userProfile",
     list_my_courses,
-    mycourses: true
+    mycourses: true,
   });
 });
 
@@ -289,36 +290,40 @@ router.get("/teacher/myCourses/add", async function (req, res) {
     layout: "userProfile",
     idTeacher,
     teacherAdd: true,
-  })
-});
-
-router.post("/teacher/myCourses/add", upload2.single('image'), async function (req, res) {
-  const today = new Date();
-  const lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
-  let imgPath;
-  if (req.file === undefined) {
-    imgPath = "";
-  } else {
-    imgPath = "/public/images/courses/" + req.file.filename;
-  }
-
-  const new_course = {
-    imagePath: imgPath,
-    price: req.body.price,
-    idCat: req.body.field,
-    title: req.body.title,
-    description: req.body.description,
-    detail: req.body.detail,
-    lastModified: lastModified,
-    idTeacher: req.body.idTeacher,
-    status: req.body.status,
-  };
-  console.log(new_course);
-  await courseModel.add(new_course);
-  res.render("vwCourses/add", {
-    layout: "userProfile.hbs",
   });
 });
+
+router.post(
+  "/teacher/myCourses/add",
+  upload2.single("image"),
+  async function (req, res) {
+    const today = new Date();
+    const lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
+    let imgPath;
+    if (req.file === undefined) {
+      imgPath = "";
+    } else {
+      imgPath = "/public/images/courses/" + req.file.filename;
+    }
+
+    const new_course = {
+      imagePath: imgPath,
+      price: req.body.price,
+      idCat: req.body.field,
+      title: req.body.title,
+      description: req.body.description,
+      detail: req.body.detail,
+      lastModified: lastModified,
+      idTeacher: req.body.idTeacher,
+      status: req.body.status,
+    };
+    console.log(new_course);
+    await courseModel.add(new_course);
+    res.render("vwCourses/add", {
+      layout: "userProfile.hbs",
+    });
+  }
+);
 
 router.post("/teacher/myCourses/delete/", async function (req, res) {
   await courseModel.delete(req.body.idCourse);

@@ -46,14 +46,12 @@
 </head>
 
 <body>
-    {{#if auth}}
-        {{> headerAuth}}
-    {{else}}
-        {{> header }}
-    {{/if}}
+    {{> header }}
+
     {{{body}}}
 
     {{> footer }}
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
