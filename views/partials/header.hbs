@@ -49,14 +49,16 @@
             {{#if auth}}
                 <form id="frmSignout" action="/account/signout" method="POST"></form>
                 {{#unless isAdmin}}
-                    <ul class="nav-shop">
-                        <li class="nav-item mt-2">
-                            <a href="/cart">
-                                <i class="ti-shopping-cart"></i>
-                                <span class="nav-shop__circle">{{this.cartSummary}}</span>
-                            </a>
-                        </li>
-                    </ul>
+                    {{#unless isTeacher}}
+                        <ul class="nav-shop">
+                            <li class="nav-item mt-2">
+                                <a href="/cart">
+                                    <i class="ti-shopping-cart"></i>
+                                    <span class="nav-shop__circle">{{this.cartSummary}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    {{/unless}}
                 {{/unless}}
                 <li class="nav-item dropdown mr-5">
 

@@ -1,0 +1,647 @@
+{{#section 'css'}}
+    {{!-- plyr.io --}}
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css">
+{{/section}}
+
+{{#section 'js'}}
+    <script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#txtDetail',
+            plugins: 'paste image link autolink lists table media',
+            menubar: false,
+            toolbar: [
+                'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+            ],
+            height: 800
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/themes/fa/theme.min.js"></script>
+    <script>
+        $('#txtImgPath').fileinput({
+            theme: 'fa',
+            allowedFileExtensions: ['jpg', 'png'],
+            dropZoneEnabled: false,
+        });
+    </script>
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script>
+        $('#txtLastModified').datetimepicker({
+            format: 'd/m/Y',
+            timepicker: false,
+            mask: true,
+        });
+        // < DatePicker
+
+        $('#txtField').val($('#txtFieldtemp').val());
+
+        //Check input Validation
+        $('#save').click(function () {
+            $('#frmEdit').attr('action', '/admin/courses/patch');
+            $('#frmEdit').submit();
+        });
+
+
+        $('#frmEdit').on('submit', function (e) {
+            e.preventDefault();
+            const imgPath = $('#txtImgPath').val();
+            const price = $('#txtPrice').val();
+            const field = $('#txtField').val();
+            const title = $('#txtTitle').val();
+            const description = $('#txtDescription').val();
+            const detail = $('#txtDetail').val();
+            const lastModified = $('#txtLastModified').val();
+            const status = $('#txtStatus').val();
+
+            if (price.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Price',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                });
+                return;
+            } else if (field.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Field',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                });
+                return;
+            } else if (title.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Title',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                });
+                return;
+            } else if (!description.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Description',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                });
+                return;
+            } else if (!detail.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Detail',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                });
+                return;
+            } else if (status.length === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Invalid Status',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                });
+                return;
+            } else {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Your information has been saved',
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(function () {
+                    $('#frmEdit').off('submit').submit();
+                })
+            }
+
+        })
+    </script>
+
+
+    <script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const player = new Plyr('#player', {
+                controls: [
+                    "play-large",
+                    "restart",
+                    "rewind",
+                    "play",
+                    "fast-forward",
+                    "progress",
+                    "current-time",
+                    "duration",
+                    "mute",
+                    "volume",
+                    "captions",
+                    "settings",
+                    "pip",
+                    "airplay",
+                    // "download",
+                    "fullscreen",
+                ],
+            });
+            window.player = player;
+
+            $('#displayModal').on('hide.bs.modal', function (e) {
+                player.stop();
+                $('.course-lessons').css('background-color', 'transparent');
+            });
+            $('#displayModal').on('shown.bs.modal', function (e) {
+                const sourceVideo = $('#srcModal').val();
+                player.source = {
+                    type: 'video',
+                    sources: [
+                        {
+                            src: sourceVideo,
+                            provider: 'youtube',
+                        },
+                    ],
+                };
+                let courseList = $('.course-lessons').toArray();
+                for (let i = 0; i < courseList.length; i++) {
+                    if (courseList[i].dataset.src === sourceVideo) {
+                        courseList[i].style.backgroundColor = '#000';
+                    } else {
+                        courseList[i].style.backgroundColor = 'transparent';
+                    }
+                }
+            });
+
+            $('.course-lessons').click(function () {
+                $('.course-lessons').css('background-color', 'transparent');
+                $(this).css('background-color', '#000');
+
+                const sourceVideo = $(this).data('src');
+                player.source = {
+                    type: 'video',
+                    sources: [
+                        {
+                            src: sourceVideo,
+                            provider: 'youtube',
+                        },
+                    ],
+                    autoplay: true
+                };
+            });
+
+            $('.course-lessons-content').click(function () {
+                $('#srcModal').val($(this).data('src'));
+
+            })
+
+            $('.single-prd-item').click(function () {
+                $('#srcModal').val($(this).data('src'));
+            });
+        })
+    </script>
+
+    {{!-- Feedback Star's js --}}
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script>
+        // Starrr plugin (https://github.com/dobtco/starrr)
+        var __slice = [].slice;
+
+        (function ($, window) {
+            var Starrr;
+
+            Starrr = (function () {
+                Starrr.prototype.defaults = {
+                    rating: void 0,
+                    numStars: 5,
+                    change: function (e, value) { }
+                };
+
+                function Starrr($el, options) {
+                    var i, _, _ref,
+                        _this = this;
+
+                    this.options = $.extend({}, this.defaults, options);
+                    this.$el = $el;
+                    _ref = this.defaults;
+                    for (i in _ref) {
+                        _ = _ref[i];
+                        if (this.$el.data(i) != null) {
+                            this.options[i] = this.$el.data(i);
+                        }
+                    }
+                    this.createStars();
+                    this.syncRating();
+                    this.$el.on('mouseover.starrr', 'span', function (e) {
+                        return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
+                    });
+                    this.$el.on('mouseout.starrr', function () {
+                        return _this.syncRating();
+                    });
+                    this.$el.on('click.starrr', 'span', function (e) {
+                        return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
+                    });
+                    this.$el.on('starrr:change', this.options.change);
+                }
+
+                Starrr.prototype.createStars = function () {
+                    var _i, _ref, _results;
+
+                    _results = [];
+                    for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
+                        _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
+                    }
+                    return _results;
+                };
+
+                Starrr.prototype.setRating = function (rating) {
+                    if (this.options.rating === rating) {
+                        rating = void 0;
+                    }
+                    this.options.rating = rating;
+                    this.syncRating();
+                    return this.$el.trigger('starrr:change', rating);
+                };
+
+                Starrr.prototype.syncRating = function (rating) {
+                    var i, _i, _j, _ref;
+
+                    rating || (rating = this.options.rating);
+                    if (rating) {
+                        for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+                            this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+                        }
+                    }
+                    if (rating && rating < 5) {
+                        for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
+                            this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+                        }
+                    }
+                    if (!rating) {
+                        return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+                    }
+                };
+
+                return Starrr;
+
+            })();
+            return $.fn.extend({
+                starrr: function () {
+                    var args, option;
+
+                    option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+                    return this.each(function () {
+                        var data;
+
+                        data = $(this).data('star-rating');
+                        if (!data) {
+                            $(this).data('star-rating', (data = new Starrr($(this), option)));
+                        }
+                        if (typeof option === 'string') {
+                            return data[option].apply(data, args);
+                        }
+                    });
+                }
+            });
+        })(window.jQuery, window);
+
+        $(function () {
+            return $(".starrr").starrr();
+        });
+
+        $(document).ready(function () {
+
+            $('#stars').on('starrr:change', function (e, value) {
+                $('#count').html(value);
+            });
+
+            $('#stars-existing').on('starrr:change', function (e, value) {
+                $('#count-existing').html(value);
+            });
+        });
+
+        $('#frmFeedback').on('submit', function (e) {
+            $('#txtPoint').val($('#count').html());
+        })
+    </script>
+    {{!-- Feedback Star's js --}}
+{{/section}}
+<!--================Single Product Area =================-->
+<div class="product_image_area">
+    <div class="container">
+        <div class="row s_product_inner">
+            <div class="col-lg-6">
+                <input type="hidden" id="srcModal">
+                <div class="single-prd-item btn" data-toggle="modal" data-target="#displayModal"
+                    data-src="{{this.firstLesson.videoPath}}">
+                    <img class=" detail-img" style="width: 255; height: 150" src="{{this.course.imagePath}}"
+                        alt="image" />
+                    <div class="background-icon"></div>
+                    <div class="icon-play">
+                        <i class="fa fa-play-circle-o fa-4x" aria-hidden="true"></i>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="s_product_text">
+                    <h3><strong>{{this.course.title}}</strong></h3>
+                    <h2>${{this.course.price}}</h2>
+                    <ul class="list">
+                        <li>
+                            <a class="active" style="text-transform: capitalize;" href="#">
+                                <h4><span><strong>Field</strong></span> : {{this.course.name}}</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <h4><span><strong>Teacher</strong></span> : {{this.course.fullname}}</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <h4><span><strong>Last-update</strong></span> : {{this.course.lastModified}}</h4>
+                            </a>
+                        </li>
+                    </ul>
+                    <p>
+                        {{this.course.description}}
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--================End Single Product Area =================-->
+<!--================Modal ==================-->
+<div class="modal fade" id="displayModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">
+                    <h6 class="text-white-50">Preview</h6>
+                    <h4 class="text-white">{{this.course.title}}</h4>
+                </div>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="embedded-media-player">
+                        <div class="plyr__video-embed" id="player">
+                            <iframe src="{{this.firstLesson.videoPath}}" allowfullscreen allowtransparency
+                                allow="autoplay"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="lesson-text">
+                        <h6 class="text-white">Lesson Videos:</h6>
+                    </div>
+
+                    {{#each this.lessons }}
+
+                        <div class="course-lessons" data-src="{{videoPath}}">
+                            <div class="course-lesson-row">
+                                <div class="course-lesson-row-thumbnail">
+                                    <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img"
+                                        src="{{imagePath}}">
+                                </div>
+                                <div class="course-lesson-row-description">{{chapterName}}</div>
+                                <div class="course-lesson-row-duration">{{duration}}</div>
+                            </div>
+                        </div>
+
+                    {{/each}}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--================End Modal ==================-->
+
+<!--================Product Description Area =================-->
+<section class="product_description_area">
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab"
+                    aria-controls="description" aria-selected="true">Description</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail"
+                    aria-selected="false">Course's Detail</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="content-tab" data-toggle="tab" href="#content" role="tab"
+                    aria-controls="content" aria-selected="false">Course Content</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+                    aria-selected="false">Reviews</a>
+            </li>
+            <li class="nav-item float-right mr-4">
+                <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit"
+                    aria-selected="false">
+                    <i class="fa fa-pencil mr-2" aria-hidden="true"></i>
+                    Edit
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <!--================Course's Description =================-->
+            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                {{this.course.description}}
+            </div>
+            <!--================Course's Detail =================-->
+            <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
+                <div class="detail-ul">
+                    {{{this.course.detail}}}
+                </div>
+            </div>
+            <!--================Course's Content =================-->
+            <div class="tab-pane fade" id="content" role="tabpanel" aria-labelledby="content-tab">
+                <div>
+                    <h4 class="ml-2">Total lesson: {{this.lessons.length}}</h4>
+                    {{#each this.lessons }}
+                        <div class="course-lessons-content" data-toggle="modal" data-target="#displayModal"
+                            data-src="{{videoPath}}">
+                            <div class="course-lesson-content-row row" id="{{chapter}}">
+                                <div class="col-md-1"><i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-md-9 pl-0">
+                                    <div class="course-lesson-content-row-name">{{chapterName}}</div>
+                                </div>
+
+                                <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
+                  isPreview}}Preview{{/if}}</span>
+                                </div>
+
+                                <div class="col-md-1"><span
+                                        class="course-lesson-content-row-duration">{{duration}}</span></div>
+                            </div>
+                        </div>
+
+                    {{/each}}
+                </div>
+            </div>
+            <!--================Course's Reviews =================-->
+            <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row total_rate">
+                            <div class="col-12">
+                                <div class="box_total">
+                                    <h5>Overall</h5>
+                                    <h4>{{total_feedback_point}}</h4>
+                                    <h6>({{count_feedback}} Reviews)</h6>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-center mt-3">
+                                <div class="rating_list">
+                                    <h3>Based on {{count_feedback}} Reviews</h3>
+                                    <ul class="list">
+                                        {{#each count_feedbacks_star }}
+                                            <li>
+                                                <a href="#">{{star}} Star
+                                                    {{{calcStarsDetail star}}}
+
+                                                    {{count}}
+                                                </a>
+                                            </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review_list">
+                            {{#each feedbacks}}
+                                <div class="review_item">
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="{{avatar}}" style="width: 150px; height:150px" alt="" />
+                                        </div>
+                                        <div class="media-body">
+                                            <h4>{{fullname}} - {{dateRating}}</h4>
+                                            <script>
+                                                for (let i = 0; i < {{ ratingPoint }}; i++) {
+                                                    document.write('<i class="fa fa-star"></i>');
+                                                }
+                                                for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
+                                                    document.write('<i class="fa fa-star-o"></i>');
+                                                }
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        {{ratingComment}}
+                                    </p>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--================Course's Edit =================-->
+            <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
+                <form id="frmEdit" method="POST" enctype="multipart/form-data">
+
+                    <div class="container">
+                        <div class="form-group">
+                            <label>Preview Image</label> <br>
+                            <img style="width: 200px;" src="{{this.course.imagePath}}" alt="no preview image found">
+                        </div>
+                        <input type="hidden" value="{{this.course.imagePath}}" name="previewImage">
+
+                        <div class="form-group">
+                            <label for="txtImgPath">New Image</label>
+                            <input type="file" class="form-control-file" id="txtImgPath" name="image">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtPrice">Price</label>
+                            <input type="number" class="form-control-file" id="txtPrice" name="price"
+                                value="{{this.course.price}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtField" class="my-1 ml-3"><b>Field</b></label>
+                            <input type="hidden" class="form-control" id="txtFieldtemp" name="fieldtemp"
+                                value="{{this.course.idCat}}">
+                            <select name='field' id="txtField" value="{{this.course.idCat}}">
+                                {{#each listCategories}}
+                                    <option value="{{idCategory}}" style="text-transform: capitalize;">{{name}}
+                                    </option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtTitle">Title</label>
+                            <input type="text" class="form-control" id="txtTitle" name="title" required
+                                value="{{this.course.title}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtDescription">Description</label>
+                            <input type="text" class="form-control" id="txtDescription" name="description"
+                                value="{{this.course.description}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtDetail">Detail</label>
+                            <textarea class="form-control" id="txtDetail" name="detail" rows="20">
+                            {{this.course.detail}}
+                            </textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtLastModified">Last Modified</label>
+                            <input type="text" class="form-control" id="txtLastModified" name="lastModified" readonly
+                                value="{{this.course.lastModified}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtStatus">Status</label>
+                            <input type="text" class="form-control" id="txtStatus" name="status"
+                                value="{{this.course.status}}">
+                        </div>
+
+                        <h4 class="my-3 border-bottom">Total lesson: {{this.lessons.length}}</h4>
+                        {{#each this.lessons }}
+                            <div class="form-group row">
+                                <div class="col-sm-9 mb-3">
+                                    <h4>{{chapterName}}</h4>
+                                </div>
+                                <label class="col-sm-2">{{#if isPreview}}Preview{{/if}}</label>
+                                <div class="col-sm-1">
+                                    <a class="btn btn-sm btn-primary" title="Edit" href="#" role="button">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+
+                            </div>
+                        {{/each}}
+
+                        <button class="btn btn-success" type="button" formaction="/admin/courses/patch" id="save">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            Save
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--================End Product Description Area =================-->

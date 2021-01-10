@@ -14,9 +14,10 @@ module.exports = function (app) {
     res.locals.auth = req.session.auth;
     res.locals.authUser = req.session.authUser;
     res.locals.isAdmin = false;
-    if (req.session.authUser)
+    if (req.session.authUser) {
       res.locals.isAdmin = req.session.authUser.role === "admin";
-
+      res.locals.isTeacher = req.session.authUser.role === "teacher";
+    }
     res.locals.cartSummary = cartModel.getNumberOfItems(req.session.cart);
     next();
   });

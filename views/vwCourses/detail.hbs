@@ -1,8 +1,6 @@
 {{#section 'css'}}
   {{!-- plyr.io --}}
   <link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
-  <link rel="" {{!-- stars --}} {{!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
-    rel="stylesheet" id="bootstrap-css"> --}}
   <link rel="stylesheet" href="/public/css/style.css" />
 
 {{/section}}
@@ -11,7 +9,26 @@
   <script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const player = new Plyr('#player');
+      const player = new Plyr('#player', {
+        controls: [
+          "play-large",
+          "restart",
+          "rewind",
+          "play",
+          "fast-forward",
+          "progress",
+          "current-time",
+          "duration",
+          "mute",
+          "volume",
+          "captions",
+          "settings",
+          "pip",
+          "airplay",
+          // "download",
+          "fullscreen",
+        ],
+      });
       window.player = player;
 
       $('#displayModal').on('hide.bs.modal', function (e) {
@@ -345,15 +362,15 @@
   <div class="container">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-          aria-selected="true">Description</a>
+        <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
+          aria-controls="description" aria-selected="true">Description</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+        <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail"
           aria-selected="false">Course's Detail</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+        <a class="nav-link" id="content-tab" data-toggle="tab" href="#content" role="tab" aria-controls="content"
           aria-selected="false">Course Content</a>
       </li>
       <li class="nav-item">
@@ -361,19 +378,19 @@
           aria-selected="false">Reviews</a>
       </li>
     </ul>
-    <!--================Course's Description =================-->
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <!--================Course's Description =================-->
+      <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
         {{{this.course.description}}}
       </div>
       <!--================Course's Detail =================-->
-      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+      <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
         <div class="detail-ul">
           {{{this.course.detail}}}
         </div>
       </div>
       <!--================Course's Content =================-->
-      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+      <div class="tab-pane fade" id="content" role="tabpanel" aria-labelledby="content-tab">
         <div>
           <h4 class="ml-2">Total lesson: {{this.lessons.length}}</h4>
           {{#each this.lessons }}
@@ -450,7 +467,7 @@
                   <div class="review_item">
                     <div class="media">
                       <div class="d-flex">
-                        <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
+                        <img src="{{avatar}}" style="width: 150px; height:150px" alt="" />
                       </div>
                       <div class="media-body">
                         <h4>{{fullname}} - {{dateRating}}</h4>
@@ -527,7 +544,7 @@
                   <div class="review_item">
                     <div class="media">
                       <div class="d-flex">
-                        <img src="/public/images/user-male.png" style="width: 150px; height:150px" alt="" />
+                        <img src="{{avatar}}" style="width: 150px; height:150px" alt="" />
                       </div>
                       <div class="media-body">
                         <h4>{{fullname}} - {{dateRating}}</h4>

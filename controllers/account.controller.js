@@ -3,12 +3,17 @@ const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const userModel = require("../models/user.model");
 const auth = require("../middlewares/auth.mdw").auth;
+const authTeacher = require("../middlewares/auth.mdw").authTeacher;
 const mail = require("../controllers/mail.controller");
 const multer = require("multer");
 const path = require("path");
 const favoriteCourses = require("../models/favoriteCourses.model");
+const feedbackModel = require("../models/feedback.model");
+const registerModel = require("../models/register.model");
 const courseModel = require("../models/course.model");
 const router = express.Router();
+const videoUrlLink = require("../public/video-url-link");
+const parseMilliseconds = require("parse-ms");
 
 //Set Storage Engine
 const storage = multer.diskStorage({
@@ -266,14 +271,13 @@ router.get(
   async function (req, res) {
     const idStudent = req.session.authUser.idUser;
     const idCourse = req.params.idCourse;
-    console.log("hi");
     await favoriteCourses.delete(idCourse, idStudent);
     res.redirect("/account/favoriteCourses");
   }
 );
 
 //Teacher's Part
-router.get("/teacher/myCourses", async function (req, res) {
+router.get("/teacher/myCourses", authTeacher, async function (req, res) {
   const idTeacher = req.session.authUser.idUser;
   list_my_courses = await courseModel.allByIdTeacher(idTeacher);
 
@@ -284,7 +288,7 @@ router.get("/teacher/myCourses", async function (req, res) {
   });
 });
 
-router.get("/teacher/myCourses/add", async function (req, res) {
+router.get("/teacher/myCourses/add", authTeacher, async function (req, res) {
   const idTeacher = req.session.authUser.idUser;
   res.render("vwCourses/add", {
     layout: "userProfile",
@@ -321,6 +325,92 @@ router.post(
     await courseModel.add(new_course);
     res.render("vwCourses/add", {
       layout: "userProfile.hbs",
+    });
+  }
+);
+function getDuration(url) {
+  return new Promise((resolve, reject) => {
+    videoUrlLink.youtube.getInfo(url, { hl: "en" }, (error, info) => {
+      if (error) {
+        //   console.error(error);
+        return reject("ERROR : " + error);
+      } else {
+        const t = info.details;
+        // const duration = prettyMilliseconds(Number(t.lengthSeconds * 1000), {
+        //   colonNotation: true,
+        // });
+
+        let duration = "";
+        if (typeof t !== "undefined") {
+          const time = parseMilliseconds(t.lengthSeconds * 1000);
+          time.hours = (time.hours < 10 ? "0" : "") + time.hours;
+          time.minutes = (time.minutes < 10 ? "0" : "") + time.minutes;
+          time.seconds = (time.seconds < 10 ? "0" : "") + time.seconds;
+          duration = time.minutes + ":" + time.seconds;
+        }
+        return resolve(duration);
+      }
+    });
+  });
+}
+router.get(
+  "/teacher/myCourses/detail/:id",
+  authTeacher,
+  async function (req, res) {
+    const id = req.params.id;
+
+    const course = await courseModel.single(id);
+    const lessons = await courseModel.getLessons(id);
+    const feedbacks = await feedbackModel.allWithIdCourse(id);
+    course.studentNumber = await registerModel.getStudentNumbers(id);
+
+    // Invalid date
+    const lastModified = moment(course.lastModified, "YYYY-MM-DD").format(
+      "DD/MM/YYYY"
+    );
+    course.lastModified = lastModified;
+    if (course === null) {
+      return res.redirect("/admin/courses");
+    }
+
+    let firstLesson = null;
+    if (lessons !== null) {
+      for (let index = 0; index < lessons.length; index++) {
+        const dur = await getDuration(lessons[index].videoPath);
+        lessons[index].duration = dur;
+      }
+      firstLesson = lessons[0];
+    }
+
+    //Feedback's part
+    let count_feedbacks_star = [
+      { star: "1", count: 0 },
+      { star: "2", count: 0 },
+      { star: "3", count: 0 },
+      { star: "4", count: 0 },
+      { star: "5", count: 0 },
+    ];
+
+    feedbacks.forEach((element) => {
+      element.dateRating = moment(element.dateRating, "YYYY-MM-DD").format(
+        "MMMM Do YYYY"
+      );
+      count_feedbacks_star[element.ratingPoint - 1].count++;
+    });
+    count_feedbacks_star.reverse();
+
+    let total_feedback_point = await feedbackModel.getRatingPoint(
+      course.idCourse
+    );
+
+    res.render("vwAccount/myCourseDetail", {
+      course,
+      lessons,
+      firstLesson,
+      feedbacks,
+      count_feedback: feedbacks.length,
+      total_feedback_point,
+      count_feedbacks_star,
     });
   }
 );
