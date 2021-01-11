@@ -1,333 +1,406 @@
 {{#section 'css'}}
-    {{!-- plyr.io --}}
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
-    <link rel="stylesheet" href="/public/css/style.css" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css">
+{{!-- plyr.io --}}
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css">
 {{/section}}
 
 {{#section 'js'}}
-    <script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: '#txtDetail',
-            plugins: 'paste image link autolink lists table media',
-            menubar: false,
-            toolbar: [
-                'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+<script src="https://cdn.tiny.cloud/1/ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '#txtDetail',
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+        ],
+        height: 800
+    });
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/themes/fa/theme.min.js"></script>
+<script>
+    $('#txtImgPath').fileinput({
+        theme: 'fa',
+        allowedFileExtensions: ['jpg', 'png'],
+        dropZoneEnabled: false,
+    });
+    $('#lesson_image').fileinput({
+        theme: 'fa',
+        allowedFileExtensions: ['jpg', 'png'],
+        dropZoneEnabled: false,
+    });
+</script>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script>
+    $('#txtLastModified').datetimepicker({
+        format: 'd/m/Y',
+        timepicker: false,
+        mask: true,
+    });
+    // < DatePicker
+
+    $('#txtField').val($('#txtFieldtemp').val());
+
+    //Check input Validation
+    $('#save').click(function () {
+        $('#frmEdit').attr('action', '/admin/courses/patch');
+        $('#frmEdit').submit();
+    });
+
+
+    $('#frmEdit').on('submit', function (e) {
+        e.preventDefault();
+        const imgPath = $('#txtImgPath').val();
+        const price = $('#txtPrice').val();
+        const field = $('#txtField').val();
+        const title = $('#txtTitle').val();
+        const description = $('#txtDescription').val();
+        const detail = $('#txtDetail').val();
+        const lastModified = $('#txtLastModified').val();
+        const status = $('#txtStatus').val();
+
+        if (price.length === 0) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Invalid Price',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            });
+            return;
+        } else if (field.length === 0) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Invalid Field',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            });
+            return;
+        } else if (title.length === 0) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Invalid Title',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            });
+            return;
+        } else if (!description.length === 0) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Invalid Description',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            });
+            return;
+        } else if (!detail.length === 0) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Invalid Detail',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            });
+            return;
+        } else if (status.length === 0) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Invalid Status',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            });
+            return;
+        } else {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Your information has been saved',
+                timer: 2000,
+                showConfirmButton: false
+            }).then(function () {
+                $('#frmEdit').off('submit').submit();
+            })
+        }
+
+    })
+
+    $('#frmLesson').on('submit', function (e) {
+        e.preventDefault();
+        const imgPath = $('#lesson_image').val();
+        const chapterName = $('.lesson-name').val();
+        const videoPath = $('#lesson-video').val();
+        if (videoPath.length === 0) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Invalid Video Path',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            });
+            return;
+        } else if (chapterName.length === 0) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Invalid Chapter Name',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            });
+            return;
+        } else {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Lesson has been updated',
+                timer: 2000,
+                showConfirmButton: false
+            }).then(function () {
+                $('#frmLesson').off('submit').submit();
+            })
+        }
+
+    })
+
+    $('.lesson-select').on('change', function (e) {
+        $('.lesson-preview').val($(this).val());
+    })
+</script>
+
+
+<script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const player = new Plyr('#player', {
+            controls: [
+                "play-large",
+                "restart",
+                "rewind",
+                "play",
+                "fast-forward",
+                "progress",
+                "current-time",
+                "duration",
+                "mute",
+                "volume",
+                "captions",
+                "settings",
+                "pip",
+                "airplay",
+                // "download",
+                "fullscreen",
             ],
-            height: 800
         });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/themes/fa/theme.min.js"></script>
-    <script>
-        $('#txtImgPath').fileinput({
-            theme: 'fa',
-            allowedFileExtensions: ['jpg', 'png'],
-            dropZoneEnabled: false,
+        window.player = player;
+
+        $('#displayModal').on('hide.bs.modal', function (e) {
+            player.stop();
+            $('.course-lessons').css('background-color', 'transparent');
         });
-    </script>
-
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-    <script>
-        $('#txtLastModified').datetimepicker({
-            format: 'd/m/Y',
-            timepicker: false,
-            mask: true,
-        });
-        // < DatePicker
-
-        $('#txtField').val($('#txtFieldtemp').val());
-
-        //Check input Validation
-        $('#save').click(function () {
-            $('#frmEdit').attr('action', '/admin/courses/patch');
-            $('#frmEdit').submit();
+        $('#displayModal').on('shown.bs.modal', function (e) {
+            const sourceVideo = $('#srcModal').val();
+            player.source = {
+                type: 'video',
+                sources: [
+                    {
+                        src: sourceVideo,
+                        provider: 'youtube',
+                    },
+                ],
+            };
+            let courseList = $('.course-lessons').toArray();
+            for (let i = 0; i < courseList.length; i++) {
+                if (courseList[i].dataset.src === sourceVideo) {
+                    courseList[i].style.backgroundColor = '#000';
+                } else {
+                    courseList[i].style.backgroundColor = 'transparent';
+                }
+            }
         });
 
+        $('.course-lessons').click(function () {
+            $('.course-lessons').css('background-color', 'transparent');
+            $(this).css('background-color', '#000');
 
-        $('#frmEdit').on('submit', function (e) {
-            e.preventDefault();
-            const imgPath = $('#txtImgPath').val();
-            const price = $('#txtPrice').val();
-            const field = $('#txtField').val();
-            const title = $('#txtTitle').val();
-            const description = $('#txtDescription').val();
-            const detail = $('#txtDetail').val();
-            const lastModified = $('#txtLastModified').val();
-            const status = $('#txtStatus').val();
+            const sourceVideo = $(this).data('src');
+            player.source = {
+                type: 'video',
+                sources: [
+                    {
+                        src: sourceVideo,
+                        provider: 'youtube',
+                    },
+                ],
+                autoplay: true
+            };
+        });
 
-            if (price.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Price',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
+        $('.course-lessons-content').click(function () {
+            $('#srcModal').val($(this).data('src'));
+
+        })
+
+        $('.single-prd-item').click(function () {
+            $('#srcModal').val($(this).data('src'));
+        });
+    })
+</script>
+
+{{!-- Feedback Star's js --}}
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script>
+    // Starrr plugin (https://github.com/dobtco/starrr)
+    var __slice = [].slice;
+
+    (function ($, window) {
+        var Starrr;
+
+        Starrr = (function () {
+            Starrr.prototype.defaults = {
+                rating: void 0,
+                numStars: 5,
+                change: function (e, value) { }
+            };
+
+            function Starrr($el, options) {
+                var i, _, _ref,
+                    _this = this;
+
+                this.options = $.extend({}, this.defaults, options);
+                this.$el = $el;
+                _ref = this.defaults;
+                for (i in _ref) {
+                    _ = _ref[i];
+                    if (this.$el.data(i) != null) {
+                        this.options[i] = this.$el.data(i);
+                    }
+                }
+                this.createStars();
+                this.syncRating();
+                this.$el.on('mouseover.starrr', 'span', function (e) {
+                    return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
                 });
-                return;
-            } else if (field.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Field',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
+                this.$el.on('mouseout.starrr', function () {
+                    return _this.syncRating();
                 });
-                return;
-            } else if (title.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Title',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
+                this.$el.on('click.starrr', 'span', function (e) {
+                    return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
                 });
-                return;
-            } else if (!description.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Description',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else if (!detail.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Detail',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else if (status.length === 0) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Invalid Status',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                });
-                return;
-            } else {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Your information has been saved',
-                    timer: 2000,
-                    showConfirmButton: false
-                }).then(function () {
-                    $('#frmEdit').off('submit').submit();
-                })
+                this.$el.on('starrr:change', this.options.change);
             }
 
-        })
-    </script>
+            Starrr.prototype.createStars = function () {
+                var _i, _ref, _results;
 
+                _results = [];
+                for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
+                    _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
+                }
+                return _results;
+            };
 
-    <script src="https://cdn.plyr.io/3.6.3/plyr.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const player = new Plyr('#player', {
-                controls: [
-                    "play-large",
-                    "restart",
-                    "rewind",
-                    "play",
-                    "fast-forward",
-                    "progress",
-                    "current-time",
-                    "duration",
-                    "mute",
-                    "volume",
-                    "captions",
-                    "settings",
-                    "pip",
-                    "airplay",
-                    // "download",
-                    "fullscreen",
-                ],
-            });
-            window.player = player;
+            Starrr.prototype.setRating = function (rating) {
+                if (this.options.rating === rating) {
+                    rating = void 0;
+                }
+                this.options.rating = rating;
+                this.syncRating();
+                return this.$el.trigger('starrr:change', rating);
+            };
 
-            $('#displayModal').on('hide.bs.modal', function (e) {
-                player.stop();
-                $('.course-lessons').css('background-color', 'transparent');
-            });
-            $('#displayModal').on('shown.bs.modal', function (e) {
-                const sourceVideo = $('#srcModal').val();
-                player.source = {
-                    type: 'video',
-                    sources: [
-                        {
-                            src: sourceVideo,
-                            provider: 'youtube',
-                        },
-                    ],
-                };
-                let courseList = $('.course-lessons').toArray();
-                for (let i = 0; i < courseList.length; i++) {
-                    if (courseList[i].dataset.src === sourceVideo) {
-                        courseList[i].style.backgroundColor = '#000';
-                    } else {
-                        courseList[i].style.backgroundColor = 'transparent';
+            Starrr.prototype.syncRating = function (rating) {
+                var i, _i, _j, _ref;
+
+                rating || (rating = this.options.rating);
+                if (rating) {
+                    for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+                        this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
                     }
                 }
-            });
-
-            $('.course-lessons').click(function () {
-                $('.course-lessons').css('background-color', 'transparent');
-                $(this).css('background-color', '#000');
-
-                const sourceVideo = $(this).data('src');
-                player.source = {
-                    type: 'video',
-                    sources: [
-                        {
-                            src: sourceVideo,
-                            provider: 'youtube',
-                        },
-                    ],
-                    autoplay: true
-                };
-            });
-
-            $('.course-lessons-content').click(function () {
-                $('#srcModal').val($(this).data('src'));
-
-            })
-
-            $('.single-prd-item').click(function () {
-                $('#srcModal').val($(this).data('src'));
-            });
-        })
-    </script>
-
-    {{!-- Feedback Star's js --}}
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script>
-        // Starrr plugin (https://github.com/dobtco/starrr)
-        var __slice = [].slice;
-
-        (function ($, window) {
-            var Starrr;
-
-            Starrr = (function () {
-                Starrr.prototype.defaults = {
-                    rating: void 0,
-                    numStars: 5,
-                    change: function (e, value) { }
-                };
-
-                function Starrr($el, options) {
-                    var i, _, _ref,
-                        _this = this;
-
-                    this.options = $.extend({}, this.defaults, options);
-                    this.$el = $el;
-                    _ref = this.defaults;
-                    for (i in _ref) {
-                        _ = _ref[i];
-                        if (this.$el.data(i) != null) {
-                            this.options[i] = this.$el.data(i);
-                        }
+                if (rating && rating < 5) {
+                    for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
+                        this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
                     }
-                    this.createStars();
-                    this.syncRating();
-                    this.$el.on('mouseover.starrr', 'span', function (e) {
-                        return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
-                    });
-                    this.$el.on('mouseout.starrr', function () {
-                        return _this.syncRating();
-                    });
-                    this.$el.on('click.starrr', 'span', function (e) {
-                        return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
-                    });
-                    this.$el.on('starrr:change', this.options.change);
                 }
-
-                Starrr.prototype.createStars = function () {
-                    var _i, _ref, _results;
-
-                    _results = [];
-                    for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
-                        _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
-                    }
-                    return _results;
-                };
-
-                Starrr.prototype.setRating = function (rating) {
-                    if (this.options.rating === rating) {
-                        rating = void 0;
-                    }
-                    this.options.rating = rating;
-                    this.syncRating();
-                    return this.$el.trigger('starrr:change', rating);
-                };
-
-                Starrr.prototype.syncRating = function (rating) {
-                    var i, _i, _j, _ref;
-
-                    rating || (rating = this.options.rating);
-                    if (rating) {
-                        for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-                            this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
-                        }
-                    }
-                    if (rating && rating < 5) {
-                        for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
-                            this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-                        }
-                    }
-                    if (!rating) {
-                        return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-                    }
-                };
-
-                return Starrr;
-
-            })();
-            return $.fn.extend({
-                starrr: function () {
-                    var args, option;
-
-                    option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-                    return this.each(function () {
-                        var data;
-
-                        data = $(this).data('star-rating');
-                        if (!data) {
-                            $(this).data('star-rating', (data = new Starrr($(this), option)));
-                        }
-                        if (typeof option === 'string') {
-                            return data[option].apply(data, args);
-                        }
-                    });
+                if (!rating) {
+                    return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
                 }
-            });
-        })(window.jQuery, window);
+            };
 
-        $(function () {
-            return $(".starrr").starrr();
+            return Starrr;
+
+        })();
+        return $.fn.extend({
+            starrr: function () {
+                var args, option;
+
+                option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+                return this.each(function () {
+                    var data;
+
+                    data = $(this).data('star-rating');
+                    if (!data) {
+                        $(this).data('star-rating', (data = new Starrr($(this), option)));
+                    }
+                    if (typeof option === 'string') {
+                        return data[option].apply(data, args);
+                    }
+                });
+            }
+        });
+    })(window.jQuery, window);
+
+    $(function () {
+        return $(".starrr").starrr();
+    });
+
+    $(document).ready(function () {
+
+        $('#stars').on('starrr:change', function (e, value) {
+            $('#count').html(value);
         });
 
-        $(document).ready(function () {
-
-            $('#stars').on('starrr:change', function (e, value) {
-                $('#count').html(value);
-            });
-
-            $('#stars-existing').on('starrr:change', function (e, value) {
-                $('#count-existing').html(value);
-            });
+        $('#stars-existing').on('starrr:change', function (e, value) {
+            $('#count-existing').html(value);
         });
+    });
 
-        $('#frmFeedback').on('submit', function (e) {
-            $('#txtPoint').val($('#count').html());
-        })
-    </script>
-    {{!-- Feedback Star's js --}}
+    $('#frmFeedback').on('submit', function (e) {
+        $('#txtPoint').val($('#count').html());
+    })
+</script>
+{{!-- Feedback Star's js --}}
+
+
+<script>
+    $('.lessonID').on('click', function () {
+        const id = $(this).data('id');
+        const chapterName = $(this).data('name');
+        const video = $(this).data('src');
+        const image = $(this).data('image');
+        const preview = $(this).data('preview');
+
+        $('.lesson-id').val(id);
+        $('.lesson-image').val(image);
+        $('.lesson-image').attr('src', image);
+        $('.lesson-image-view').val(image);
+        $('.lesson-preview').val(preview);
+        $('.lesson-select').val(preview);
+        $('select').niceSelect('update');
+        $('.lesson-name').val(chapterName);
+        $('#lesson-video').val(video);
+        $('#lesson-video').html(video);
+    })
+
+    $('#deleteLesson').on('click', function (e) {
+        $('#deleteOrder').val('true');
+    }).then(function () {
+        $('#frmLesson').off('submit').submit();
+    })
+</script>
 {{/section}}
 <!--================Single Product Area =================-->
 <div class="product_image_area">
@@ -407,21 +480,101 @@
 
                     {{#each this.lessons }}
 
-                        <div class="course-lessons" data-src="{{videoPath}}">
-                            <div class="course-lesson-row">
-                                <div class="course-lesson-row-thumbnail">
-                                    <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img"
-                                        src="{{imagePath}}">
-                                </div>
-                                <div class="course-lesson-row-description">{{chapterName}}</div>
-                                <div class="course-lesson-row-duration">{{duration}}</div>
+                    <div class="course-lessons" data-src="{{videoPath}}">
+                        <div class="course-lesson-row">
+                            <div class="course-lesson-row-thumbnail">
+                                <img alt="" width="640" height="480" class="course-lesson-row-thumbnail-img"
+                                    src="{{imagePath}}">
                             </div>
+                            <div class="course-lesson-row-description">{{chapterName}}</div>
+                            <div class="course-lesson-row-duration">{{duration}}</div>
                         </div>
+                    </div>
 
                     {{/each}}
 
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editLesson" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">
+
+                    <h4 class="text-white">{{this.course.title}}</h4>
+                </div>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form id="frmLesson" method="POST" action='/account/lesson-patch'>
+                <input type="hidden" name="id" value="{{this.course.idCourse}}">
+                <div class="card mx-5">
+                    <div class="card-header">
+                        <h4>Lesson</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="txtID">Lesson's chapter</label>
+                            <input type="text" class="form-control lesson-id" name="lesson_chapter" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Preview Image</label> <br>
+                            <img class="lesson-image" style="width: 200px;" alt="no preview image found">
+                        </div>
+                        <input class="lesson-image-view" type="hidden" name="lesson_image_new">
+
+                        <div class="form-group">
+                            <label for="txtImgPath">New Image</label>
+                            <input type="file" class="form-control-file" id="lesson_image" name="lesson_image_chose">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="txtField" class="my-1 ml-3"><b>Preview</b></label>
+                            <input type="hidden" class="form-control lesson-preview" name="lesson_preview">
+                            <select name='field' id="txtField" class="lesson-select">
+                                <option value="1" style="text-transform: capitalize;">True</option>
+                                <option value="0" style="text-transform: capitalize;">False</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtTitle">Lesson's name</label>
+                            <input type="text" class="form-control lesson-name" name="lesson_name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lesson-video">Video Path</label>
+                            <input class="form-control" id="lesson-video" name="lesson_video" rows="3">
+                            </input>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-danger" type="submit" id="deleteLesson">
+                            <input type="hidden" name="deleteOrder" id="deleteOrder">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            Delete
+                        </button>
+                        <button class="btn btn-success" type="submit" id="saveLesson">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            Save
+                        </button>
+                    </div>
+
+
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
@@ -471,23 +624,23 @@
                 <div>
                     <h4 class="ml-2">Total lesson: {{this.lessons.length}}</h4>
                     {{#each this.lessons }}
-                        <div class="course-lessons-content" data-toggle="modal" data-target="#displayModal"
-                            data-src="{{videoPath}}">
-                            <div class="course-lesson-content-row row" id="{{chapter}}">
-                                <div class="col-md-1"><i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i>
-                                </div>
-                                <div class="col-md-9 pl-0">
-                                    <div class="course-lesson-content-row-name">{{chapterName}}</div>
-                                </div>
+                    <div class="course-lessons-content" data-toggle="modal" data-target="#displayModal"
+                        data-src="{{videoPath}}">
+                        <div class="course-lesson-content-row row" id="{{chapter}}">
+                            <div class="col-md-1"><i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-md-9 pl-0">
+                                <div class="course-lesson-content-row-name">{{chapterName}}</div>
+                            </div>
 
-                                <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
-                  isPreview}}Preview{{/if}}</span>
-                                </div>
+                            <div class="col-md-1"><span class="course-lesson-content-row-preview">{{#if
+                                    isPreview}}Preview{{/if}}</span>
+                            </div>
 
-                                <div class="col-md-1"><span
-                                        class="course-lesson-content-row-duration">{{duration}}</span></div>
+                            <div class="col-md-1"><span class="course-lesson-content-row-duration">{{duration}}</span>
                             </div>
                         </div>
+                    </div>
 
                     {{/each}}
                 </div>
@@ -510,13 +663,13 @@
                                     <h3>Based on {{count_feedback}} Reviews</h3>
                                     <ul class="list">
                                         {{#each count_feedbacks_star }}
-                                            <li>
-                                                <a href="#">{{star}} Star
-                                                    {{{calcStarsDetail star}}}
+                                        <li>
+                                            <a href="#">{{star}} Star
+                                                {{{calcStarsDetail star}}}
 
-                                                    {{count}}
-                                                </a>
-                                            </li>
+                                                {{count}}
+                                            </a>
+                                        </li>
                                         {{/each}}
                                     </ul>
                                 </div>
@@ -524,27 +677,27 @@
                         </div>
                         <div class="review_list">
                             {{#each feedbacks}}
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="{{avatar}}" style="width: 150px; height:150px" alt="" />
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>{{fullname}} - {{dateRating}}</h4>
-                                            <script>
-                                                for (let i = 0; i < {{ ratingPoint }}; i++) {
-                                                    document.write('<i class="fa fa-star"></i>');
-                                                }
-                                                for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
-                                                    document.write('<i class="fa fa-star-o"></i>');
-                                                }
-                                            </script>
-                                        </div>
+                            <div class="review_item">
+                                <div class="media">
+                                    <div class="d-flex">
+                                        <img src="{{avatar}}" style="width: 150px; height:150px" alt="" />
                                     </div>
-                                    <p>
-                                        {{ratingComment}}
-                                    </p>
+                                    <div class="media-body">
+                                        <h4>{{fullname}} - {{dateRating}}</h4>
+                                        <script>
+                                            for (let i = 0; i < {{ ratingPoint }}; i++) {
+                                                document.write('<i class="fa fa-star"></i>');
+                                            }
+                                            for (let i = 0; i < 5 - {{ ratingPoint }}; i++) {
+                                                document.write('<i class="fa fa-star-o"></i>');
+                                            }
+                                        </script>
+                                    </div>
                                 </div>
+                                <p>
+                                    {{ratingComment}}
+                                </p>
+                            </div>
                             {{/each}}
                         </div>
                     </div>
@@ -579,8 +732,8 @@
                                 value="{{this.course.idCat}}">
                             <select name='field' id="txtField" value="{{this.course.idCat}}">
                                 {{#each listCategories}}
-                                    <option value="{{idCategory}}" style="text-transform: capitalize;">{{name}}
-                                    </option>
+                                <option value="{{idCategory}}" style="text-transform: capitalize;">{{name}}
+                                </option>
                                 {{/each}}
                             </select>
                         </div>
@@ -618,18 +771,21 @@
 
                         <h4 class="my-3 border-bottom">Total lesson: {{this.lessons.length}}</h4>
                         {{#each this.lessons }}
-                            <div class="form-group row">
-                                <div class="col-sm-9 mb-3">
-                                    <h4>{{chapterName}}</h4>
-                                </div>
-                                <label class="col-sm-2">{{#if isPreview}}Preview{{/if}}</label>
-                                <div class="col-sm-1">
-                                    <a class="btn btn-sm btn-primary" title="Edit" href="#" role="button">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-
+                        <div class="form-group row">
+                            <div class="col-sm-9 mb-3">
+                                <h4>{{chapterName}}</h4>
                             </div>
+                            <label class="col-sm-2">{{#if isPreview}}Preview{{/if}}</label>
+                            <div class="col-sm-1">
+                                <a class="btn btn-sm btn-primary lessonID" data-toggle="modal" data-target="#editLesson"
+                                    title="Edit" href="#" role="button" data-id="{{chapter}}"
+                                    data-name="{{chapterName}}" data-src="{{videoPath}}" data-preview="{{isPreview}}"
+                                    data-image="{{imagePath}}">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </a>
+                            </div>
+
+                        </div>
                         {{/each}}
 
                         <button class="btn btn-success" type="button" formaction="/admin/courses/patch" id="save">

@@ -424,4 +424,42 @@ router.post("/teacher/myCourses/delete/", async function (req, res) {
   res.redirect("/account/teacher/myCourses");
 });
 
+router.get("/lesson-delete", async function (req, res) {
+  console.log(req.body.id);
+
+  console.log(req.body.lesson_chapter);
+  
+});
+
+router.post("/lesson-patch", async function (req, res) {
+  if(req.body.deleteOrder=="true"){
+    console.log(req.body.deleteOrder);
+    await courseModel.deleteLesson(req.body.id,req.body.lesson_chapter);
+    res.redirect(req.headers.referer);
+    return;
+  }
+
+  let imgPath;
+  console.log(req.body.lesson_image_chose);
+  if (req.body.lesson_image_chose === "") {
+    imgPath = req.body.lesson_image_new;
+  } else {
+    imgPath = req.body.lesson_image_chose;
+  }
+
+  console.log(req.body.lesson_name);
+  const new_lesson = {
+    idCourse: req.body.id,
+    imagePath: imgPath,
+    chapter: req.body.lesson_chapter,
+    chapterName: req.body.lesson_name,
+    videoPath: req.body.lesson_video,
+    isPreview: req.body.lesson_review,
+  };
+
+  console.log(new_lesson);
+  await courseModel.patchLesson(new_lesson);
+  console.log(req.headers.referer);
+  res.redirect(req.headers.referer);
+});
 module.exports = router;

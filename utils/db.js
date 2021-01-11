@@ -15,12 +15,16 @@ module.exports = {
   },
 
   delete(condition, table_name) {
-    const sql = `delete from ${table_name} where ?`;
+    const sql = `delete from ${table_name} where idCourse=${condition.idCourse} and chapter=${condition.chapter}`;
     return promisePool.query(sql, condition);
   },
 
   patch(new_data, condition, table_name) {
     const sql = `update ${table_name} set ? where ?`;
     return promisePool.query(sql, [new_data, condition]);
+  },
+  patchLesson(new_data, condition, table_name) {
+    const sql = `update ${table_name} set ? where idCourse=${condition.idCourse} and chapter=${condition.chapter}`;
+    return promisePool.query(sql, [new_data]);
   },
 };

@@ -144,6 +144,15 @@ module.exports = {
     return result;
   },
 
+  async deleteLesson(idCourse,idLesson) {
+    const condition = {
+      idCourse:idCourse,
+      chapter:idLesson
+  };
+    const [result, fields] = await db.delete(condition, "lessons");
+    return result;
+  },
+
   async patch(entity) {
     const condition = {
       idCourse: entity.id,
@@ -152,6 +161,23 @@ module.exports = {
 
     const [result, fields] = await db.patch(entity, condition, "courses");
     return result;
+  },
+
+  async patchLesson(entity) {
+    const condition = {
+      idCourse: entity.idCourse,
+      chapter: entity.chapter
+  };
+    delete entity.idCourse;
+    delete entity.chapter;
+
+    for(let key in entity) {
+      if (entity.hasOwnProperty(key)) {
+        let entityTemp = {};
+        entityTemp[key] = entity[key];
+        await db.patchLesson(entityTemp, condition, "lessons");
+      }
+    }
   },
 
   async countCourseByKeyword(keyword) {

@@ -143,6 +143,9 @@ router.post("/patch/", upload.single("image"), async function (req, res) {
   res.redirect("/admin/courses");
 });
 
+
+
+
 //link /admin/courses/isAvailable?idTeacher={{idTeacher}}
 router.get("/isAvailable", async function (req, res) {
   const idTeacher = req.query.teacher;
