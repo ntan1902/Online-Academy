@@ -19,10 +19,12 @@
         <i class="fa fa-backward" aria-hidden="true"></i>
         Back to Categories
       </a>
+      {{#if isEmpty}}
       <button class="btn btn-danger" type="submit" formaction="/admin/categories/del">
         <i class="fa fa-trash-o" aria-hidden="true"></i>
         Delete
       </button>
+      {{/if}}
       <button class="btn btn-success" type="submit" formaction="/admin/categories/patch">
         <i class="fa fa-check" aria-hidden="true"></i>
         Save

@@ -18,6 +18,7 @@ module.exports = function (app) {
     topRegister = await feedbackModel.getRatingPoints(topRegister);
 
     let topCourses = await courseModel.topCourses();
+    // console.log(topCourses);
     // topCourses = await feedbackModel.getRatingPoints(topCourses);
 
     if (req.session.auth) {

@@ -25,6 +25,15 @@ module.exports = {
     return rows[0];
   },
 
+  async isEmptyCat(id) {
+    const sql = `select cat.*, count(co.idCourse) from categories cat, courses co 
+                where idCategory = ${id} and co.idCat = cat.idCategory
+                group by cat.idCategory, cat.name`;
+    const [rows, fields] = await db.load(sql);
+    if (rows.length === 0) return true;
+    return false;
+  },
+
   async add(category) {
     const [result, fields] = await db.add(category, 'categories');
     console.log(result);

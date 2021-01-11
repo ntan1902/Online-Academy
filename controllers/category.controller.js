@@ -16,13 +16,16 @@ router.get('/', async function (req, res) {
 router.get('/edit/:id', async function (req, res) {
   const id = req.params.id;
   const category = await categoryModel.single(id);
+
   if (category === null) {
     return res.redirect('/admin/categories');
   }
+  let isEmpty = await categoryModel.isEmptyCat(id);
 
   res.render('vwCategories/edit', {
     layout: "admin.hbs",
-    category
+    category,
+    isEmpty,
   });
 })
 
