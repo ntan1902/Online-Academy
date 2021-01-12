@@ -18,8 +18,7 @@ module.exports = function (app) {
     topRegister = await feedbackModel.getRatingPoints(topRegister);
 
     let topCourses = await courseModel.topCourses();
-    // console.log(topCourses);
-    // topCourses = await feedbackModel.getRatingPoints(topCourses);
+    topCourses = await feedbackModel.getRatingPoints(topCourses);
 
     if (req.session.auth) {
       //newCourses
@@ -58,18 +57,18 @@ module.exports = function (app) {
         );
         topRegister[i].notReview = topRegister[i].totalPoint === 0;
       }
-      //topCourses
-      // for (let i = 0; i < topCourses.length; i++) {
-      //   topCourses[i].isRegister = await registerModel.isRegister(
-      //     req.session.authUser.idUser,
-      //     topCourses[i].idCourse
-      //   );
-      //   topCourses[i].isFavorite = await favoriteCoursesModel.isFavoriteCourse(
-      //     req.session.authUser.idUser,
-      //     topCourses[i].idCourse
-      //   );
-      //   topCourses[i].notReview = topCourses[i].totalPoint === 0;
-      // }
+      topCourses
+      for (let i = 0; i < topCourses.length; i++) {
+        topCourses[i].isRegister = await registerModel.isRegister(
+          req.session.authUser.idUser,
+          topCourses[i].idCourse
+        );
+        topCourses[i].isFavorite = await favoriteCoursesModel.isFavoriteCourse(
+          req.session.authUser.idUser,
+          topCourses[i].idCourse
+        );
+        topCourses[i].notReview = topCourses[i].totalPoint === 0;
+      }
     } else {
       //newCourses
       for (let i = 0; i < newCourses.length; i++) {
@@ -84,9 +83,9 @@ module.exports = function (app) {
         topRegister[i].notReview = topRegister[i].totalPoint === 0;
       }
       //topCourses
-      // for (let i = 0; i < topCourses.length; i++) {
-      //   topCourses[i].notReview = topCourses[i].totalPoint === 0;
-      // }
+      for (let i = 0; i < topCourses.length; i++) {
+        topCourses[i].notReview = topCourses[i].totalPoint === 0;
+      }
     }
 
     res.render("home", {

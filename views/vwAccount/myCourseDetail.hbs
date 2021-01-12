@@ -499,7 +499,7 @@
     </div>
 </div>
 
-
+<!--================LESSON EDIT Area =================-->
 <div class="modal fade" id="editLesson" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-dark">
@@ -514,7 +514,7 @@
                 </button>
             </div>
 
-            <form id="frmLesson" method="POST" action='/account/lesson-patch'>
+            <form id="frmLesson" method="POST" action='/account/lesson-patch' enctype="multipart/form-data">
                 <input type="hidden" name="id" value="{{this.course.idCourse}}">
                 <div class="card mx-5">
                     <div class="card-header">
@@ -530,18 +530,18 @@
                             <label>Preview Image</label> <br>
                             <img class="lesson-image" style="width: 200px;" alt="no preview image found">
                         </div>
-                        <input class="lesson-image-view" type="hidden" name="lesson_image_new">
+                        <input class="lesson-image-view" type="hidden" name="lesson_image">
 
                         <div class="form-group">
                             <label for="txtImgPath">New Image</label>
-                            <input type="file" class="form-control-file" id="lesson_image" name="lesson_image_chose">
+                            <input type="file" class="form-control-file" id="lesson_image" name="lesson_image_new">
                         </div>
 
 
                         <div class="form-group">
                             <label for="txtField" class="my-1 ml-3"><b>Preview</b></label>
                             <input type="hidden" class="form-control lesson-preview" name="lesson_preview">
-                            <select name='field' id="txtField" class="lesson-select">
+                            <select name='lesson_isPreview' id="txtField" class="lesson-select">
                                 <option value="1" style="text-transform: capitalize;">True</option>
                                 <option value="0" style="text-transform: capitalize;">False</option>
                             </select>
@@ -578,6 +578,8 @@
         </div>
     </div>
 </div>
+<!--================LESSON EDIT Area =================-->
+
 <!--================End Modal ==================-->
 
 <!--================Product Description Area =================-->

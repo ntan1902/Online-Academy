@@ -41,7 +41,7 @@ module.exports = {
   },
 
   async single(id) {
-    const sql = `select co.*, cat.name, u.fullname, u.userDescription as teacherName from courses co, users u, categories cat where co.idCourse = ${id} and co.idTeacher = u.idUser and co.idCat = cat.idCategory`;
+    const sql = `select co.*, cat.name, u.fullname, u.userDescription from courses co, users u, categories cat where co.idCourse = ${id} and co.idTeacher = u.idUser and co.idCat = cat.idCategory`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
     return rows[0];
@@ -70,9 +70,9 @@ module.exports = {
   },
 
   async allByIdTeacher(idTeacher) {
-    const sql = `select * from courses co where co.idTeacher = ${idTeacher}`
+    const sql = `select * from courses co where co.idTeacher = ${idTeacher}`;
     const [rows, fields] = await db.load(sql);
-    if(rows.length === 0) return null;
+    if (rows.length === 0) return null;
     return rows;
   },
 
@@ -144,12 +144,12 @@ module.exports = {
     return result;
   },
 
-  async deleteLesson(idCourse,idLesson) {
+  async deleteLesson(idCourse, idLesson) {
     const condition = {
-      idCourse:idCourse,
-      chapter:idLesson
-  };
-    const [result, fields] = await db.delete(condition, "lessons");
+      idCourse: idCourse,
+      chapter: idLesson,
+    };
+    const [result, fields] = await db.DeleteLesson(condition, "lessons");
     return result;
   },
 
@@ -166,12 +166,12 @@ module.exports = {
   async patchLesson(entity) {
     const condition = {
       idCourse: entity.idCourse,
-      chapter: entity.chapter
-  };
+      chapter: entity.chapter,
+    };
     delete entity.idCourse;
     delete entity.chapter;
 
-    for(let key in entity) {
+    for (let key in entity) {
       if (entity.hasOwnProperty(key)) {
         let entityTemp = {};
         entityTemp[key] = entity[key];
@@ -214,18 +214,16 @@ module.exports = {
                   order by avg (distinct f.ratingPoint) desc
       limit ${paginate.limit} offset ${offset}`;
       const [rows, fields] = await db.load(sql);
-      if(rows.length == 0){
+      if (rows.length == 0) {
         const sql = `select distinct c.*, u.fullname
                 from users u, courses c
                 where u.idUser=c.idTeacher and (match(c.title) against ('${keyword}') or 
                   match(u.fullname) against('${keyword}')
                   or match(c.description) against ('${keyword}'))
                 limit ${paginate.limit} offset ${offset}`;
-      const [rows, fields] = await db.load(sql);
-      return rows;
-      }
-      else
+        const [rows, fields] = await db.load(sql);
         return rows;
+      } else return rows;
     }
     /*const sql = `select distinct c.*
                 from users u, courses c

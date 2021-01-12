@@ -15,8 +15,8 @@ const router = express.Router();
 const videoUrlLink = require("../public/video-url-link");
 const parseMilliseconds = require("parse-ms");
 
-//Set Storage Engine
-const storage = multer.diskStorage({
+//Set Storage Engine for User
+const storageUser = multer.diskStorage({
   destination: "./public/images/users",
   filename: function (req, file, callback) {
     callback(
@@ -26,8 +26,8 @@ const storage = multer.diskStorage({
   },
 });
 
-//Set Storage Engine
-const storage2 = multer.diskStorage({
+//Set Storage Engine for Course
+const storageCourse = multer.diskStorage({
   destination: "./public/images/courses",
   filename: function (req, file, callback) {
     callback(
@@ -37,13 +37,28 @@ const storage2 = multer.diskStorage({
   },
 });
 
-const upload = multer({
-  storage: storage,
+//Set Storage Engine for Lesson
+const storageLesson = multer.diskStorage({
+  destination: "./public/images/lessons",
+  filename: function (req, file, callback) {
+    callback(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+const uploadUser = multer({
+  storage: storageUser,
   limits: { fileSize: 1000000 },
 });
 
-const upload2 = multer({
-  storage: storage2,
+const uploadCourse = multer({
+  storage: storageCourse,
+  limits: { fileSize: 1000000 },
+});
+
+const uploadLesson = multer({
+  storage: storageLesson,
   limits: { fileSize: 1000000 },
 });
 
@@ -171,7 +186,7 @@ router.get("/profile", auth, async function (req, res) {
   });
 });
 
-router.post("/patch", auth, upload.single("avatar"), async function (req, res) {
+router.post("/patch", auth, uploadUser.single("avatar"), async function (req, res) {
   const dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
   let imgPath;
   if (req.file === undefined) {
@@ -303,7 +318,7 @@ router.get("/teacher/myCourses/add", authTeacher, async function (req, res) {
 
 router.post(
   "/teacher/myCourses/add",
-  upload2.single("image"),
+  uploadCourse.single("image"),
   async function (req, res) {
     const today = new Date();
     const lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
@@ -431,7 +446,7 @@ router.get("/lesson-delete", async function (req, res) {
   
 });
 
-router.post("/lesson-patch", async function (req, res) {
+router.post("/lesson-patch", uploadLesson.single("lesson_image_new"), async function (req, res) {
   if(req.body.deleteOrder=="true"){
     console.log(req.body.deleteOrder);
     await courseModel.deleteLesson(req.body.id,req.body.lesson_chapter);
@@ -440,26 +455,23 @@ router.post("/lesson-patch", async function (req, res) {
   }
 
   let imgPath;
-  console.log(req.body.lesson_image_chose);
-  if (req.body.lesson_image_chose === "") {
-    imgPath = req.body.lesson_image_new;
+  if(req.file === undefined) {
+    imgPath = req.body.lesson_image;
   } else {
-    imgPath = req.body.lesson_image_chose;
+    imgPath = "/public/images/lessons/" + req.file.filename;
   }
-
-  console.log(req.body.lesson_name);
+  // console.log(req.body.lesson_name);
   const new_lesson = {
     idCourse: req.body.id,
     imagePath: imgPath,
     chapter: req.body.lesson_chapter,
     chapterName: req.body.lesson_name,
     videoPath: req.body.lesson_video,
-    isPreview: req.body.lesson_review,
+    isPreview: req.body.lesson_isPreview,
   };
 
-  console.log(new_lesson);
   await courseModel.patchLesson(new_lesson);
-  console.log(req.headers.referer);
+
   res.redirect(req.headers.referer);
 });
 module.exports = router;
