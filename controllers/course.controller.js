@@ -110,6 +110,7 @@ router.get("/edit/:id", async function (req, res) {
 });
 
 router.post("/delete/", async function (req, res) {
+  console.log(+req.body.id);
   await courseModel.delete(+req.body.id);
   res.redirect("/admin/courses");
 });

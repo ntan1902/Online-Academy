@@ -296,6 +296,7 @@ router.get("/teacher/myCourses", authTeacher, async function (req, res) {
   const idTeacher = req.session.authUser.idUser;
   list_my_courses = await courseModel.allByIdTeacher(idTeacher);
 
+  console.log(list_my_courses);
   for(let i=0; i < list_my_courses.length; i++) {
     list_my_courses[i].countLessons = (await courseModel.getLessons(list_my_courses[i].idCourse)).length;
     console.log(list_my_courses[i].countLessons);

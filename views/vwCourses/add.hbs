@@ -109,39 +109,39 @@
           });
           return;
         } else {
-          if({{teacherAdd}}){
-              Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Your information has been saved',
-                timer: 2000,
-                showConfirmButton: false
-              }).then(function () {
-                $('#frmProduct').off('submit').submit();
-              })}
-          else {
-          $.getJSON(`/admin/courses/isAvailable?teacher=${idTeacher}`, function (data) {
-            if (data === true) {
-              Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Your information has been saved',
-                timer: 2000,
-                showConfirmButton: false
-              }).then(function () {
-                $('#frmProduct').off('submit').submit();
-              })
+          if ({{ teacherAdd }}){
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Your information has been saved',
+          timer: 2000,
+          showConfirmButton: false
+        }).then(function () {
+          $('#frmProduct').off('submit').submit();
+        })
+      } else {
+        $.getJSON(`/admin/courses/isAvailable?teacher=${idTeacher}`, function (data) {
+          if (data === true) {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Your information has been saved',
+              timer: 2000,
+              showConfirmButton: false
+            }).then(function () {
+              $('#frmProduct').off('submit').submit();
+            })
 
-            } else {
-              Swal.fire({
-                title: 'Error!',
-                text: 'Teacher ID is not exist ! Please enter another Teacher ID',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-              });
-            }
-          })
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Teacher ID is not exist ! Please enter another Teacher ID',
+              icon: 'error',
+              confirmButtonText: 'Cool'
+            });
           }
+        })
+      }
         }
 
       })
@@ -179,12 +179,19 @@
             <label>Course's Detail</label>
             <textarea class="form-control" id="txtDetail" name="detail" rows="3"></textarea>
 
-            <label>Teacher's ID</label>
-            <input type="number" class="form-control" id="txtIdTeacher" name="idTeacher" {{#if teacherAdd}}
-              value="{{idTeacher}}" readonly{{/if}}>
+            <div class="form-group">
+              <label>Teacher's ID</label>
+              <input type="number" class="form-control" id="txtIdTeacher" name="idTeacher" {{#if teacherAdd}}
+                value="{{idTeacher}}" readonly{{/if}}>
+            </div>
 
-            <label>Course Status</label>
-            <input type="text" class="form-control" id="txtStatus" name="status">
+            <div class="form-group">
+              <label for="txtStatus" class="my-1 ml-3">Status</label>
+              <select name='status' id="txtStatus">
+                <option value="incomplete" selected>Incomplete</option>
+                <option value="complete">Complete</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="card-footer">

@@ -42,7 +42,8 @@
         // < DatePicker
 
         $('#txtField').val($('#txtFieldtemp').val());
-
+        $('#txtStatus').val($('#txtStatustemp').val());
+        
         //Check input Validation
         $('#save').click(function () {
             $('#frmEdit').attr('action', '/admin/courses/patch');
@@ -239,8 +240,13 @@
             </div>
 
             <div class="form-group">
-                <label for="txtStatus">Status</label>
-                <input type="text" class="form-control" id="txtStatus" name="status" value="{{this.course.status}}">
+                <label for="txtStatus" class="my-1 ml-3"><b>Status</b></label>
+                <input type="hidden" class="form-control" id="txtStatustemp" name="statustemp"
+                    value="{{this.course.status}}">
+                <select name='status' id="txtStatus">
+                    <option value="incomplete" style="text-transform: capitalize;">Incomplete</option>
+                    <option value="complete" style="text-transform: capitalize;">Complete</option>
+                </select>
             </div>
         </div>
         <div class="card-footer">

@@ -280,9 +280,31 @@ router.get("/detail/:id", async function (req, res) {
   );
 
   console.log(course.idCat);
-  const topRegister = await courseModel.topRegistedCoursesWithIdCat(
-    course.idCat
-  );
+  //topRegister part
+  let topRegister = await courseModel.topRegistedCoursesWithIdCat(course.idCat);
+  topRegister = await feedbackModel.getRatingPoints(topRegister);
+
+  if (req.session.auth) {
+    //topRegister
+    for (let i = 0; i < topRegister.length; i++) {
+      topRegister[i].isRegister = await registerModel.isRegister(
+        req.session.authUser.idUser,
+        topRegister[i].idCourse
+      );
+      topRegister[i].isFavorite = await favoriteCoursesModel.isFavoriteCourse(
+        req.session.authUser.idUser,
+        topRegister[i].idCourse
+      );
+      topRegister[i].notReview = topRegister[i].totalPoint === 0;
+      console.log(topRegister[i].totalPoint);
+    }
+  } else {
+    for (let i = 0; i < topRegister.length; i++) {
+      topRegister[i].notReview = topRegister[i].totalPoint === 0;
+      console.log(topRegister[i].totalPoint);
+
+    }
+  }
 
   res.render("vwCourses/detail", {
     course,
