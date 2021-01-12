@@ -257,20 +257,20 @@
             <h3><strong>{{this.course.title}}</strong></h3>
             <h2>${{this.course.price}}</h2>
             <ul class="list">
-              <li>
-                <a class="active" style="text-transform: capitalize;" href="#">
-                  <h4><span><strong>Field</strong></span> : {{this.course.name}}</h4>
-                </a>
+              <li style="text-transform: capitalize;" class="mb-3">
+                <h4><span><strong>Field</strong></span> : {{this.course.name}}</h4>
               </li>
-              <li>
-                <a href="#">
-                  <h4><span><strong>Teacher</strong></span> : {{this.course.fullname}}</h4>
-                </a>
+
+              <li class="mb-3">
+                <h4><span><strong>Teacher</strong></span> : {{this.course.fullname}}</h4>
               </li>
-              <li>
-                <a href="#">
-                  <h4><span><strong>Last-update</strong></span> : {{this.course.lastModified}}</h4>
-                </a>
+
+              <li class="mb-3">
+                <h4><span><strong>Last-update</strong></span> : {{this.course.lastModified}}</h4>
+              </li>
+
+              <li class="mb-3">
+                <h4><span><strong>Student(s)</strong></span> : {{this.course.studentNumber}}</h4>
               </li>
             </ul>
             <p>

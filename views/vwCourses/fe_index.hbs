@@ -11,10 +11,6 @@
 <div class="card shadow">
   <div class="card-header d-flex justify-content-between">
     <h4>Courses</h4>
-    <a class="btn btn-outline-success" href="/admin/courses/add" role="button">
-      <i class="fa fa-plus" aria-hidden="true"></i>
-      Add Course
-    </a>
   </div>
 
   <div class="card-body">
@@ -60,11 +56,6 @@
                     <p>No Review</p>
                   {{else}}
                     <ul class="rating">
-                      {{!-- <li class="fa fa-star"></li>
-                <li class="fa fa-star"></li>
-                <li class="fa fa-star"></li>
-                <li class="fa fa-star disable"></li>
-                <li class="fa fa-star disable"></li> --}}
                       {{{calcStars totalPoint}}}
                     </ul>
                   {{/if}}
@@ -73,9 +64,9 @@
                     <span>$5.00</span>
                   </div>
                   {{#if ../auth}}
-                  {{#unless isRegister}}
-                  <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
-                  {{/unless}}
+                    {{#unless isRegister}}
+                      <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+                    {{/unless}}
                   {{/if}}
                 </div>
               </div>
