@@ -15,4 +15,12 @@ module.exports = {
     const [rows, fields] = await db.load(sql);
     return rows.length === 0 ? false : true;
   },
+
+  async allByUser(id) {
+    const sql = `select co.title, co.imagePath, co.idCourse, u.fullname
+    from registers r, courses co, users u
+    where r.idStudent = ${id} and r.idCourse = co.idCourse and co.idTeacher = u.idUser`;
+    const [rows, fields] = await db.load(sql);
+    return rows;
+  },
 };

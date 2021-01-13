@@ -1,0 +1,83 @@
+<!-- ================ start banner area ================= -->
+<section class="blog-banner-area" id="category">
+    <div class="container h-100">
+        <div class="blog-banner">
+            <div class="text-center">
+                <h1>Registered Courses</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Registered Courses</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================ end banner area ================= -->
+
+
+<!--================Favorite Courses Area =================-->
+{{#if this.emtpy }}
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive align-items-center">
+                <h3>
+                    Your watch-list is empty,
+                    <a href="/courses" class="badge badge-primary"> register some courses now !!!</a>
+                </h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{else}}
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Course</th>
+                            <th scope="col">
+                                &nbsp;
+                            </th>
+                            <th scope="col">Teacher</th>
+                            <th scope="col">
+                                &nbsp;
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each list_my_courses}}
+                        <tr>
+                            <td>
+                                <a href="/courses/detail/{{this.idCourse}}">
+                                    <div class="media-body d-flex justify-content-between">
+                                        <img style="height: 150px; width:255px" src="{{this.imagePath}}">
+                                        <div>
+                                            <p class="pl-2">{{this.title}}</p>
+                                            {{!-- <p class="pl-2 font-weight-bold">{{this.fullname}}</p> --}}
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+
+                            <td class="pt-3">
+                                <h5>{{this.fullname}}</h5>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{{/if}}
+<!--================End Cart Area =================-->

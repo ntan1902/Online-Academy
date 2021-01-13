@@ -262,11 +262,29 @@ router.get("/favoriteCourses", auth, async function (req, res) {
   res.render("vwAccount/favoriteCourses", {
     favorite: true,
     edit: false,
+    mycourses: false,
     change: false,
     layout: "userProfile.hbs",
+    empty: list_favorites.length === 0,
     list_favorites,
   });
 });
+
+router.get("/myCourses", auth, async function (req, res) {
+  const list_my_courses = await registerModel.allByUser(
+    req.session.authUser.idUser
+  );
+  res.render("vwAccount/myRegisteredCourses", {
+    favorite: false,
+    edit: false,
+    change: false,
+    owncourses: true,
+    layout: "userProfile.hbs",
+    empty: list_my_courses.length === 0,
+    list_my_courses,
+  });
+});
+
 
 router.get("/favoriteCourses/add/:idCourse", auth, async function (req, res) {
   const idStudent = req.session.authUser.idUser;
@@ -470,12 +488,6 @@ router.post("/teacher/myCourses/delete/", async function (req, res) {
   res.redirect("/account/teacher/myCourses");
 });
 
-router.get("/lesson-delete", async function (req, res) {
-  console.log(req.body.id);
-
-  console.log(req.body.lesson_chapter);
-  
-});
 
 router.post("/lesson-add", uploadLesson.single("add_lesson_image_new"), async function(req, res) {
   let imgPath;
