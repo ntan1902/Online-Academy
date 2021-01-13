@@ -46,11 +46,17 @@ module.exports = {
     if (rows.length === 0) return null;
     return rows[0];
   },
-  async getLessons(id) {
-    const sql = `select less.* from courses co, lessons less where co.idCourse = ${id} and less.idCourse = co.idCourse`;
+  async getLessons(idCourse) {
+    const sql = `select less.* from courses co, lessons less where co.idCourse = ${idCourse} and less.idCourse = co.idCourse`;
     const [rows, fields] = await db.load(sql);
     if (rows.length === 0) return null;
     return rows;
+  },
+
+  async countLessons(idCourse) {
+    const sql = `select less.* from courses co, lessons less where co.idCourse = ${idCourse} and less.idCourse = co.idCourse`;
+    const [rows, fields] = await db.load(sql);
+    return rows.length;
   },
 
   async singleByIdTeacher(teacherID) {
@@ -160,6 +166,11 @@ module.exports = {
     delete entity.id;
 
     const [result, fields] = await db.patch(entity, condition, "courses");
+    return result;
+  },
+
+  async addLesson(lesson) {
+    const [result, fields] = await db.add(lesson, "lessons");
     return result;
   },
 

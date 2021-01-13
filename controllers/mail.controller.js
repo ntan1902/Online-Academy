@@ -5,7 +5,7 @@ require('dotenv').config();
 const smtpTransport = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.USER, // generated ethereal user
+        user: process.env.USER,
         pass: process.env.PASS,
     },
     tls: {

@@ -109,9 +109,9 @@ router.get("/edit/:id", async function (req, res) {
   });
 });
 
-router.post("/delete/", async function (req, res) {
-  console.log(+req.body.id);
-  await courseModel.delete(+req.body.id);
+router.post("/delete/", upload.single("image"), async function (req, res) {
+  console.log(+req.body.idCourse);
+  await courseModel.delete(+req.body.idCourse);
   res.redirect("/admin/courses");
 });
 
@@ -127,7 +127,7 @@ router.post("/patch/", upload.single("image"), async function (req, res) {
   const today = new Date();
   let lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
   const new_course = {
-    id: req.body.id,
+    id: req.body.idCourse,
     imagePath: imgPath,
     price: req.body.price,
     idCat: req.body.field,

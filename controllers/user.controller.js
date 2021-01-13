@@ -102,8 +102,9 @@ router.get("/:role", async function (req, res) {
   });
 });
 
-router.post("/delete/", async function (req, res) {
-  await userModel.delete(req.body.id);
+router.post("/delete/",upload.single("avatar"), async function (req, res) {
+  console.log(req.body.idUser);
+  await userModel.delete(req.body.idUser);
   res.redirect("/admin/users");
 });
 

@@ -45,16 +45,12 @@
         format: 'd/m/Y',
         timepicker: false,
         mask: true,
+        scrollInput: false
     });
     // < DatePicker
 
     $('#txtField').val($('#txtFieldtemp').val());
-
-    //Check input Validation
-    $('#save').click(function () {
-        $('#frmEdit').attr('action', '/admin/courses/patch');
-        $('#frmEdit').submit();
-    });
+    $('#txtStatus').val($('#txtStatustemp').val());
 
 
     $('#frmEdit').on('submit', function (e) {
@@ -410,7 +406,7 @@
                 <input type="hidden" id="srcModal">
                 <div class="single-prd-item btn" data-toggle="modal" data-target="#displayModal"
                     data-src="{{this.firstLesson.videoPath}}">
-                    <img class=" detail-img" style="width: 255; height: 150" src="{{this.course.imagePath}}"
+                    <img class="detail-img" style="width: 500px; height: 400px" src="{{this.course.imagePath}}"
                         alt="image" />
                     <div class="background-icon"></div>
                     <div class="icon-play">
@@ -518,7 +514,7 @@
                 <input type="hidden" name="id" value="{{this.course.idCourse}}">
                 <div class="card mx-5">
                     <div class="card-header">
-                        <h4>Lesson</h4>
+                        <h4>Edit Lesson</h4>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -578,7 +574,75 @@
         </div>
     </div>
 </div>
-<!--================LESSON EDIT Area =================-->
+<!--================End LESSON EDIT Area =================-->
+<!--================LESSON ADD Area =================-->
+<div class="modal fade" id="addLesson" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">
+                    <h4 class="text-white">{{this.course.title}}</h4>
+                </div>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form id="frmLesson" method="POST" action='/account/lesson-add' enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{this.course.idCourse}}">
+                <div class="card mx-5">
+                    <div class="card-header">
+                        <h4>Add Lesson</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="txtID">Lesson's chapter</label>
+                            <input type="number" class="form-control" name="add_lesson_chapter">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtImgPath">New Image</label>
+                            <input type="file" class="form-control-file" id="lesson_image" name="add_lesson_image_new">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="txtField" class="my-1 ml-3"><b>Preview</b></label>
+                            <input type="hidden" class="form-control" name="add_lesson_preview">
+                            <select name='add_lesson_isPreview'>
+                                <option value="1" style="text-transform: capitalize;">True</option>
+                                <option value="0" style="text-transform: capitalize;">False</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtTitle">Lesson's name</label>
+                            <input type="text" class="form-control" name="add_lesson_name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lesson-video">Video Path</label>
+                            <input class="form-control" name="add_lesson_video" rows="3">
+                            </input>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-success" type="submit" id="addLesson">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            Add
+                        </button>
+                    </div>
+
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!--================End LESSON ADD Area =================-->
 
 <!--================End Modal ==================-->
 
@@ -708,9 +772,12 @@
 
             <!--================Course's Edit =================-->
             <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
-                <form id="frmEdit" method="POST" enctype="multipart/form-data">
+                <form id="frmEdit" method="POST" enctype="multipart/form-data"
+                    action="/account/teacher/myCourses/patch">
 
                     <div class="container">
+                        <input type="hidden" class="form-control" id="txtID" name="idCourse"
+                            value="{{this.course.idCourse}}">
                         <div class="form-group">
                             <label>Preview Image</label> <br>
                             <img style="width: 200px;" src="{{this.course.imagePath}}" alt="no preview image found">
@@ -766,31 +833,47 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="txtStatus">Status</label>
-                            <input type="text" class="form-control" id="txtStatus" name="status"
+                            <label for="txtStatus" class="my-1 ml-3"><b>Status</b></label>
+                            <input type="hidden" class="form-control" id="txtStatustemp" name="statustemp"
                                 value="{{this.course.status}}">
+                            <select name='status' id="txtStatus">
+                                <option value="incomplete" style="text-transform: capitalize;">Incomplete</option>
+                                <option value="complete" style="text-transform: capitalize;">Complete</option>
+                            </select>
                         </div>
 
-                        <h4 class="my-3 border-bottom">Total lesson: {{this.lessons.length}}</h4>
-                        {{#each this.lessons }}
-                        <div class="form-group row">
-                            <div class="col-sm-9 mb-3">
-                                <h4>{{chapterName}}</h4>
-                            </div>
-                            <label class="col-sm-2">{{#if isPreview}}Preview{{/if}}</label>
-                            <div class="col-sm-1">
-                                <a class="btn btn-sm btn-primary lessonID" data-toggle="modal" data-target="#editLesson"
-                                    title="Edit" href="#" role="button" data-id="{{chapter}}"
-                                    data-name="{{chapterName}}" data-src="{{videoPath}}" data-preview="{{isPreview}}"
-                                    data-image="{{imagePath}}">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <h4>Total lesson: {{this.lessons.length}}</h4>
+                                <a class="btn btn-outline-success" href="#" role="button" data-toggle="modal"
+                                    data-target="#addLesson" title="Add">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Add Lesson
                                 </a>
                             </div>
+                            <div class="card-body">
+
+                                {{#each this.lessons }}
+                                <div class="form-group row">
+                                    <div class="col-sm-9 mb-3">
+                                        <h5>{{chapterName}}</h5>
+                                    </div>
+                                    <label class="col-sm-2">{{#if isPreview}}Preview{{/if}}</label>
+                                    <div class="col-sm-1">
+                                        <a class="btn btn-sm btn-primary lessonID" data-toggle="modal"
+                                            data-target="#editLesson" title="Edit" href="#" role="button"
+                                            data-id="{{chapter}}" data-name="{{chapterName}}" data-src="{{videoPath}}"
+                                            data-preview="{{isPreview}}" data-image="{{imagePath}}">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
+                                {{/each}}
+                            </div>
 
                         </div>
-                        {{/each}}
-
-                        <button class="btn btn-success" type="button" formaction="/admin/courses/patch" id="save">
+                        <button class="btn btn-success mt-3" type="submit" id="save">
                             <i class="fa fa-check" aria-hidden="true"></i>
                             Save
                         </button>

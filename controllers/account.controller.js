@@ -101,7 +101,7 @@ router.get("/signup/:role", function (req, res) {
   });
 });
 
-router.post("/signup", async function (req, res) {
+router.post("/signup/", async function (req, res) {
   const hash = bcrypt.hashSync(req.body.password, 10);
 
   const dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
@@ -118,29 +118,29 @@ router.post("/signup", async function (req, res) {
   req.session.host = req.get("host");
   req.session.authUser = user;
 
-  //TEST start
-  await userModel.add(user);
-  res.render("vwAccount/signup", {
-    message: `Email ${req.session.authUser.email} is been successfully verified`,
-    type: "success",
-  });
-  //TEST end
+  // //TEST start
+  // await userModel.add(user);
+  // res.render("vwAccount/signup", {
+  //   message: `Email ${req.session.authUser.email} is been successfully verified`,
+  //   type: "success",
+  // });
+  // //TEST end
 
-  // link = req.protocol + "://" + req.get("host") + "/account/verify?id=" + hash;
+  link = req.protocol + "://" + req.get("host") + "/account/verify?id=" + hash;
 
-  // mail
-  //   .send(req.body.email, link)
-  //   .then((response) => {
-  //     console.log("Message sent: " + response.message);
-  //     res.render("vwAccount/signup", {
-  //       message: `Email is sent at ${req.body.email}. Please check your mail to verify the account`,
-  //       type: "warning",
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //     res.end("Error");
-  //   });
+  mail
+    .send(req.body.email, link)
+    .then((response) => {
+      console.log("Message sent: " + response.message);
+      res.render("vwAccount/signup", {
+        message: `Email is sent at ${req.body.email}. Please check your mail to verify the account`,
+        type: "warning",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.end("Error");
+    });
 });
 
 router.get("/verify", async function (req, res) {
@@ -298,7 +298,7 @@ router.get("/teacher/myCourses", authTeacher, async function (req, res) {
 
   console.log(list_my_courses);
   for(let i=0; i < list_my_courses.length; i++) {
-    list_my_courses[i].countLessons = (await courseModel.getLessons(list_my_courses[i].idCourse)).length;
+    list_my_courses[i].countLessons = (await courseModel.countLessons(list_my_courses[i].idCourse));
     console.log(list_my_courses[i].countLessons);
   }
   res.render("vwAccount/myCourses", {
@@ -435,6 +435,36 @@ router.get(
   }
 );
 
+router.post("/teacher/myCourses/patch",uploadCourse.single("image"), async (req, res) => {
+  let imgPath;
+  console.log(req.body.previewImage);
+  if (req.file === undefined) {
+    imgPath = req.body.previewImage;
+  } else {
+    imgPath = "/public/images/courses/" + req.file.filename;
+  }
+
+  const today = new Date();
+  let lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
+  const new_course = {
+    id: req.body.idCourse,
+    imagePath: imgPath,
+    price: req.body.price,
+    idCat: req.body.field,
+    title: req.body.title,
+    description: req.body.description,
+    detail: req.body.detail,
+    lastModified: lastModified,
+    idTeacher: req.session.authUser.idUser,
+    status: req.body.status,
+  };
+
+  console.log(new_course);
+  await courseModel.patch(new_course);
+  console.log(req.headers.referer);
+  res.redirect(req.headers.referer);
+})
+
 router.post("/teacher/myCourses/delete/", async function (req, res) {
   await courseModel.delete(req.body.idCourse);
   res.redirect("/account/teacher/myCourses");
@@ -446,6 +476,27 @@ router.get("/lesson-delete", async function (req, res) {
   console.log(req.body.lesson_chapter);
   
 });
+
+router.post("/lesson-add", uploadLesson.single("add_lesson_image_new"), async function(req, res) {
+  let imgPath;
+  if(req.file === undefined) {
+    imgPath = "";
+  } else {
+    imgPath = "/public/images/lessons/" + req.file.filename;
+  }
+  const new_lesson = {
+    idCourse: req.body.id,
+    imagePath: imgPath,
+    chapter: req.body.add_lesson_chapter,
+    chapterName: req.body.add_lesson_name,
+    videoPath: req.body.add_lesson_video,
+    isPreview: req.body.add_lesson_isPreview,
+  };
+
+  await courseModel.addLesson(new_lesson);
+
+  res.redirect(req.headers.referer);
+})
 
 router.post("/lesson-patch", uploadLesson.single("lesson_image_new"), async function (req, res) {
   if(req.body.deleteOrder=="true"){
