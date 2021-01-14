@@ -1,4 +1,14 @@
 {
+  "mysqlRemote": {
+    "host": "remotemysql.com",
+    "port": 3306,
+    "user": "r8nZ4TpaWV",
+    "password": "b95csbluKn",
+    "database": "r8nZ4TpaWV",
+    "waitForConnections": true,
+    "connectionLimit": 50,
+    "queueLimit": 0
+  },
   "mysql": {
     "host": "localhost",
     "port": 3306,
