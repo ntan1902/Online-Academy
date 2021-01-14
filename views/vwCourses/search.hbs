@@ -84,7 +84,7 @@
             <div class="row">
 
                 {{#each this.courses}}
-                {{#unless disable}}
+                {{#unless (checkDisableCourse disable)}}
                 <div class="col-md-3 col-sm-6 mb-2">
                     <div class="product-grid4 h-100">
                         <div class="product-image4">

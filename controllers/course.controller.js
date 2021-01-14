@@ -137,6 +137,7 @@ router.post("/patch/", upload.single("image"), async function (req, res) {
     lastModified: lastModified,
     idTeacher: req.body.idTeacher,
     status: req.body.status,
+    disable: req.body.disable,
   };
 
   console.log(new_course);

@@ -613,7 +613,7 @@
 
       <!-- Carousel items -->
       {{#each topRegister }}
-      {{#unless disable}}
+      {{#unless (checkDisableCourse disable)}}
       <div class="product-grid4 h-100">
         <div class="product-image4">
           <a href="#">
@@ -658,7 +658,7 @@
           {{/if}}
         </div>
       </div>
-      {{#unless disable}}
+      {{/unless}}
       {{/each}}
     </div>
     <!--.Carousel-->

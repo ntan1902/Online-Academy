@@ -100,7 +100,7 @@
 
             <!-- Carousel items -->
             {{#each this.topCourses }}
-            {{#unless disable}}
+            {{#unless (checkDisableCourse disable)}}
             <div class="product-grid4 h-100">
                 <div class="product-image4">
                     <a href="/courses/detail/{{idCourse}}">
@@ -168,7 +168,7 @@
 
             <!-- Carousel items -->
             {{#each this.topView }}
-            {{#unless disable}}
+            {{#unless (checkDisableCourse disable)}}
             <div class="product-grid4 h-100">
                 <div class="product-image4">
                     <a href="/courses/detail/{{idCourse}}">
@@ -236,7 +236,7 @@
 
             <!-- Carousel items -->
             {{#each this.newCourses }}
-            {{#unless disable}}
+            {{#unless (checkDisableCourse disable)}}
             <div class="product-grid4 h-100">
                 <div class="product-image4">
                     <a href="/courses/detail/{{idCourse}}">
@@ -304,7 +304,7 @@
 
             <!-- Carousel items -->
             {{#each this.topRegister }}
-            {{#unless disable}}
+            {{#unless (checkDisableCourse disable)}}
             <div class="product-grid4 h-100">
                 <div class="product-image4">
                     <a href="/courses/detail/{{idCourse}}">
