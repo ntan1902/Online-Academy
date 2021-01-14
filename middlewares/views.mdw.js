@@ -31,27 +31,26 @@ module.exports = function (app) {
           return res;
         },
         checkStudentRole(role) {
-          if(role === "student") {
+          if (role === "student") {
             return true;
           } else return false;
-
         },
         checkTeacherRole(role) {
-            if(role === "teacher") {
-              return true;
-            } else return false;
-        },
-        checkAdminRole(role) {
-          if(role === "admin") {
+          if (role === "teacher") {
             return true;
           } else return false;
+        },
+        checkAdminRole(role) {
+          if (role === "admin") {
+            return true;
+          } else return false;
+        },
+        checkDisableCourse(disable) {
+          if (disable === "true") {
+            return true;
+          } else return false;
+        },
       },
-      checkDisableCourse(disable) {
-        if(disable === "true") {
-          return true;
-        } else return false;
-      }
-    },
     })
   );
   app.set("view engine", "hbs");
