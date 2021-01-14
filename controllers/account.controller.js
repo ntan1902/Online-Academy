@@ -287,6 +287,8 @@ router.get("/myCourses", auth, async function (req, res) {
   const list_my_courses = await registerModel.allByUser(
     req.session.authUser.idUser
   );
+    console.log(list_my_courses.length === 0);
+  
   res.render("vwAccount/myRegisteredCourses", {
     favorite: false,
     edit: false,
