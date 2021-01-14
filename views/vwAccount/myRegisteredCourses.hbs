@@ -49,7 +49,7 @@
                     </thead>
                     <tbody>
                         {{#each list_my_courses}}
-                        {{#unless disable}}
+                        {{#unless (checkDisableCourse disable)}}
                         <tr>
                             <td>
                                 <a href="/courses/detail/{{this.idCourse}}">

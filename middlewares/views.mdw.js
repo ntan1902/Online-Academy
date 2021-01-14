@@ -45,8 +45,13 @@ module.exports = function (app) {
           if(role === "admin") {
             return true;
           } else return false;
-      }
       },
+      checkDisableCourse(disable) {
+        if(disable === "true") {
+          return true;
+        } else return false;
+      }
+    },
     })
   );
   app.set("view engine", "hbs");
