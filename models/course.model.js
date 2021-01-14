@@ -5,7 +5,7 @@ module.exports = {
   async all() {
     //with detail now
     const sql =
-      "select * from courses co, categories cat where cat.idCategory = co.idCat";
+      "select * from courses co, categories cat, users u where cat.idCategory = co.idCat and co.idTeacher = u.idUser";
     const [rows, fields] = await db.load(sql);
     return rows;
   },

@@ -99,8 +99,12 @@
                                 <li><a href="/courses/detail/{{idCourse}}" data-tip="Like the course" role="button"><i
                                             class="fa fa-heart"></i></a></li>
                                 {{/unless}}
+                                {{#unless ../isTeacher}}
+                                {{#unless ../isAdmin}}
                                 {{#unless isRegister}}
                                 <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                                {{/unless}}
+                                {{/unless}}
                                 {{/unless}}
                                 {{/if}}
                             </ul>
@@ -123,8 +127,12 @@
                                 <span>$5.00</span>
                             </div>
                             {{#if ../auth}}
+                            {{#unless ../isTeacher}}
+                            {{#unless ../isAdmin}}
                             {{#unless isRegister}}
                             <a class="add-to-cart" href="#">ADD TO CART</a>
+                            {{/unless}}
+                            {{/unless}}
                             {{/unless}}
                             {{/if}}
                         </div>

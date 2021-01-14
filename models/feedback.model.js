@@ -25,7 +25,7 @@ module.exports = {
   },
 
   async all() {
-    const sql = "select * from feedbacks";
+    const sql = "select * from feedbacks fb, courses co, users u where fb.idCourse = co.idCourse and fb.idStudent = u.idUser";
     const [rows, fields] = await db.load(sql);
     return rows;
   },

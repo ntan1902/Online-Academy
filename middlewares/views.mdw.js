@@ -40,7 +40,12 @@ module.exports = function (app) {
             if(role === "teacher") {
               return true;
             } else return false;
-        }
+        },
+        checkAdminRole(role) {
+          if(role === "admin") {
+            return true;
+          } else return false;
+      }
       },
     })
   );
