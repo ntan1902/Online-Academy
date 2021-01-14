@@ -62,7 +62,7 @@
                 {{/unless}}
                 <li class="nav-item dropdown mr-5">
 
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" {{#if isAdmin}}href="/admin" {{else}} href="#" {{/if}}>
                         {{#if isAdmin}}
                             <b class="text-warning">Welcome Admin</b>
                         {{else}}
