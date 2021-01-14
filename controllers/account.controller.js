@@ -251,7 +251,7 @@ router.get("/isValidPassword", async function (req, res) {
 router.post("/changePassword", auth, async function (req, res) {
   const hash = bcrypt.hashSync(req.body.newPassword, 10);
   await userModel.patch({
-    id: req.session.authUser.id,
+    idUser: req.session.authUser.idUser,
     password: hash,
   });
 
