@@ -123,6 +123,19 @@
     </script>
 
 {{/section}}
+<!-- ================ start banner area ================= -->
+<section class="blog-banner-area mb-3">
+    <div class="container h-100">
+        <div class="blog-banner">
+            <div class="text-center">
+                <h1>Edit Profile</h1>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================ end banner area ================= -->
+
 <form id="frmEdit" method="POST" action="/account/patch" enctype="multipart/form-data">
     <div class="card shadow">
         <div class="card-header">
@@ -132,7 +145,8 @@
 
             <div class="form-group">
                 <label>Preview Avatar</label> <br>
-                <img style="width: 200px;" src="{{this.user.avatar}}" alt="No preview avatar found">
+                <img style="width: 180px; height: 180px; border-radius: 50%" src="{{this.user.avatar}}"
+                    alt="No preview avatar found">
             </div>
             <input type="hidden" value="{{this.user.avatar}}" name="previewAvatar">
 
@@ -154,7 +168,8 @@
 
             <div class="form-group">
                 <label for="txtFullName">Full name</label>
-                <input type="text" class="form-control" id="txtFullName" name="fullname" value="{{this.user.fullname}}" required>
+                <input type="text" class="form-control" id="txtFullName" name="fullname" value="{{this.user.fullname}}"
+                    required>
             </div>
 
             <div class="form-group">

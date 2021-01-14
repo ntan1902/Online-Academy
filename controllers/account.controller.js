@@ -86,6 +86,8 @@ router.post("/signin", async function (req, res) {
   req.session.auth = true;
   req.session.authUser = user; //initial authen session for user
   req.session.isAdmin = user.role === "admin";
+  req.session.isTeacher = user.role === "teacher";
+
   if (req.session.isAdmin) {
     res.redirect("/admin");
   } else {
@@ -263,39 +265,50 @@ router.post("/signout", function (req, res) {
   req.session.auth = false;
   req.session.authUser = null;
   req.session.retUrl = null;
+  req.session.isAdmin = false;
+  req.session.isTeacher = false;
   req.session.cart = [];
   const url = req.headers.referer || "/";
   res.redirect(url);
 });
 
 router.get("/favoriteCourses", auth, async function (req, res) {
-  const list_favorites = await favoriteCourses.allByUser(
-    req.session.authUser.idUser
-  );
-  res.render("vwAccount/favoriteCourses", {
-    favorite: true,
-    edit: false,
-    mycourses: false,
-    change: false,
-    layout: "userProfile.hbs",
-    empty: list_favorites.length === 0,
-    list_favorites,
-  });
+  if (req.session.isTeacher === true) {
+    res.redirect("/account/profile");
+  } else {
+    const list_favorites = await favoriteCourses.allByUser(
+      req.session.authUser.idUser
+    );
+    res.render("vwAccount/favoriteCourses", {
+      favorite: true,
+      edit: false,
+      mycourses: false,
+      change: false,
+      layout: "userProfile.hbs",
+      empty: list_favorites.length === 0,
+      list_favorites,
+    });
+  }
 });
 
 router.get("/myCourses", auth, async function (req, res) {
-  const list_my_courses = await registerModel.allByUser(
-    req.session.authUser.idUser
-  );
-  res.render("vwAccount/myRegisteredCourses", {
-    favorite: false,
-    edit: false,
-    change: false,
-    owncourses: true,
-    layout: "userProfile.hbs",
-    empty: list_my_courses.length === 0,
-    list_my_courses,
-  });
+  if (req.session.isTeacher === true) {
+    res.redirect("/account/teacher/myCourses");
+  } else {
+    const list_my_courses = await registerModel.allByUser(
+      req.session.authUser.idUser
+    );
+    console.log(list_my_courses.length === 0);
+    res.render("vwAccount/myRegisteredCourses", {
+      favorite: false,
+      edit: false,
+      change: false,
+      owncourses: true,
+      layout: "userProfile.hbs",
+      empty: list_my_courses.length === 0,
+      list_my_courses,
+    });
+  }
 });
 
 router.get("/favoriteCourses/add/:idCourse", auth, async function (req, res) {

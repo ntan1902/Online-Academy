@@ -27,16 +27,11 @@
     </script>
 {{/section}}
 <!-- ================ start banner area ================= -->
-<section class="blog-banner-area" id="category">
+<section class="blog-banner-area">
     <div class="container h-100">
         <div class="blog-banner">
             <div class="text-center">
                 <h1>My Courses</h1>
-                <nav aria-label="breadcrumb" class="banner-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item active" aria-current="page">My Courses</li>
-                    </ol>
-                </nav>
             </div>
         </div>
     </div>
@@ -45,20 +40,20 @@
 
 
 <!--================Favorite Courses Area =================-->
-{{#if this.emtpy }}
+{{#if this.empty }}
     <section class="cart_area">
         <div class="container">
             <div class="cart_inner">
                 <div class="table-responsive align-items-center">
                     <h3>
                         Your Course-List is empty,
-                        <a href="admin/courses/add" class="badge badge-primary"> Add some courses now !!!</a>
+                        <a href="/account/teacher/myCourses/add" class="badge badge-primary"> Add some courses now
+                            !!!</a>
                     </h3>
                 </div>
             </div>
         </div>
     </section>
-
 {{else}}
     <form id="frmDelete" action="/account/teacher/myCourses/delete/" method="POST">
         <input type="hidden" name="idCourse" id="txtIdCourse">
