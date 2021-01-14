@@ -123,7 +123,7 @@ router.post("/patch/", upload.single("image"), async function (req, res) {
   } else {
     imgPath = "/public/images/courses/" + req.file.filename;
   }
-
+  console.log(req.body.disable);
   const today = new Date();
   let lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
   const new_course = {

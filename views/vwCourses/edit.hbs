@@ -39,6 +39,9 @@
                 mask: true,
             });
             // < DatePicker
+            $("#txtStatus").niceSelect();
+            $('#txtField').niceSelect();
+
 
             $('#txtField').val($('#txtFieldtemp').val());
             $('#txtStatus').val($('#txtStatustemp').val());
@@ -174,7 +177,8 @@
                     })
                 }
 
-            })
+            });
+
         </script>
 
         {{/section}}
@@ -234,8 +238,8 @@
                     <div class="form-group">
                         <label for="txtDetail">Detail</label>
                         <textarea class="form-control" id="txtDetail" name="detail" rows="3">
-                {{this.course.detail}}
-                </textarea>
+                        {{this.course.detail}}
+                        </textarea>
                     </div>
 
                     <div class="form-group">
@@ -265,20 +269,10 @@
                         <input type="hidden" class="form-control" id="txtDisabletemp" name="disabletemp"
                             value="{{this.course.disable}}">
                         <select name='disable' id="txtDisable">
-                            <option value="true" style="text-transform: capitalize;">True</option>
-                            <option value="false" style="text-transform: capitalize;">False</option>
+                            <option value="disable">True</option>
+                            <option value="nodisable">False</option>
                         </select>
                     </div>
-
-                    {{!-- <div class="form-group">
-                        <label for="txtDisable" class="my-1 ml-3"><b>Disable</b></label>
-                        <input type="hidden" class="form-control" id="txtDisabletemp" name="disabletemp"
-                            value="{{this.course.disable}}">
-                        <select name='disable' id="txtDisable">
-                            <option value="true" style="text-transform: capitalize;">True</option>
-                            <option value="false" style="text-transform: capitalize;">False</option>
-                        </select>
-                    </div> --}}
                 </div>
                 <div class="card-footer">
                     <a class="btn btn-primary" href="/admin/courses" role="button">

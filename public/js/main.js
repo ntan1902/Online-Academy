@@ -76,3 +76,4 @@ $(function () {
     location.href = url;
   }
 });
+

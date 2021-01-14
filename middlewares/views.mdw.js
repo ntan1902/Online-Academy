@@ -47,7 +47,7 @@ module.exports = function (app) {
           } else return false;
       },
       checkDisableCourse(disable) {
-        if(disable === "true") {
+        if(disable === "disable") {
           return true;
         } else return false;
       }
