@@ -100,61 +100,55 @@
 
             <!-- Carousel items -->
             {{#each this.topCourses }}
-            <div class="product-grid4 h-100">
-                <div class="product-image4">
-                    <a href="#">
-                        <img class="pic-1" style="height: 150px" src="{{imagePath}}">
-                        <img class="pic-2" style="height: 150px" src="{{imagePath}}">
-                    </a>
-                    <ul class="social">
-                        <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
-                                    class="fa fa-eye"></i></a></li>
-                        {{#if ../auth}}
-                        {{#unless isFavorite}}
-                        <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
-                                role="button"><i class="fa fa-heart"></i></a></li>
-                        {{/unless}}
-                        {{#unless ../isTeacher}}
-                        {{#unless ../isAdmin}}
-                        {{#unless isRegister}}
-                        <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
-                                    class="fa fa-shopping-cart "></i></a></li>
-                        {{/unless}}
-                        {{/unless}}
-                        {{/unless}}
-                        {{/if}}
+                <div class="product-grid4 h-100">
+                    <div class="product-image4">
+                        <a href="/courses/detail/{{idCourse}}">
+                            <img class="pic-1" style="height: 150px" src="{{imagePath}}">
+                            <img class="pic-2" style="height: 150px" src="{{imagePath}}">
+                        </a>
+                        <ul class="social">
+                            <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
+                                        class="fa fa-eye"></i></a></li>
+                            {{#if ../auth}}
+                                {{#unless isFavorite}}
+                                    <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
+                                            role="button"><i class="fa fa-heart"></i></a></li>
+                                {{/unless}}
+                                {{#unless ../isTeacher}}
+                                {{#unless ../isAdmin}}
+                                {{#unless isRegister}}
+                                    <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
+                                                class="fa fa-shopping-cart "></i></a></li>
+                                {{/unless}}
+                                {{/unless}}
+                                {{/unless}}
+                            {{/if}}
 
                         </ul>
                         <span class="product-new-label">New</span>
                         <span class="product-discount-label">-10%</span>
                     </div>
-                    {{#if ../auth}}
-                    {{#unless ../isTeacher}}
-                    {{#unless ../isAdmin}}
-                    {{#unless isRegister}}
-                    <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
-                    {{/unless}}
-                    {{/unless}}
-                    {{/unless}}
-                    {{/if}}
-                </div>
-            </div>
-            {{!-- <div class="card card-course">
-                <a href="#">
-                    <div class="card-course__img">
-                        <img class="img-fluid" src="{{imagePath}}" alt="Image">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-course__title">
-                            <h5>{{title}}</h5>
-                        </div>
-                        <div class="card-course__nameTeacher">{{fullname}}</div>
-                        <div class="card-course__price">
-                            <h4>${{price}}</h4>
+                    <div class="product-content">
+                        <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
+                        <span class="teacher"><a href="">{{fullname}}</a></span>
+                        {{#if notReview}}
+                            <p>No Review</p>
+                        {{else}}
+                            <ul class="rating">
+                                {{{calcStars totalPoint}}}
+                            </ul>
+                        {{/if}}
+                        <div class="price">
+                            ${{price}}
+                            <span>$5.00</span>
                         </div>
                         {{#if ../auth}}
+                            {{#unless ../isTeacher}}
+                            {{#unless ../isAdmin}}                        
                             {{#unless isRegister}}
                                 <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+                            {{/unless}}
+                            {{/unless}}
                             {{/unless}}
                         {{/if}}
                     </div>
@@ -187,9 +181,13 @@
                                     <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
                                             role="button"><i class="fa fa-heart"></i></a></li>
                                 {{/unless}}
+                                {{#unless ../isTeacher}}
+                                {{#unless ../isAdmin}}
                                 {{#unless isRegister}}
                                     <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
                                                 class="fa fa-shopping-cart "></i></a></li>
+                                {{/unless}}
+                                {{/unless}}
                                 {{/unless}}
                             {{/if}}
 
@@ -212,29 +210,15 @@
                             <span>$5.00</span>
                         </div>
                         {{#if ../auth}}
-                        {{#unless isFavorite}}
-                        <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
-                                role="button"><i class="fa fa-heart"></i></a></li>
-                        {{/unless}}
-                        {{#unless ../isTeacher}}
-                        {{#unless ../isAdmin}}
-                        {{#unless isRegister}}
-                        <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
-                                    class="fa fa-shopping-cart "></i></a></li>
-                        {{/unless}}
-                        {{/unless}}
-                        {{/unless}}
+                            {{#unless ../isTeacher}}
+                            {{#unless ../isAdmin}}
+                            {{#unless isRegister}}
+                                <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+                            {{/unless}}
+                            {{/unless}}
+                            {{/unless}}
                         {{/if}}
                     </div>
-                    {{#if ../auth}}
-                    {{#unless ../isTeacher}}
-                    {{#unless ../isAdmin}}
-                    {{#unless isRegister}}
-                    <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
-                    {{/unless}}
-                    {{/unless}}
-                    {{/unless}}
-                    {{/if}}
                 </div>
             {{/each}}
         </div>
@@ -263,9 +247,13 @@
                                     <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
                                             role="button"><i class="fa fa-heart"></i></a></li>
                                 {{/unless}}
+                                {{#unless ../isTeacher}}
+                                {{#unless ../isAdmin}}
                                 {{#unless isRegister}}
                                     <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
                                                 class="fa fa-shopping-cart "></i></a></li>
+                                {{/unless}}
+                                {{/unless}}
                                 {{/unless}}
                             {{/if}}
 
@@ -288,29 +276,15 @@
                             <span>$5.00</span>
                         </div>
                         {{#if ../auth}}
-                        {{#unless isFavorite}}
-                        <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
-                                role="button"><i class="fa fa-heart"></i></a></li>
-                        {{/unless}}
-                        {{#unless ../isTeacher}}
-                        {{#unless ../isAdmin}}
-                        {{#unless isRegister}}
-                        <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
-                                    class="fa fa-shopping-cart "></i></a></li>
-                        {{/unless}}
-                        {{/unless}}
-                        {{/unless}}
+                            {{#unless ../isTeacher}}
+                            {{#unless ../isAdmin}}                        
+                            {{#unless isRegister}}
+                                <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+                            {{/unless}}
+                            {{/unless}}
+                            {{/unless}}
                         {{/if}}
                     </div>
-                    {{#if ../auth}}
-                    {{#unless ../isTeacher}}
-                    {{#unless ../isAdmin}}
-                    {{#unless isRegister}}
-                    <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
-                    {{/unless}}
-                    {{/unless}}
-                    {{/unless}}
-                    {{/if}}
                 </div>
             {{/each}}
         </div>
@@ -339,9 +313,13 @@
                                     <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
                                             role="button"><i class="fa fa-heart"></i></a></li>
                                 {{/unless}}
+                                {{#unless ../isTeacher}}
+                                {{#unless ../isAdmin}}
                                 {{#unless isRegister}}
                                     <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
                                                 class="fa fa-shopping-cart "></i></a></li>
+                                {{/unless}}
+                                {{/unless}}
                                 {{/unless}}
                             {{/if}}
 
@@ -364,29 +342,15 @@
                             <span>$5.00</span>
                         </div>
                         {{#if ../auth}}
-                        {{#unless isFavorite}}
-                        <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
-                                role="button"><i class="fa fa-heart"></i></a></li>
-                        {{/unless}}
-                        {{#unless ../isTeacher}}
-                        {{#unless ../isAdmin}}
-                        {{#unless isRegister}}
-                        <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
-                                    class="fa fa-shopping-cart "></i></a></li>
-                        {{/unless}}
-                        {{/unless}}
-                        {{/unless}}
+                            {{#unless ../isTeacher}}
+                            {{#unless ../isAdmin}}
+                            {{#unless isRegister}}
+                                <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+                            {{/unless}}
+                            {{/unless}}
+                            {{/unless}}
                         {{/if}}
                     </div>
-                    {{#if ../auth}}
-                    {{#unless ../isTeacher}}
-                    {{#unless ../isAdmin}}
-                    {{#unless isRegister}}
-                    <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
-                    {{/unless}}
-                    {{/unless}}
-                    {{/unless}}
-                    {{/if}}
                 </div>
             {{/each}}
         </div>

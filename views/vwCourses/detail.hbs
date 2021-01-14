@@ -279,9 +279,13 @@
             {{#if auth}}
               {{#unless isRegister}}
                 <div class="product_count d-flex justify-content-between">
+                {{#unless isTeacher}}
+                {{#unless isAdmin}}
                   <button class="button primary-btn" type="submit">Add to Cart</button>
                   <form id="form-cart" action="/cart/add" method="POST"></form>
                   <input type="hidden" value="{{this.course.idCourse}}" name="id">
+                {{/unless}}
+                {{/unless}}
                   <div class="card_area my-2">
                     {{#unless isFavorite}}
                       <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
