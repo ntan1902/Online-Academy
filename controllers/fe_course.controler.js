@@ -9,6 +9,7 @@ const router = express.Router();
 const feedbackModel = require("../models/feedback.model");
 const registerModel = require("../models/register.model");
 const favoriteCoursesModel = require("../models/favoriteCourses.model");
+const viewModel = require("../models/view.model");
 
 function paginating(nPages, page) {
   var page_numbers = [];
@@ -221,6 +222,14 @@ function getDuration(url) {
 router.get("/detail/:id", async function (req, res) {
   const id = req.params.id;
 
+  // Increase view for course
+  const today = new Date();
+  const dateView = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
+  await viewModel.add({
+    idCourse: id,
+    date: dateView,
+  });
+
   const course = await courseModel.single(id);
   const lessons = await courseModel.getLessons(id);
   const feedbacks = await feedbackModel.allWithIdCourse(id);
@@ -240,7 +249,6 @@ router.get("/detail/:id", async function (req, res) {
   }
   console.log("The user has registered this course? " + isRegister);
 
-  // Invalid date
   const lastModified = moment(course.lastModified, "YYYY-MM-DD").format(
     "DD/MM/YYYY"
   );
@@ -302,7 +310,6 @@ router.get("/detail/:id", async function (req, res) {
     for (let i = 0; i < topRegister.length; i++) {
       topRegister[i].notReview = topRegister[i].totalPoint === 0;
       console.log(topRegister[i].totalPoint);
-
     }
   }
 

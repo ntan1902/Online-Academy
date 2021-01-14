@@ -22,7 +22,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h2><b>Achieve your goals with Coursera</b></h2>
+                <h2><b>Achieve your goals with Online Academy</b></h2>
             </div>
         </div>
         <div class="goals">
@@ -124,23 +124,9 @@
                         {{/unless}}
                         {{/if}}
 
-                    </ul>
-                    <span class="product-new-label">New</span>
-                    <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                    <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
-                    <span class="teacher"><a href="">{{fullname}}</a></span>
-                    {{#if notReview}}
-                    <p>No Review</p>
-                    {{else}}
-                    <ul class="rating">
-                        {{{calcStars totalPoint}}}
-                    </ul>
-                    {{/if}}
-                    <div class="price">
-                        ${{price}}
-                        <span>$5.00</span>
+                        </ul>
+                        <span class="product-new-label">New</span>
+                        <span class="product-discount-label">-10%</span>
                     </div>
                     {{#if ../auth}}
                     {{#unless ../isTeacher}}
@@ -166,9 +152,14 @@
                         <div class="card-course__price">
                             <h4>${{price}}</h4>
                         </div>
+                        {{#if ../auth}}
+                            {{#unless isRegister}}
+                                <a data-id="{{idCourse}}" class="add-to-cart addItem" href="#">ADD TO CART</a>
+                            {{/unless}}
+                        {{/if}}
                     </div>
-                </a>
-            </div> --}}
+                </div>
+
             {{/each}}
         </div>
         <!--.Carousel-->
@@ -182,15 +173,44 @@
 
             <!-- Carousel items -->
             {{#each this.topView }}
-            <div class="product-grid4 h-100">
-                <div class="product-image4">
-                    <a href="#">
-                        <img class="pic-1" style="height: 150px" src="{{imagePath}}">
-                        <img class="pic-2" style="height: 150px" src="{{imagePath}}">
-                    </a>
-                    <ul class="social">
-                        <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
-                                    class="fa fa-eye"></i></a></li>
+                <div class="product-grid4 h-100">
+                    <div class="product-image4">
+                        <a href="/courses/detail/{{idCourse}}">
+                            <img class="pic-1" style="height: 150px" src="{{imagePath}}">
+                            <img class="pic-2" style="height: 150px" src="{{imagePath}}">
+                        </a>
+                        <ul class="social">
+                            <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
+                                        class="fa fa-eye"></i></a></li>
+                            {{#if ../auth}}
+                                {{#unless isFavorite}}
+                                    <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
+                                            role="button"><i class="fa fa-heart"></i></a></li>
+                                {{/unless}}
+                                {{#unless isRegister}}
+                                    <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
+                                                class="fa fa-shopping-cart "></i></a></li>
+                                {{/unless}}
+                            {{/if}}
+
+                        </ul>
+                        <span class="product-new-label">New</span>
+                        <span class="product-discount-label">-10%</span>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
+                        <span class="teacher"><a href="">{{fullname}}</a></span>
+                        {{#if notReview}}
+                            <p>No Review</p>
+                        {{else}}
+                            <ul class="rating">
+                                {{{calcStars totalPoint}}}
+                            </ul>
+                        {{/if}}
+                        <div class="price">
+                            ${{price}}
+                            <span>$5.00</span>
+                        </div>
                         {{#if ../auth}}
                         {{#unless isFavorite}}
                         <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
@@ -205,24 +225,6 @@
                         {{/unless}}
                         {{/unless}}
                         {{/if}}
-
-                    </ul>
-                    <span class="product-new-label">New</span>
-                    <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                    <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
-                    <span class="teacher"><a href="">{{fullname}}</a></span>
-                    {{#if notReview}}
-                    <p>No Review</p>
-                    {{else}}
-                    <ul class="rating">
-                        {{{calcStars totalPoint}}}
-                    </ul>
-                    {{/if}}
-                    <div class="price">
-                        ${{price}}
-                        <span>$5.00</span>
                     </div>
                     {{#if ../auth}}
                     {{#unless ../isTeacher}}
@@ -234,7 +236,6 @@
                     {{/unless}}
                     {{/if}}
                 </div>
-            </div>
             {{/each}}
         </div>
         <!--.Carousel-->
@@ -248,15 +249,44 @@
 
             <!-- Carousel items -->
             {{#each this.newCourses }}
-            <div class="product-grid4 h-100">
-                <div class="product-image4">
-                    <a href="#">
-                        <img class="pic-1" style="height: 150px" src="{{imagePath}}">
-                        <img class="pic-2" style="height: 150px" src="{{imagePath}}">
-                    </a>
-                    <ul class="social">
-                        <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
-                                    class="fa fa-eye"></i></a></li>
+                <div class="product-grid4 h-100">
+                    <div class="product-image4">
+                        <a href="/courses/detail/{{idCourse}}">
+                            <img class="pic-1" style="height: 150px" src="{{imagePath}}">
+                            <img class="pic-2" style="height: 150px" src="{{imagePath}}">
+                        </a>
+                        <ul class="social">
+                            <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
+                                        class="fa fa-eye"></i></a></li>
+                            {{#if ../auth}}
+                                {{#unless isFavorite}}
+                                    <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
+                                            role="button"><i class="fa fa-heart"></i></a></li>
+                                {{/unless}}
+                                {{#unless isRegister}}
+                                    <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
+                                                class="fa fa-shopping-cart "></i></a></li>
+                                {{/unless}}
+                            {{/if}}
+
+                        </ul>
+                        <span class="product-new-label">New</span>
+                        <span class="product-discount-label">-10%</span>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
+                        <span class="teacher"><a href="">{{fullname}}</a></span>
+                        {{#if notReview}}
+                            <p>No Review</p>
+                        {{else}}
+                            <ul class="rating">
+                                {{{calcStars totalPoint}}}
+                            </ul>
+                        {{/if}}
+                        <div class="price">
+                            ${{price}}
+                            <span>$5.00</span>
+                        </div>
                         {{#if ../auth}}
                         {{#unless isFavorite}}
                         <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
@@ -271,24 +301,6 @@
                         {{/unless}}
                         {{/unless}}
                         {{/if}}
-
-                    </ul>
-                    <span class="product-new-label">New</span>
-                    <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                    <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
-                    <span class="teacher"><a href="">{{fullname}}</a></span>
-                    {{#if notReview}}
-                    <p>No Review</p>
-                    {{else}}
-                    <ul class="rating">
-                        {{{calcStars totalPoint}}}
-                    </ul>
-                    {{/if}}
-                    <div class="price">
-                        ${{price}}
-                        <span>$5.00</span>
                     </div>
                     {{#if ../auth}}
                     {{#unless ../isTeacher}}
@@ -300,7 +312,6 @@
                     {{/unless}}
                     {{/if}}
                 </div>
-            </div>
             {{/each}}
         </div>
         <!--.Carousel-->
@@ -314,15 +325,44 @@
 
             <!-- Carousel items -->
             {{#each this.topRegister }}
-            <div class="product-grid4 h-100">
-                <div class="product-image4">
-                    <a href="#">
-                        <img class="pic-1" style="height: 150px" src="{{imagePath}}">
-                        <img class="pic-2" style="height: 150px" src="{{imagePath}}">
-                    </a>
-                    <ul class="social">
-                        <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
-                                    class="fa fa-eye"></i></a></li>
+                <div class="product-grid4 h-100">
+                    <div class="product-image4">
+                        <a href="/courses/detail/{{idCourse}}">
+                            <img class="pic-1" style="height: 150px" src="{{imagePath}}">
+                            <img class="pic-2" style="height: 150px" src="{{imagePath}}">
+                        </a>
+                        <ul class="social">
+                            <li><a href="/courses/detail/{{idCourse}}" data-tip="Quick View" role="button"><i
+                                        class="fa fa-eye"></i></a></li>
+                            {{#if ../auth}}
+                                {{#unless isFavorite}}
+                                    <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
+                                            role="button"><i class="fa fa-heart"></i></a></li>
+                                {{/unless}}
+                                {{#unless isRegister}}
+                                    <li><a data-id="{{idCourse}}" href="#" data-tip="Add to Cart" class="addItem"><i
+                                                class="fa fa-shopping-cart "></i></a></li>
+                                {{/unless}}
+                            {{/if}}
+
+                        </ul>
+                        <span class="product-new-label">New</span>
+                        <span class="product-discount-label">-10%</span>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
+                        <span class="teacher"><a href="">{{fullname}}</a></span>
+                        {{#if notReview}}
+                            <p>No Review</p>
+                        {{else}}
+                            <ul class="rating">
+                                {{{calcStars totalPoint}}}
+                            </ul>
+                        {{/if}}
+                        <div class="price">
+                            ${{price}}
+                            <span>$5.00</span>
+                        </div>
                         {{#if ../auth}}
                         {{#unless isFavorite}}
                         <li><a href="/account/favoriteCourses/add/{{idCourse}}" data-tip="Like the course"
@@ -337,24 +377,6 @@
                         {{/unless}}
                         {{/unless}}
                         {{/if}}
-
-                    </ul>
-                    <span class="product-new-label">New</span>
-                    <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                    <h3 class="title"><a href="/courses/detail/{{idCourse}}">{{title}}</a></h3>
-                    <span class="teacher"><a href="">{{fullname}}</a></span>
-                    {{#if notReview}}
-                    <p>No Review</p>
-                    {{else}}
-                    <ul class="rating">
-                        {{{calcStars totalPoint}}}
-                    </ul>
-                    {{/if}}
-                    <div class="price">
-                        ${{price}}
-                        <span>$5.00</span>
                     </div>
                     {{#if ../auth}}
                     {{#unless ../isTeacher}}
@@ -366,7 +388,6 @@
                     {{/unless}}
                     {{/if}}
                 </div>
-            </div>
             {{/each}}
         </div>
         <!--.Carousel-->
