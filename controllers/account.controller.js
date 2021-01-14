@@ -63,7 +63,6 @@ const uploadLesson = multer({
 });
 
 router.get("/signin", function (req, res) {
-  req.session.retUrl = req.headers.referer;
   res.render("vwAccount/signin", { layout: "main.hbs" });
 });
 
@@ -174,6 +173,15 @@ router.get("/isAvailable", async function (req, res) {
   res.json(false);
 });
 
+router.get("/isUniqueEmail", async function (req, res) {
+  const email = req.query.email;
+  const user = await userModel.singleByEmail(email);
+  if (user === null) {
+    return res.json(true);
+  }
+  res.json(false);
+});
+
 router.get("/profile", auth, async function (req, res) {
   const user = await userModel.single(req.session.authUser.idUser);
 
@@ -186,35 +194,40 @@ router.get("/profile", auth, async function (req, res) {
   });
 });
 
-router.post("/patch", auth, uploadUser.single("avatar"), async function (req, res) {
-  const dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
-  let imgPath;
-  if (req.file === undefined) {
-    imgPath = req.body.previewAvatar;
-  } else {
-    imgPath = "/public/images/users/" + req.file.filename;
+router.post(
+  "/patch",
+  auth,
+  uploadUser.single("avatar"),
+  async function (req, res) {
+    const dob = moment(req.body.dob, "DD/MM/YYYY").format("YYYY-MM-DD");
+    let imgPath;
+    if (req.file === undefined) {
+      imgPath = req.body.previewAvatar;
+    } else {
+      imgPath = "/public/images/users/" + req.file.filename;
+    }
+    let userDescript;
+    if (req.body.userDescription === "") {
+      userDescript = req.body.tempUserDescription;
+    } else {
+      userDescript = req.body.userDescription;
+    }
+    const new_user = {
+      idUser: req.body.idUser,
+      username: req.body.username,
+      fullname: req.body.fullname,
+      email: req.body.email,
+      dob: dob,
+      role: req.body.role,
+      userDescription: userDescript,
+      avatar: imgPath,
+    };
+    console.log(new_user);
+    await userModel.patch(new_user);
+    req.session.authUser = await userModel.singleByUserName(req.body.username);
+    res.redirect("/account/profile");
   }
-  let userDescript;
-  if (req.body.userDescription === "") {
-    userDescript = req.body.tempUserDescription;
-  } else {
-    userDescript = req.body.userDescription;
-  }
-  const new_user = {
-    idUser: req.body.idUser,
-    username: req.body.username,
-    fullname: req.body.fullname,
-    email: req.body.email,
-    dob: dob,
-    role: req.body.role,
-    userDescription: userDescript,
-    avatar: imgPath,
-  };
-  console.log(new_user);
-  await userModel.patch(new_user);
-  req.session.authUser = await userModel.singleByUserName(req.body.username);
-  res.redirect("/account/profile");
-});
+);
 
 router.get("/changePassword", auth, async function (req, res) {
   const user = await userModel.single(req.session.authUser.idUser);
@@ -285,7 +298,6 @@ router.get("/myCourses", auth, async function (req, res) {
   });
 });
 
-
 router.get("/favoriteCourses/add/:idCourse", auth, async function (req, res) {
   const idStudent = req.session.authUser.idUser;
   const idCourse = req.params.idCourse;
@@ -315,8 +327,10 @@ router.get("/teacher/myCourses", authTeacher, async function (req, res) {
   list_my_courses = await courseModel.allByIdTeacher(idTeacher);
 
   console.log(list_my_courses);
-  for(let i=0; i < list_my_courses.length; i++) {
-    list_my_courses[i].countLessons = (await courseModel.countLessons(list_my_courses[i].idCourse));
+  for (let i = 0; i < list_my_courses.length; i++) {
+    list_my_courses[i].countLessons = await courseModel.countLessons(
+      list_my_courses[i].idCourse
+    );
     console.log(list_my_courses[i].countLessons);
   }
   res.render("vwAccount/myCourses", {
@@ -453,89 +467,100 @@ router.get(
   }
 );
 
-router.post("/teacher/myCourses/patch",uploadCourse.single("image"), async (req, res) => {
-  let imgPath;
-  console.log(req.body.previewImage);
-  if (req.file === undefined) {
-    imgPath = req.body.previewImage;
-  } else {
-    imgPath = "/public/images/courses/" + req.file.filename;
+router.post(
+  "/teacher/myCourses/patch",
+  uploadCourse.single("image"),
+  async (req, res) => {
+    let imgPath;
+    console.log(req.body.previewImage);
+    if (req.file === undefined) {
+      imgPath = req.body.previewImage;
+    } else {
+      imgPath = "/public/images/courses/" + req.file.filename;
+    }
+
+    const today = new Date();
+    let lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
+    const new_course = {
+      id: req.body.idCourse,
+      imagePath: imgPath,
+      price: req.body.price,
+      idCat: req.body.field,
+      title: req.body.title,
+      description: req.body.description,
+      detail: req.body.detail,
+      lastModified: lastModified,
+      idTeacher: req.session.authUser.idUser,
+      status: req.body.status,
+    };
+
+    console.log(new_course);
+    await courseModel.patch(new_course);
+    console.log(req.headers.referer);
+    res.redirect(req.headers.referer);
   }
-
-  const today = new Date();
-  let lastModified = moment(today, "DD/MM/YYYY").format("YYYY-MM-DD");
-  const new_course = {
-    id: req.body.idCourse,
-    imagePath: imgPath,
-    price: req.body.price,
-    idCat: req.body.field,
-    title: req.body.title,
-    description: req.body.description,
-    detail: req.body.detail,
-    lastModified: lastModified,
-    idTeacher: req.session.authUser.idUser,
-    status: req.body.status,
-  };
-
-  console.log(new_course);
-  await courseModel.patch(new_course);
-  console.log(req.headers.referer);
-  res.redirect(req.headers.referer);
-})
+);
 
 router.post("/teacher/myCourses/delete/", async function (req, res) {
   await courseModel.delete(req.body.idCourse);
   res.redirect("/account/teacher/myCourses");
 });
 
+router.post(
+  "/lesson-add",
+  uploadLesson.single("add_lesson_image_new"),
+  async function (req, res) {
+    let imgPath;
+    if (req.file === undefined) {
+      imgPath = "";
+    } else {
+      imgPath = "/public/images/lessons/" + req.file.filename;
+    }
+    const new_lesson = {
+      idCourse: req.body.id,
+      imagePath: imgPath,
+      chapter: req.body.add_lesson_chapter,
+      chapterName: req.body.add_lesson_name,
+      videoPath: req.body.add_lesson_video,
+      isPreview: req.body.add_lesson_isPreview,
+    };
 
-router.post("/lesson-add", uploadLesson.single("add_lesson_image_new"), async function(req, res) {
-  let imgPath;
-  if(req.file === undefined) {
-    imgPath = "";
-  } else {
-    imgPath = "/public/images/lessons/" + req.file.filename;
-  }
-  const new_lesson = {
-    idCourse: req.body.id,
-    imagePath: imgPath,
-    chapter: req.body.add_lesson_chapter,
-    chapterName: req.body.add_lesson_name,
-    videoPath: req.body.add_lesson_video,
-    isPreview: req.body.add_lesson_isPreview,
-  };
+    await courseModel.addLesson(new_lesson);
 
-  await courseModel.addLesson(new_lesson);
-
-  res.redirect(req.headers.referer);
-})
-
-router.post("/lesson-patch", uploadLesson.single("lesson_image_new"), async function (req, res) {
-  if(req.body.deleteOrder=="true"){
-    console.log(req.body.deleteOrder);
-    await courseModel.deleteLesson(req.body.id,req.body.lesson_chapter);
     res.redirect(req.headers.referer);
-    return;
   }
+);
 
-  let imgPath;
-  if(req.file === undefined) {
-    imgPath = req.body.lesson_image;
-  } else {
-    imgPath = "/public/images/lessons/" + req.file.filename;
+router.post(
+  "/lesson-patch",
+  uploadLesson.single("lesson_image_new"),
+  async function (req, res) {
+    if (req.body.deleteOrder == "true") {
+      console.log(req.body.deleteOrder);
+      await courseModel.deleteLesson(req.body.id, req.body.lesson_chapter);
+      res.redirect(req.headers.referer);
+      return;
+    }
+
+    let imgPath;
+    if (req.file === undefined) {
+      imgPath = req.body.lesson_image;
+    } else {
+      imgPath = "/public/images/lessons/" + req.file.filename;
+    }
+    // console.log(req.body.lesson_name);
+    const new_lesson = {
+      idCourse: req.body.id,
+      imagePath: imgPath,
+      chapter: req.body.lesson_chapter,
+      chapterName: req.body.lesson_name,
+      videoPath: req.body.lesson_video,
+      isPreview: req.body.lesson_isPreview,
+    };
+
+    await courseModel.patchLesson(new_lesson);
+
+    res.redirect(req.headers.referer);
   }
-  // console.log(req.body.lesson_name);
-  const new_lesson = {
-    idCourse: req.body.id,
-    imagePath: imgPath,
-    chapter: req.body.lesson_chapter,
-    chapterName: req.body.lesson_name,
-    videoPath: req.body.lesson_video,
-    isPreview: req.body.lesson_isPreview,
-  };
-
-  await courseModel.patchLesson(new_lesson);
-
-  res.redirect(req.headers.referer);
-});
+);
 module.exports = router;

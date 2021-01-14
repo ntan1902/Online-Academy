@@ -57,14 +57,27 @@
                 $.getJSON(`/account/isAvailable?user=${username}`, function (data) {
                     // User name is Unique
                     if (data === true) {
-                        $('#frmRegister').off('submit').submit();
-                        //Swal.fire({
-                        //    title: 'Sending E-mail...Please wait',
-                        //    timerProgressBar: true,
-                        //    didOpen: () => {
-                        //        Swal.showLoading();
-                        //    }
-                        //});
+                        // Email is Unique
+                        $.getJSON(`/account/isUniqueEmail?email=${email}`, function (res) {
+                            if (res === true) {
+                                $('#frmRegister').off('submit').submit();
+                                Swal.fire({
+                                    title: 'Sending E-mail...Please wait',
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Your email already exists! Please enter another email',
+                                    icon: 'error',
+                                    confirmButtonText: 'Retry'
+                                });
+                                return;
+                            }
+                        })
                     } else {
                         Swal.fire({
                             title: 'Error!',
