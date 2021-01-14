@@ -3,7 +3,7 @@ const db = require("../utils/db");
 
 module.exports = {
   async allByUser(id) {
-    const sql = `select co.title, co.imagePath, co.idCourse, u.fullname
+    const sql = `select co.title, co.imagePath, co.idCourse, u.fullname, co.disable
                 from favoriteCourses fa, courses co, users u
                 where fa.idStudent = ${id} and fa.idCourse = co.idCourse and co.idTeacher = u.idUser`;
     const [rows, fields] = await db.load(sql);

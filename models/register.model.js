@@ -17,7 +17,7 @@ module.exports = {
   },
 
   async allByUser(id) {
-    const sql = `select co.title, co.imagePath, co.idCourse, u.fullname
+    const sql = `select co.title, co.imagePath, co.idCourse, u.fullname, co.status, co.disable
     from registers r, courses co, users u
     where r.idStudent = ${id} and r.idCourse = co.idCourse and co.idTeacher = u.idUser`;
     const [rows, fields] = await db.load(sql);

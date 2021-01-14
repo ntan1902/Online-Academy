@@ -1,30 +1,30 @@
 {{#section 'js'}}
-    <script>
-        $('.delete').click(function () {
-            const del = $(this);
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    ).then(function () {
-                        $('#txtIdCourse').val(del.data('id'));
-                        console.log($('#txtIdCourse').val());
-                        $('#frmDelete').submit();
-                    });
-                }
-            });
+<script>
+    $('.delete').click(function () {
+        const del = $(this);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                ).then(function () {
+                    $('#txtIdCourse').val(del.data('id'));
+                    console.log($('#txtIdCourse').val());
+                    $('#frmDelete').submit();
+                });
+            }
         });
-    </script>
+    });
+</script>
 {{/section}}
 <!-- ================ start banner area ================= -->
 <section class="blog-banner-area">
@@ -41,93 +41,95 @@
 
 <!--================Favorite Courses Area =================-->
 {{#if this.empty }}
-    <section class="cart_area">
-        <div class="container">
-            <div class="cart_inner">
-                <div class="table-responsive align-items-center">
-                    <h3>
-                        Your Course-List is empty,
-                        <a href="/account/teacher/myCourses/add" class="badge badge-primary"> Add some courses now
-                            !!!</a>
-                    </h3>
-                </div>
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive align-items-center">
+                <h3>
+                    Your Course-List is empty,
+                    <a href="/account/teacher/myCourses/add" class="badge badge-primary"> Add some courses now
+                        !!!</a>
+                </h3>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 {{else}}
-    <form id="frmDelete" action="/account/teacher/myCourses/delete/" method="POST">
-        <input type="hidden" name="idCourse" id="txtIdCourse">
-    </form>
+<form id="frmDelete" action="/account/teacher/myCourses/delete/" method="POST">
+    <input type="hidden" name="idCourse" id="txtIdCourse">
+</form>
 
 
-    <section class="cart_area">
-        <div class="container">
-            <div class="cart_inner">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Course</th>
-                                <th scope="col">
-                                    &nbsp;
-                                </th>
-                                <th scope="col">Lesson(s)</th>
-                                <th scope="col">
-                                    &nbsp;
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each list_my_courses}}
-                                <tr>
-                                    <td>
-                                        <a href="/account/teacher/myCourses/detail/{{this.idCourse}}">
-                                            <div class="media-body d-flex justify-content-between">
-                                                <img style="height: 150px; width:255px" src="{{this.imagePath}}">
-                                                <div class="pl-3">
-                                                    <h4>{{this.title}}</h4>
-                                                </div>
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Course</th>
+                            <th scope="col">
+                                &nbsp;
+                            </th>
+                            <th scope="col">Lesson(s)</th>
+                            <th scope="col">
+                                &nbsp;
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each list_my_courses}}
+                        {{#unless disable}}
+                        <tr>
+                            <td>
+                                <a href="/account/teacher/myCourses/detail/{{this.idCourse}}">
+                                    <div class="media-body d-flex justify-content-between">
+                                        <img style="height: 150px; width:255px" src="{{this.imagePath}}">
+                                        <div class="pl-3">
+                                            <h4>{{this.title}}</h4>
+                                        </div>
 
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        &nbsp;
-                                    </td>
+                                    </div>
+                                </a>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
 
-                                    <td class="pt-3">
-                                        <h5>{{this.countLessons}}</h5>
-                                    </td>
+                            <td class="pt-3">
+                                <h5>{{this.countLessons}}</h5>
+                            </td>
 
-                                    <td class="pt-2">
-                                        <a class="delete btn btn-outline-danger" data-id="{{this.idCourse}}">
-                                            <i class="fa fa-trash p fa-lg" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            {{/each}}
-                            <tr>
+                            <td class="pt-2">
+                                <a class="delete btn btn-outline-danger" data-id="{{this.idCourse}}">
+                                    <i class="fa fa-trash p fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {{/unless}}
+                        {{/each}}
+                        <tr>
 
-                                <td>
-                                    &nbsp;
-                                </td>
-                                <td>
-                                    &nbsp;
-                                </td>
-                                <td>
-                                    &nbsp;
-                                </td>
-                                <td>
-                                    <a href="/account/teacher/myCourses/add" class="btn btn-success">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                <a href="/account/teacher/myCourses/add" class="btn btn-success">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 {{/if}}
 <!--================End Cart Area =================-->

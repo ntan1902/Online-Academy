@@ -24,6 +24,7 @@
     <div class="container">
       <div class="row">
         {{#each this.courses}}
+        {{#unless disable}}
         <div class="col-md-3 col-sm-6 mb-4">
           <div class="product-grid4 h-100">
             <div class="product-image4">
@@ -78,6 +79,7 @@
             </div>
           </div>
         </div>
+        {{/unless}}
         {{/each}}
       </div>
       <div class="card-body d-flex justify-content-between">

@@ -210,7 +210,7 @@ module.exports = {
                 from users u, courses c
                 where u.idUser=c.idTeacher and (match(c.title) against ('${keyword}') or 
                   match(u.fullname) against('${keyword}')
-                  or match(c.description) against ('${keyword}'))
+                  or match(c.description) against ('${keyword}')) and c.disable=false
                 order by ${sort}
                 limit ${paginate.limit} offset ${offset}`;
       const [rows, fields] = await db.load(sql);
@@ -220,7 +220,7 @@ module.exports = {
                   from users u, courses c, feedbacks f
                   where (match(c.title) against ('${keyword}') or 
                     match(u.fullname) against('${keyword}') and u.idUser=c.idTeacher 
-                    or match(c.description) against ('${keyword}')) and f.idCourse=c.idCourse 
+                    or match(c.description) against ('${keyword}')) and f.idCourse=c.idCourse and c.disable=false
                   group by c.idCourse
                   order by avg (distinct f.ratingPoint) desc
       limit ${paginate.limit} offset ${offset}`;
@@ -230,7 +230,7 @@ module.exports = {
                 from users u, courses c
                 where u.idUser=c.idTeacher and (match(c.title) against ('${keyword}') or 
                   match(u.fullname) against('${keyword}')
-                  or match(c.description) against ('${keyword}'))
+                  or match(c.description) against ('${keyword}')) and c.disable=false
                 limit ${paginate.limit} offset ${offset}`;
         const [rows, fields] = await db.load(sql);
         return rows;
