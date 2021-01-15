@@ -52,11 +52,10 @@ module.exports = function (app) {
         },
       },
       checkDisableCourse(disable) {
-        if (disable === "disable") {
+        if(disable === "disable") {
           return true;
         } else return false;
-      },
-    })
-  ),
-    app.set("view engine", "hbs");
+      }
+    }),
+  app.set("view engine", "hbs"));
 };
