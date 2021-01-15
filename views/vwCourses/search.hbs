@@ -1,22 +1,8 @@
 {{#section 'js'}}
-<script>
+    <script>
 
-    let urlParams = new URLSearchParams(location.search);
-    let params = {
-        search: "",
-        sort: ""
-    };
-
-    for (let key in params) {
-        if (!urlParams.has(key)) {
-            urlParams.append(key, params[key]);
-        }
-    }
-
-    if (urlParams.get('sort') == null) {
-        urlParams.set('search', $('#sort-keyword').val());
-        urlParams = new URLSearchParams(location.search.substring(2));
-        params = {
+        let urlParams = new URLSearchParams(location.search);
+        let params = {
             search: "",
             sort: ""
         };
@@ -26,20 +12,34 @@
                 urlParams.append(key, params[key]);
             }
         }
-    }
 
-    function selectParams(key, value) {
-        urlParams.set(key, value);
-        let url = `/courses/search/?${urlParams.toString()}`;
-        $('select').niceSelect('update'); //Tell the plugin to recreate the DIV.
-        location.href = url;
-    }
+        if (urlParams.get('sort') == null) {
+            urlParams.set('search', $('#sort-keyword').val());
+            urlParams = new URLSearchParams(location.search.substring(2));
+            params = {
+                search: "",
+                sort: ""
+            };
 
-    if (urlParams.get('sort') != "") {
-        $('select').val(urlParams.get('sort'));
-        $('select').niceSelect('update');
-    }
-</script>
+            for (let key in params) {
+                if (!urlParams.has(key)) {
+                    urlParams.append(key, params[key]);
+                }
+            }
+        }
+
+        function selectParams(key, value) {
+            urlParams.set(key, value);
+            let url = `/courses/search/?${urlParams.toString()}`;
+            $('select').niceSelect('update'); //Tell the plugin to recreate the DIV.
+            location.href = url;
+        }
+
+        if (urlParams.get('sort') != "") {
+            $('select').val(urlParams.get('sort'));
+            $('select').niceSelect('update');
+        }
+    </script>
 {{/section}}
 
 <div class="card shadow w-75 mx-auto mt-3 mb-3">
@@ -50,133 +50,135 @@
 
         {{#if this.have}}
 
-        <select class="sort-keyword" id="sort-keyword" onchange="selectParams('sort',this.value)"
-            action="/courses/search">
-            <option disabled>
-                Sort
-            </option>
-            <option value="title" data-display="{{this.sort}}">
-                Name
-            </option>
-            <option value="rating">
-                Rating
-            </option>
-            <option value="price">
-                Price
-            </option>
+            <select class="sort-keyword" id="sort-keyword" onchange="selectParams('sort',this.value)"
+                action="/courses/search">
+                <option disabled>
+                    Sort
+                </option>
+                <option value="title" data-display="{{this.sort}}">
+                    Name
+                </option>
+                <option value="rating">
+                    Rating
+                </option>
+                <option value="price">
+                    Price
+                </option>
 
-        </select>
+            </select>
 
         {{/if}}
     </div>
 
     <div class="card-body">
         {{#if this.empty}}
-        <h4 class="card-title">Sorry, we couldn't find any results for "{{this.showKeyword}}"</h4>
-        <h5>Try adjusting your search. Here are some ideas:</h5>
-        <ol>
-            <li>Make sure all words are spelled correctly</li>
-            <li>Try different search terms</li>
-            <li>Try more general search terms</li>
-        </ol>
+            <h4 class="card-title">Sorry, we couldn't find any results for "{{this.showKeyword}}"</h4>
+            <h5>Try adjusting your search. Here are some ideas:</h5>
+            <ol>
+                <li>Make sure all words are spelled correctly</li>
+                <li>Try different search terms</li>
+                <li>Try more general search terms</li>
+            </ol>
         {{else}}
-        <div class="container">
-            <div class="row">
+            <div class="container">
+                <div class="row">
 
-                {{#each this.courses}}
-                {{#unless (checkDisableCourse disable)}}
-                <div class="col-md-3 col-sm-6 mb-2">
-                    <div class="product-grid4 h-100">
-                        <div class="product-image4">
-                            <a href="#">
-                                <img class="pic-1" style="height: 150px" src="{{imagePath}}">
-                                <img class="pic-2" style="height: 150px" src="{{imagePath}}">
-                            </a>
-                            <ul class="social">
-                                <li><a href="/admin/courses/edit/{{idCourse}}" data-tip="Quick View" role="button"><i
-                                            class="fa fa-eye"></i></a></li>
-                                {{#if ../auth}}
-                                {{#unless isFavorite}}
-                                <li><a href="/courses/detail/{{idCourse}}" data-tip="Like the course" role="button"><i
-                                            class="fa fa-heart"></i></a></li>
-                                {{/unless}}
-                                {{#unless ../isTeacher}}
-                                {{#unless ../isAdmin}}
-                                {{#unless isRegister}}
-                                <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
-                                {{/unless}}
-                                {{/unless}}
-                                {{/unless}}
-                                {{/if}}
-                            </ul>
-                            <span class="product-new-label">New</span>
-                            <span class="product-discount-label">-10%</span>
-                        </div>
-                        <div class="product-content">
-                            <h3 class="title"><a href="">{{title}}</a></h3>
-                            <span class="teacher"><a href="">{{fullname}}</a></span>
-                            <ul class="rating">
-                                {{!-- <li class="fa fa-star"></li>
+                    {{#each this.courses}}
+                        {{#unless (checkDisableCourse disable)}}
+                            <div class="col-md-3 col-sm-6 mb-2">
+                                <div class="product-grid4 h-100">
+                                    <div class="product-image4">
+                                        <a href="#">
+                                            <img class="pic-1" style="height: 150px" src="{{imagePath}}">
+                                            <img class="pic-2" style="height: 150px" src="{{imagePath}}">
+                                        </a>
+                                        <ul class="social">
+                                            <li><a href="/admin/courses/edit/{{idCourse}}" data-tip="Quick View"
+                                                    role="button"><i class="fa fa-eye"></i></a></li>
+                                            {{#if ../auth}}
+                                                {{#unless isFavorite}}
+                                                    <li><a href="/courses/detail/{{idCourse}}"
+                                                            data-tip="Like the course" role="button"><i
+                                                                class="fa fa-heart"></i></a></li>
+                                                {{/unless}}
+                                                {{#unless ../isTeacher}}
+                                                    {{#unless ../isAdmin}}
+                                                        {{#unless isRegister}}
+                                                            <li><a href="#" data-tip="Add to Cart"><i
+                                                                        class="fa fa-shopping-cart"></i></a></li>
+                                                        {{/unless}}
+                                                    {{/unless}}
+                                                {{/unless}}
+                                            {{/if}}
+                                        </ul>
+                                        <span class="product-new-label">New</span>
+                                        <span class="product-discount-label">-10%</span>
+                                    </div>
+                                    <div class="product-content">
+                                        <h3 class="title"><a href="">{{title}}</a></h3>
+                                        <span class="teacher"><a href="">{{fullname}}</a></span>
+                                        <ul class="rating">
+                                            {{!-- <li class="fa fa-star"></li>
                                 <li class="fa fa-star"></li>
                                 <li class="fa fa-star"></li>
                                 <li class="fa fa-star disable"></li>
                                 <li class="fa fa-star disable"></li> --}}
-                                {{{calcStars totalPoint}}}
-                            </ul>
-                            <div class="price">
-                                ${{price}}
-                                <span>$5.00</span>
+                                            {{{calcStars totalPoint}}}
+                                        </ul>
+                                        <div class="price">
+                                            ${{price}}
+                                            <span>$5.00</span>
+                                        </div>
+                                        {{#if ../auth}}
+                                            {{#unless ../isTeacher}}
+                                                {{#unless ../isAdmin}}
+                                                    {{#unless isRegister}}
+                                                        <a class="add-to-cart" href="#">ADD TO CART</a>
+                                                    {{/unless}}
+                                                {{/unless}}
+                                            {{/unless}}
+                                        {{/if}}
+                                    </div>
+                                </div>
                             </div>
-                            {{#if ../auth}}
-                            {{#unless ../isTeacher}}
-                            {{#unless ../isAdmin}}
-                            {{#unless isRegister}}
-                            <a class="add-to-cart" href="#">ADD TO CART</a>
-                            {{/unless}}
-                            {{/unless}}
-                            {{/unless}}
-                            {{/if}}
-                        </div>
-                    </div>
-                </div>
-                {{/unless}}
-                {{/each}}
-            </div>
-            <div class="card-body d-flex justify-content-between">
-                <ul class="pagination mx-auto">
-                    {{#if disablePrev}}
-                    <li class="page-item disabled" id="prev">
-                        <a class="page-link" href="?page={{prevPage}}" id="prev-link">Previous</a>
-                    </li>
-                    {{else}}
-                    <li class="page-item" id="prev">
-                        <a class="page-link" href="?page={{prevPage}}" id="prev-link">Previous</a>
-                    </li>
-                    {{/if}}
-                    {{#each this.page_numbers}}
-                    {{#if isCurrentPage}}
-                    <li class="page-item active">
-                        <a class="page-link" href="javascript:;" id="cur-link">{{value}}</a>
-                    </li>
-                    {{else}}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{value}}" id="click-link">{{value}}</a>
-                    </li>
-                    {{/if}}
+                        {{/unless}}
                     {{/each}}
+                </div>
+                <div class="card-body d-flex justify-content-between">
+                    <ul class="pagination mx-auto">
+                        {{#if disablePrev}}
+                            <li class="page-item disabled" id="prev">
+                                <a class="page-link" href="?page={{prevPage}}" id="prev-link">Previous</a>
+                            </li>
+                        {{else}}
+                            <li class="page-item" id="prev">
+                                <a class="page-link" href="?page={{prevPage}}" id="prev-link">Previous</a>
+                            </li>
+                        {{/if}}
+                        {{#each this.page_numbers}}
+                            {{#if isCurrentPage}}
+                                <li class="page-item active">
+                                    <a class="page-link" href="javascript:;" id="cur-link">{{value}}</a>
+                                </li>
+                            {{else}}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{value}}" id="click-link">{{value}}</a>
+                                </li>
+                            {{/if}}
+                        {{/each}}
 
-                    {{#if disableNext}}
-                    <li class="page-item disabled" id="next">
-                        <a class="page-link" href="?page={{nextPage}}" id="next-link">Next</a>
-                    </li>
-                    {{else}}
-                    <li class="page-item" id="next">
-                        <a class="page-link" href="?page={{nextPage}}" id="next-link">Next</a>
-                    </li>
-                    {{/if}}
-                </ul>
+                        {{#if disableNext}}
+                            <li class="page-item disabled" id="next">
+                                <a class="page-link" href="?page={{nextPage}}" id="next-link">Next</a>
+                            </li>
+                        {{else}}
+                            <li class="page-item" id="next">
+                                <a class="page-link" href="?page={{nextPage}}" id="next-link">Next</a>
+                            </li>
+                        {{/if}}
+                    </ul>
+                </div>
             </div>
-        </div>
         {{/if}}
     </div>
 </div>
